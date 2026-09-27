@@ -1,0 +1,5 @@
+﻿backup-before-*/
+update_*.py
+__pycache__/
+*.pyc
+.vscode/
