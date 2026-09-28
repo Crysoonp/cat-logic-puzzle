@@ -88,3 +88,41 @@
   18% { transform: translate(4px,2px) rotate(2deg); }
   100% { opacity: 0; transform: translate(105px,70px) rotate(24deg); }
 }
+
+
+/* Ver.0.3.4: swipe-to-mark and unified soft X */
+.board {
+  touch-action: none;
+  overscroll-behavior: contain;
+}
+.tile {
+  -webkit-tap-highlight-color: transparent;
+}
+.mark-x {
+  position: relative;
+  display: block;
+  width: 76%;
+  height: 76%;
+  font-size: 0 !important;
+  -webkit-text-stroke: 0 !important;
+  text-shadow: none !important;
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,.24));
+}
+/* Dark outer X */
+.mark-x::before {
+  content: "";
+  position: absolute;
+  inset: 3%;
+  background: #4f4641;
+  clip-path: polygon(18% 8%,50% 40%,82% 8%,92% 18%,60% 50%,92% 82%,82% 92%,50% 60%,18% 92%,8% 82%,40% 50%,8% 18%);
+  border-radius: 24%;
+}
+/* One continuous white X, so the center never looks like overlapping bandages */
+.mark-x::after {
+  content: "";
+  position: absolute;
+  inset: 10%;
+  background: #fffdf8;
+  clip-path: polygon(18% 8%,50% 40%,82% 8%,92% 18%,60% 50%,92% 82%,82% 92%,50% 60%,18% 92%,8% 82%,40% 50%,8% 18%);
+  border-radius: 26%;
+}

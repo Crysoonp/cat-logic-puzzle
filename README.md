@@ -1,3 +1,3 @@
-# Cat Logic Puzzle Ver.0.3.3
+# Cat Logic Puzzle Ver.0.3.4
 
-TRY AGAIN animation correction.
+Swipe-to-mark prototype, unified soft X design, and easier Stage 5.
