@@ -126,3 +126,164 @@
   clip-path: polygon(18% 8%,50% 40%,82% 8%,92% 18%,60% 50%,92% 82%,82% 92%,50% 60%,18% 92%,8% 82%,40% 50%,8% 18%);
   border-radius: 26%;
 }
+
+.settings-mini{border:1px solid #efc38c;background:#fff8ec;border-radius:10px;padding:7px 9px;font-size:1rem}.hint-dock{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:13px}.hint-dock button{min-width:0;min-height:76px;padding:6px 3px;border:1px solid #e7d9cf;border-radius:14px;background:#fffaf1;color:#604f46}.hint-dock .hint-icon{display:block;font-size:1.45rem;line-height:1.3}.hint-dock b,.hint-dock small{display:block;font-size:.67rem}.hint-dock small{margin-top:3px;color:#9a6b39}.hint-focus{outline:3px solid #79b7e5!important;filter:brightness(1.12)}.settings-list{display:grid;gap:8px}.settings-list button,.settings-list label{min-height:42px;padding:10px;border:1px solid #eadfd6;border-radius:11px;background:#fffaf6;text-align:left;font-weight:800}@media(max-width:390px){.hint-dock{gap:4px}.hint-dock b{font-size:.59rem}.hint-dock small{font-size:.56rem}}
+
+
+/* Ver.0.4.1 UI fix */
+.mark-x {
+  position: relative !important;
+  display: block !important;
+  width: 74% !important;
+  height: 74% !important;
+  font-size: 0 !important;
+  filter:
+    drop-shadow(2px 0 0 #514842)
+    drop-shadow(-2px 0 0 #514842)
+    drop-shadow(0 2px 0 #514842)
+    drop-shadow(0 -2px 0 #514842) !important;
+}
+.mark-x::before,
+.mark-x::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  width: 96% !important;
+  height: 22% !important;
+  inset: auto !important;
+  border-radius: 999px !important;
+  background: #fffdf8 !important;
+  box-shadow: none !important;
+  clip-path: none !important;
+  transform-origin: center !important;
+}
+.mark-x::before { transform: translate(-50%,-50%) rotate(45deg) !important; }
+.mark-x::after  { transform: translate(-50%,-50%) rotate(-45deg) !important; }
+.hint-locked {
+  background: #e8e3df !important;
+  border-color: #d4ccc6 !important;
+  color: #77706b !important;
+  cursor: not-allowed;
+  opacity: .78;
+}
+.hint-locked .mystery-icon {
+  color: #1f1f1f;
+  filter: none;
+  font-size: 1.35rem;
+}
+.hint-locked b,
+.hint-locked small { color: #736d69 !important; }
+.training small { font-size: .7rem; color: #9c6b3d; }
+.settings-mini { cursor: pointer; position: relative; z-index: 3; }
+
+
+/* Ver.0.4.1 tutorial polish */
+.history-dialog-body{padding-top:0!important;max-height:min(82vh,720px);overflow:auto}
+.history-sticky{position:sticky;top:0;z-index:8;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:16px 0 10px;background:linear-gradient(#fff 80%,rgba(255,255,255,.82),transparent)}
+.history-sticky h2{margin:0!important}.history-close{min-height:36px!important;padding:6px 10px!important;background:#fff4e7!important;border:1px solid #e7c79f!important;color:#775747!important}
+.tutorial-focus{outline:4px solid #6fb7ee!important;box-shadow:inset 0 0 0 3px #ffffff99!important;animation:tutorialFocus 1s ease-in-out infinite alternate}
+@keyframes tutorialFocus{from{filter:brightness(1)}to{filter:brightness(1.2)}}
+.board-complete{animation:boardRing 1.05s ease-in-out}
+@keyframes boardRing{0%{box-shadow:0 0 0 0 rgba(255,207,79,0)}30%{box-shadow:0 0 0 7px rgba(255,207,79,.85),0 0 28px rgba(255,196,51,.8)}70%{box-shadow:0 0 0 7px rgba(255,235,144,.75),0 0 38px rgba(255,196,51,.55)}100%{box-shadow:0 0 0 0 rgba(255,207,79,0)}}
+.cat-celebrate{display:inline-block;animation:catCelebrate .65s ease-in-out 2}
+@keyframes catCelebrate{0%,100%{transform:rotate(0) scale(1)}25%{transform:rotate(-10deg) scale(1.08)}75%{transform:rotate(10deg) scale(1.08)}}
+.hint-dock button{position:relative}.hint-info{position:absolute;right:5px;top:5px;display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#fff;border:1px solid #d9b98e;color:#855f35;font-size:.7rem;font-weight:1000;z-index:3}.hint-locked .hint-info{display:none}
+
+
+/* Ver.0.4.1 Stage 2 / X alignment fix */
+.tile > .mark-x {
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  width: 68% !important;
+  height: 68% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  translate: -50% -50% !important;
+  transform: none !important;
+  line-height: 0 !important;
+  overflow: visible !important;
+  filter:
+    drop-shadow(2px 0 0 #514842)
+    drop-shadow(-2px 0 0 #514842)
+    drop-shadow(0 2px 0 #514842)
+    drop-shadow(0 -2px 0 #514842) !important;
+}
+.tile > .mark-x::before,
+.tile > .mark-x::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  width: 100% !important;
+  height: 24% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  inset: auto !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: #fffdf8 !important;
+  box-shadow: none !important;
+  clip-path: none !important;
+  transform-origin: 50% 50% !important;
+}
+.tile > .mark-x::before {
+  transform: translate(-50%,-50%) rotate(45deg) !important;
+}
+.tile > .mark-x::after {
+  transform: translate(-50%,-50%) rotate(-45deg) !important;
+}
+.board-complete {
+  animation-duration: 1.75s !important;
+}
+.cat-celebrate {
+  animation-duration: .82s !important;
+  animation-iteration-count: 2 !important;
+}
+
+
+/* Ver.0.4.1 definitive centered X fix */
+.tile .mark-x {
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: 70% !important;
+  height: 70% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  transform: translate(-50%, -50%) !important;
+  translate: none !important;
+  display: block !important;
+  overflow: hidden !important;
+  color: transparent !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+  -webkit-text-stroke: 0 !important;
+  text-shadow: none !important;
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,.22)) !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M22 22 L78 78 M78 22 L22 78' stroke='%23514842' stroke-width='30'/%3E%3Cpath d='M22 22 L78 78 M78 22 L22 78' stroke='%23fffdf8' stroke-width='21'/%3E%3C/g%3E%3C/svg%3E") !important;
+}
+.tile .mark-x::before,
+.tile .mark-x::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+}
+
+
+/* Ver.0.4.1 refined hint roles */
+.hint-safe-x {
+  outline: 4px solid #f3bd43 !important;
+  box-shadow: inset 0 0 0 4px rgba(255,255,255,.72), 0 0 18px rgba(243,189,67,.72) !important;
+  animation: safeXPulse .85s ease-in-out infinite alternate !important;
+}
+@keyframes safeXPulse {
+  from { filter: brightness(1); transform: scale(1); }
+  to { filter: brightness(1.18); transform: scale(.96); }
+}

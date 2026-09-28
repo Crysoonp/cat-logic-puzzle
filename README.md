@@ -1,3 +1,3 @@
-# Cat Logic Puzzle Ver.0.3.4
+# Cat Logic Puzzle Ver.0.4.1 hint roles
 
-Swipe-to-mark prototype, unified soft X design, and easier Stage 5.
+Cat toy: one safe X. Matatabi: one useful logical move with a reason. Cat food: reveal one cat. Paw check: repair one wrong X.
