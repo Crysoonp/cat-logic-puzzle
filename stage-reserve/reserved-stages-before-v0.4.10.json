@@ -1,0 +1,3886 @@
+[
+  {
+    "reserveId": "R-6x6-007",
+    "originalStage": 7,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "size": 6,
+      "solution": [
+        0,
+        4,
+        1,
+        3,
+        5,
+        2
+      ],
+      "regions": [
+        [
+          0,
+          2,
+          2,
+          2,
+          2,
+          1
+        ],
+        [
+          2,
+          2,
+          2,
+          1,
+          1,
+          1
+        ],
+        [
+          2,
+          2,
+          5,
+          5,
+          1,
+          4
+        ],
+        [
+          2,
+          5,
+          5,
+          3,
+          1,
+          4
+        ],
+        [
+          5,
+          5,
+          5,
+          5,
+          5,
+          4
+        ],
+        [
+          5,
+          5,
+          5,
+          5,
+          4,
+          4
+        ]
+      ],
+      "stage": 7,
+      "title": "6×6へ",
+      "guide": "いよいよ6×6じゃ。一か所だけでなく盤面全体を見るんじゃ。",
+      "tutorial": true,
+      "hard": false,
+      "bonus": false,
+      "logicLevel": 2,
+      "difficulty": "EASY"
+    }
+  },
+  {
+    "reserveId": "R-6x6-008",
+    "originalStage": 8,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "size": 6,
+      "solution": [
+        2,
+        0,
+        3,
+        5,
+        1,
+        4
+      ],
+      "regions": [
+        [
+          1,
+          1,
+          0,
+          2,
+          2,
+          2
+        ],
+        [
+          1,
+          1,
+          0,
+          2,
+          2,
+          2
+        ],
+        [
+          1,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        [
+          1,
+          1,
+          1,
+          2,
+          2,
+          3
+        ],
+        [
+          4,
+          4,
+          4,
+          2,
+          3,
+          3
+        ],
+        [
+          4,
+          4,
+          4,
+          4,
+          5,
+          5
+        ]
+      ],
+      "stage": 8,
+      "title": "候補を残す",
+      "guide": "すぐ決められない場所には「？」を置いて、別の場所から進めるんじゃ。",
+      "tutorial": true,
+      "hard": false,
+      "bonus": false,
+      "logicLevel": 2,
+      "difficulty": "EASY"
+    }
+  },
+  {
+    "reserveId": "R-6x6-009",
+    "originalStage": 9,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "size": 6,
+      "solution": [
+        4,
+        2,
+        0,
+        5,
+        3,
+        1
+      ],
+      "regions": [
+        [
+          2,
+          2,
+          1,
+          0,
+          0,
+          3
+        ],
+        [
+          2,
+          2,
+          1,
+          0,
+          3,
+          3
+        ],
+        [
+          2,
+          4,
+          3,
+          3,
+          3,
+          3
+        ],
+        [
+          4,
+          4,
+          4,
+          3,
+          3,
+          3
+        ],
+        [
+          4,
+          4,
+          4,
+          4,
+          3,
+          3
+        ],
+        [
+          5,
+          5,
+          5,
+          4,
+          4,
+          4
+        ]
+      ],
+      "stage": 9,
+      "title": "仮置き推理",
+      "guide": "ここに猫がいると仮に考える「仮置き推理」を試すんじゃ。△は仮置きの印じゃよ。",
+      "tutorial": true,
+      "hard": false,
+      "bonus": false,
+      "logicLevel": 2,
+      "difficulty": "EASY"
+    }
+  },
+  {
+    "reserveId": "R-8x8-011",
+    "originalStage": 11,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "size": 8,
+      "solution": [
+        4,
+        7,
+        5,
+        1,
+        6,
+        3,
+        0,
+        2
+      ],
+      "regions": [
+        [
+          3,
+          3,
+          3,
+          3,
+          0,
+          2,
+          2,
+          2
+        ],
+        [
+          3,
+          3,
+          3,
+          3,
+          2,
+          2,
+          2,
+          1
+        ],
+        [
+          3,
+          3,
+          3,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        [
+          3,
+          3,
+          3,
+          3,
+          2,
+          2,
+          2,
+          2
+        ],
+        [
+          3,
+          3,
+          3,
+          3,
+          5,
+          4,
+          4,
+          2
+        ],
+        [
+          3,
+          3,
+          7,
+          5,
+          5,
+          4,
+          4,
+          4
+        ],
+        [
+          6,
+          7,
+          7,
+          5,
+          5,
+          4,
+          4,
+          4
+        ],
+        [
+          6,
+          7,
+          7,
+          7,
+          4,
+          4,
+          4,
+          4
+        ]
+      ],
+      "stage": 11,
+      "title": "本編最初の一歩",
+      "guide": "1マスだけの色エリアが二つあるニャン。そこからゆっくり始めるニャン。",
+      "tutorial": false,
+      "hard": false,
+      "bonus": false,
+      "logicLevel": 3,
+      "difficulty": "NORMAL"
+    }
+  },
+  {
+    "reserveId": "R-8x8-012",
+    "originalStage": 12,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "size": 8,
+      "solution": [
+        7,
+        2,
+        6,
+        3,
+        1,
+        5,
+        0,
+        4
+      ],
+      "regions": [
+        [
+          4,
+          4,
+          1,
+          1,
+          2,
+          2,
+          2,
+          0
+        ],
+        [
+          4,
+          4,
+          1,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        [
+          4,
+          4,
+          3,
+          3,
+          2,
+          5,
+          2,
+          2
+        ],
+        [
+          4,
+          4,
+          3,
+          3,
+          5,
+          5,
+          5,
+          5
+        ],
+        [
+          4,
+          4,
+          4,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        [
+          4,
+          4,
+          4,
+          7,
+          5,
+          5,
+          5,
+          5
+        ],
+        [
+          6,
+          4,
+          4,
+          7,
+          5,
+          5,
+          5,
+          5
+        ],
+        [
+          4,
+          4,
+          7,
+          7,
+          7,
+          5,
+          5,
+          5
+        ]
+      ],
+      "stage": 12,
+      "title": "広い盤面を見る",
+      "guide": "8×8でも基本は同じ。焦らず広い盤面を見渡そう。",
+      "tutorial": false,
+      "hard": false,
+      "bonus": false,
+      "logicLevel": 3,
+      "difficulty": "NORMAL"
+    }
+  },
+  {
+    "reserveId": "R-8x8-013",
+    "originalStage": 13,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "size": 8,
+      "solution": [
+        1,
+        5,
+        3,
+        0,
+        2,
+        7,
+        4,
+        6
+      ],
+      "regions": [
+        [
+          0,
+          0,
+          2,
+          2,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          0,
+          3,
+          2,
+          2,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          3,
+          3,
+          3,
+          2,
+          2,
+          2,
+          1,
+          1
+        ],
+        [
+          3,
+          4,
+          4,
+          4,
+          4,
+          4,
+          5,
+          5
+        ],
+        [
+          4,
+          4,
+          4,
+          6,
+          6,
+          4,
+          5,
+          5
+        ],
+        [
+          4,
+          4,
+          6,
+          6,
+          6,
+          6,
+          5,
+          5
+        ],
+        [
+          4,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          5
+        ],
+        [
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          7,
+          5
+        ]
+      ],
+      "stage": 13,
+      "title": "複数エリア",
+      "guide": "複数の行と色エリアを見比べて候補を絞ろう。",
+      "tutorial": false,
+      "hard": false,
+      "bonus": false,
+      "logicLevel": 3,
+      "difficulty": "NORMAL"
+    }
+  },
+  {
+    "reserveId": "R-8x8-014",
+    "originalStage": 14,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "size": 8,
+      "solution": [
+        4,
+        6,
+        3,
+        1,
+        5,
+        7,
+        0,
+        2
+      ],
+      "regions": [
+        [
+          3,
+          3,
+          3,
+          0,
+          0,
+          0,
+          1,
+          1
+        ],
+        [
+          3,
+          3,
+          3,
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          3,
+          3,
+          3,
+          2,
+          3,
+          1,
+          1,
+          4
+        ],
+        [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          1,
+          4
+        ],
+        [
+          3,
+          3,
+          6,
+          6,
+          3,
+          4,
+          4,
+          4
+        ],
+        [
+          6,
+          6,
+          6,
+          4,
+          4,
+          4,
+          5,
+          5
+        ],
+        [
+          6,
+          6,
+          4,
+          4,
+          7,
+          4,
+          4,
+          4
+        ],
+        [
+          6,
+          6,
+          7,
+          7,
+          7,
+          4,
+          4,
+          4
+        ]
+      ],
+      "stage": 14,
+      "title": "ボーナスステージ",
+      "guide": "ボーナスステージ！クリアすると、またたびヒントを1個獲得じゃ。",
+      "tutorial": false,
+      "hard": false,
+      "bonus": true,
+      "logicLevel": 3,
+      "difficulty": "NORMAL"
+    }
+  },
+  {
+    "reserveId": "R-8x8-015",
+    "originalStage": 15,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "size": 8,
+      "solution": [
+        3,
+        1,
+        4,
+        2,
+        5,
+        7,
+        0,
+        6
+      ],
+      "regions": [
+        [
+          1,
+          1,
+          1,
+          0,
+          0,
+          2,
+          2,
+          2
+        ],
+        [
+          3,
+          1,
+          0,
+          0,
+          2,
+          2,
+          2,
+          2
+        ],
+        [
+          3,
+          3,
+          3,
+          0,
+          2,
+          2,
+          2,
+          2
+        ],
+        [
+          3,
+          3,
+          3,
+          3,
+          2,
+          4,
+          4,
+          4
+        ],
+        [
+          3,
+          3,
+          3,
+          3,
+          2,
+          4,
+          4,
+          4
+        ],
+        [
+          6,
+          3,
+          3,
+          3,
+          4,
+          4,
+          5,
+          5
+        ],
+        [
+          6,
+          3,
+          3,
+          3,
+          3,
+          4,
+          7,
+          5
+        ],
+        [
+          6,
+          6,
+          3,
+          3,
+          3,
+          3,
+          7,
+          7
+        ]
+      ],
+      "stage": 15,
+      "title": "本編チャレンジ",
+      "guide": "ここまで覚えた基本を使い、ノーミスを目指そう。",
+      "tutorial": false,
+      "hard": false,
+      "bonus": false,
+      "logicLevel": 3,
+      "difficulty": "NORMAL"
+    }
+  },
+  {
+    "reserveId": "R-5x5-016",
+    "originalStage": 16,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "stage": 16,
+      "size": 5,
+      "name": "ステージ16",
+      "difficulty": "自動判定",
+      "logicLevel": 0,
+      "regions": [
+        [
+          0,
+          0,
+          1,
+          1,
+          3
+        ],
+        [
+          0,
+          2,
+          1,
+          1,
+          3
+        ],
+        [
+          0,
+          2,
+          4,
+          1,
+          3
+        ],
+        [
+          2,
+          2,
+          4,
+          1,
+          3
+        ],
+        [
+          4,
+          4,
+          4,
+          3,
+          3
+        ]
+      ],
+      "solution": [
+        0,
+        3,
+        1,
+        4,
+        2
+      ]
+    }
+  },
+  {
+    "reserveId": "R-5x5-017",
+    "originalStage": 17,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "stage": 17,
+      "size": 5,
+      "name": "ステージ17",
+      "difficulty": "自動判定",
+      "logicLevel": 0,
+      "regions": [
+        [
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          2,
+          0,
+          0
+        ],
+        [
+          1,
+          4,
+          2,
+          3,
+          3
+        ],
+        [
+          1,
+          4,
+          2,
+          2,
+          3
+        ],
+        [
+          1,
+          4,
+          4,
+          4,
+          3
+        ]
+      ],
+      "solution": [
+        3,
+        0,
+        2,
+        4,
+        1
+      ]
+    }
+  },
+  {
+    "reserveId": "R-5x5-018",
+    "originalStage": 18,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "stage": 18,
+      "size": 5,
+      "name": "ステージ18",
+      "difficulty": "自動判定",
+      "logicLevel": 0,
+      "regions": [
+        [
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          2,
+          2,
+          2,
+          1,
+          1
+        ],
+        [
+          3,
+          3,
+          2,
+          2,
+          4
+        ],
+        [
+          3,
+          3,
+          4,
+          4,
+          4
+        ],
+        [
+          3,
+          3,
+          3,
+          4,
+          4
+        ]
+      ],
+      "solution": [
+        1,
+        4,
+        2,
+        0,
+        3
+      ]
+    }
+  },
+  {
+    "reserveId": "R-5x5-019",
+    "originalStage": 19,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "stage": 19,
+      "size": 5,
+      "name": "ステージ19",
+      "difficulty": "自動判定",
+      "logicLevel": 0,
+      "regions": [
+        [
+          0,
+          0,
+          1,
+          1,
+          1
+        ],
+        [
+          0,
+          2,
+          1,
+          1,
+          4
+        ],
+        [
+          2,
+          2,
+          3,
+          1,
+          4
+        ],
+        [
+          3,
+          3,
+          3,
+          3,
+          4
+        ],
+        [
+          3,
+          4,
+          4,
+          4,
+          4
+        ]
+      ],
+      "solution": [
+        1,
+        3,
+        0,
+        2,
+        4
+      ]
+    }
+  },
+  {
+    "reserveId": "R-5x5-020",
+    "originalStage": 20,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "stage": 20,
+      "size": 5,
+      "name": "ステージ20",
+      "difficulty": "自動判定",
+      "logicLevel": 0,
+      "regions": [
+        [
+          2,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          2,
+          2,
+          0,
+          3,
+          1
+        ],
+        [
+          4,
+          2,
+          0,
+          3,
+          1
+        ],
+        [
+          4,
+          4,
+          0,
+          3,
+          3
+        ],
+        [
+          4,
+          4,
+          4,
+          4,
+          3
+        ]
+      ],
+      "solution": [
+        2,
+        4,
+        1,
+        3,
+        0
+      ]
+    }
+  },
+  {
+    "reserveId": "R-6x6-021",
+    "originalStage": 21,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "stage": 21,
+      "size": 6,
+      "name": "ステージ21",
+      "difficulty": "自動判定",
+      "logicLevel": 0,
+      "regions": [
+        [
+          2,
+          1,
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          2,
+          2,
+          2,
+          1,
+          1,
+          1
+        ],
+        [
+          5,
+          2,
+          2,
+          3,
+          3,
+          3
+        ],
+        [
+          5,
+          2,
+          2,
+          3,
+          3,
+          3
+        ],
+        [
+          5,
+          5,
+          4,
+          4,
+          4,
+          4
+        ],
+        [
+          5,
+          5,
+          5,
+          4,
+          4,
+          4
+        ]
+      ],
+      "solution": [
+        5,
+        3,
+        1,
+        4,
+        2,
+        0
+      ]
+    }
+  },
+  {
+    "reserveId": "R-6x6-022",
+    "originalStage": 22,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "stage": 22,
+      "size": 6,
+      "name": "ステージ22",
+      "difficulty": "自動判定",
+      "logicLevel": 0,
+      "regions": [
+        [
+          0,
+          0,
+          0,
+          1,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          1,
+          1
+        ],
+        [
+          2,
+          0,
+          0,
+          0,
+          1,
+          1
+        ],
+        [
+          2,
+          3,
+          3,
+          1,
+          1,
+          1
+        ],
+        [
+          2,
+          2,
+          3,
+          3,
+          4,
+          4
+        ],
+        [
+          5,
+          5,
+          5,
+          5,
+          4,
+          4
+        ]
+      ],
+      "solution": [
+        1,
+        4,
+        0,
+        2,
+        5,
+        3
+      ]
+    }
+  },
+  {
+    "reserveId": "R-6x6-023",
+    "originalStage": 23,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "stage": 23,
+      "size": 6,
+      "name": "ステージ23",
+      "difficulty": "自動判定",
+      "logicLevel": 0,
+      "regions": [
+        [
+          2,
+          1,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          2,
+          1,
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          2,
+          2,
+          2,
+          1,
+          1,
+          0
+        ],
+        [
+          2,
+          2,
+          3,
+          3,
+          3,
+          3
+        ],
+        [
+          4,
+          4,
+          4,
+          3,
+          3,
+          3
+        ],
+        [
+          5,
+          5,
+          4,
+          4,
+          4,
+          4
+        ]
+      ],
+      "solution": [
+        5,
+        3,
+        1,
+        4,
+        2,
+        0
+      ]
+    }
+  },
+  {
+    "reserveId": "R-6x6-024",
+    "originalStage": 24,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "stage": 24,
+      "size": 6,
+      "name": "ステージ24",
+      "difficulty": "自動判定",
+      "logicLevel": 0,
+      "regions": [
+        [
+          2,
+          2,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          2,
+          1,
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          2,
+          2,
+          1,
+          1,
+          3,
+          0
+        ],
+        [
+          2,
+          2,
+          1,
+          1,
+          3,
+          3
+        ],
+        [
+          5,
+          4,
+          4,
+          3,
+          3,
+          3
+        ],
+        [
+          5,
+          4,
+          3,
+          3,
+          3,
+          3
+        ]
+      ],
+      "solution": [
+        5,
+        3,
+        1,
+        4,
+        2,
+        0
+      ]
+    }
+  },
+  {
+    "reserveId": "R-6x6-025",
+    "originalStage": 25,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "stage": 25,
+      "size": 6,
+      "name": "ステージ25",
+      "difficulty": "自動判定",
+      "logicLevel": 0,
+      "regions": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          2
+        ],
+        [
+          0,
+          0,
+          1,
+          1,
+          1,
+          2
+        ],
+        [
+          3,
+          3,
+          1,
+          1,
+          2,
+          2
+        ],
+        [
+          3,
+          3,
+          1,
+          1,
+          5,
+          2
+        ],
+        [
+          3,
+          3,
+          3,
+          3,
+          5,
+          4
+        ],
+        [
+          5,
+          5,
+          5,
+          5,
+          5,
+          4
+        ]
+      ],
+      "solution": [
+        0,
+        2,
+        4,
+        1,
+        5,
+        3
+      ]
+    }
+  },
+  {
+    "reserveId": "R-6x6-026",
+    "originalStage": 26,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "stage": 26,
+      "size": 6,
+      "name": "ステージ26",
+      "difficulty": "自動判定",
+      "logicLevel": 0,
+      "regions": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          3,
+          1,
+          1,
+          3,
+          2,
+          0
+        ],
+        [
+          3,
+          3,
+          3,
+          3,
+          2,
+          2
+        ],
+        [
+          5,
+          3,
+          3,
+          4,
+          2,
+          4
+        ],
+        [
+          5,
+          5,
+          5,
+          4,
+          4,
+          4
+        ],
+        [
+          5,
+          5,
+          5,
+          5,
+          4,
+          4
+        ]
+      ],
+      "solution": [
+        5,
+        2,
+        4,
+        1,
+        3,
+        0
+      ]
+    }
+  },
+  {
+    "reserveId": "R-6x6-027",
+    "originalStage": 27,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "stage": 27,
+      "size": 6,
+      "name": "ステージ27",
+      "difficulty": "自動判定",
+      "logicLevel": 0,
+      "regions": [
+        [
+          1,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          2,
+          2,
+          2,
+          2
+        ],
+        [
+          1,
+          2,
+          2,
+          3,
+          3,
+          3
+        ],
+        [
+          4,
+          4,
+          4,
+          3,
+          3,
+          3
+        ],
+        [
+          5,
+          5,
+          4,
+          4,
+          4,
+          4
+        ]
+      ],
+      "solution": [
+        4,
+        1,
+        3,
+        5,
+        2,
+        0
+      ]
+    }
+  },
+  {
+    "reserveId": "R-6x6-028",
+    "originalStage": 28,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "stage": 28,
+      "size": 6,
+      "name": "ステージ28",
+      "difficulty": "自動判定",
+      "logicLevel": 0,
+      "regions": [
+        [
+          3,
+          1,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          3,
+          1,
+          1,
+          0,
+          2,
+          0
+        ],
+        [
+          3,
+          1,
+          1,
+          1,
+          2,
+          0
+        ],
+        [
+          3,
+          3,
+          4,
+          2,
+          2,
+          0
+        ],
+        [
+          5,
+          3,
+          4,
+          4,
+          2,
+          2
+        ],
+        [
+          5,
+          3,
+          4,
+          4,
+          4,
+          4
+        ]
+      ],
+      "solution": [
+        5,
+        2,
+        4,
+        1,
+        3,
+        0
+      ]
+    }
+  },
+  {
+    "reserveId": "R-6x6-029",
+    "originalStage": 29,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "stage": 29,
+      "size": 6,
+      "name": "ステージ29",
+      "difficulty": "自動判定",
+      "logicLevel": 0,
+      "regions": [
+        [
+          1,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          2,
+          1,
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          2,
+          2,
+          1,
+          1,
+          3,
+          3
+        ],
+        [
+          2,
+          2,
+          2,
+          1,
+          3,
+          3
+        ],
+        [
+          4,
+          4,
+          4,
+          3,
+          3,
+          3
+        ],
+        [
+          5,
+          5,
+          4,
+          4,
+          3,
+          3
+        ]
+      ],
+      "solution": [
+        5,
+        3,
+        1,
+        4,
+        2,
+        0
+      ]
+    }
+  },
+  {
+    "reserveId": "R-6x6-030",
+    "originalStage": 30,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "stage": 30,
+      "size": 6,
+      "name": "ステージ30",
+      "difficulty": "自動判定",
+      "logicLevel": 0,
+      "regions": [
+        [
+          1,
+          1,
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          5,
+          2,
+          2,
+          1,
+          1,
+          1
+        ],
+        [
+          5,
+          2,
+          2,
+          3,
+          3,
+          3
+        ],
+        [
+          5,
+          2,
+          2,
+          4,
+          3,
+          3
+        ],
+        [
+          5,
+          2,
+          4,
+          4,
+          4,
+          3
+        ],
+        [
+          5,
+          5,
+          5,
+          4,
+          4,
+          4
+        ]
+      ],
+      "solution": [
+        5,
+        3,
+        1,
+        4,
+        2,
+        0
+      ]
+    }
+  },
+  {
+    "reserveId": "R-7x7-031",
+    "originalStage": 31,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "stage": 31,
+      "size": 7,
+      "name": "ステージ31",
+      "difficulty": "自動判定",
+      "logicLevel": 0,
+      "regions": [
+        [
+          2,
+          2,
+          1,
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          2,
+          2,
+          2,
+          4,
+          1,
+          1,
+          1
+        ],
+        [
+          5,
+          2,
+          2,
+          4,
+          3,
+          3,
+          3
+        ],
+        [
+          5,
+          5,
+          2,
+          4,
+          3,
+          3,
+          3
+        ],
+        [
+          5,
+          5,
+          5,
+          4,
+          4,
+          4,
+          3
+        ],
+        [
+          5,
+          5,
+          6,
+          6,
+          6,
+          4,
+          3
+        ],
+        [
+          5,
+          6,
+          6,
+          6,
+          6,
+          4,
+          3
+        ]
+      ],
+      "solution": [
+        6,
+        4,
+        1,
+        5,
+        3,
+        0,
+        2
+      ]
+    }
+  },
+  {
+    "reserveId": "R-7x7-032",
+    "originalStage": 32,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "stage": 32,
+      "size": 7,
+      "name": "ステージ32",
+      "difficulty": "自動判定",
+      "logicLevel": 0,
+      "regions": [
+        [
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          3,
+          0
+        ],
+        [
+          4,
+          2,
+          2,
+          1,
+          1,
+          3,
+          0
+        ],
+        [
+          4,
+          2,
+          2,
+          3,
+          3,
+          3,
+          3
+        ],
+        [
+          4,
+          4,
+          2,
+          5,
+          5,
+          3,
+          3
+        ],
+        [
+          6,
+          4,
+          5,
+          5,
+          3,
+          3,
+          3
+        ],
+        [
+          6,
+          4,
+          5,
+          5,
+          5,
+          5,
+          5
+        ]
+      ],
+      "solution": [
+        6,
+        4,
+        2,
+        5,
+        1,
+        3,
+        0
+      ],
+      "quality": {
+        "uniqueSolution": true,
+        "difficulty": 3,
+        "difficultyScore": 31,
+        "logicOnly": true,
+        "logicStepCount": 21,
+        "highestRuleLevel": 2,
+        "solverVersion": "python-1.0"
+      }
+    }
+  },
+  {
+    "reserveId": "R-7x7-033",
+    "originalStage": 33,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "stage": 33,
+      "size": 7,
+      "name": "ステージ33",
+      "difficulty": "自動判定",
+      "logicLevel": 0,
+      "regions": [
+        [
+          3,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          3,
+          1,
+          1,
+          1,
+          1,
+          2,
+          0
+        ],
+        [
+          3,
+          1,
+          1,
+          1,
+          2,
+          2,
+          0
+        ],
+        [
+          3,
+          3,
+          3,
+          4,
+          2,
+          2,
+          0
+        ],
+        [
+          3,
+          3,
+          4,
+          4,
+          4,
+          2,
+          0
+        ],
+        [
+          5,
+          5,
+          5,
+          4,
+          4,
+          2,
+          2
+        ],
+        [
+          6,
+          6,
+          5,
+          5,
+          4,
+          4,
+          4
+        ]
+      ],
+      "solution": [
+        6,
+        3,
+        5,
+        1,
+        4,
+        2,
+        0
+      ],
+      "quality": {
+        "uniqueSolution": true,
+        "difficulty": 3,
+        "difficultyScore": 31,
+        "logicOnly": true,
+        "logicStepCount": 20,
+        "highestRuleLevel": 2,
+        "solverVersion": "python-1.0"
+      }
+    }
+  },
+  {
+    "reserveId": "R-7x7-034",
+    "originalStage": 34,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "stage": 34,
+      "size": 7,
+      "name": "ステージ34",
+      "difficulty": "自動判定",
+      "logicLevel": 0,
+      "regions": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          3,
+          2,
+          2,
+          0,
+          0,
+          1,
+          1
+        ],
+        [
+          3,
+          2,
+          2,
+          2,
+          4,
+          4,
+          1
+        ],
+        [
+          3,
+          3,
+          3,
+          2,
+          4,
+          4,
+          1
+        ],
+        [
+          3,
+          3,
+          3,
+          2,
+          4,
+          4,
+          1
+        ],
+        [
+          5,
+          5,
+          5,
+          2,
+          4,
+          4,
+          4
+        ],
+        [
+          6,
+          6,
+          5,
+          5,
+          5,
+          5,
+          5
+        ]
+      ],
+      "solution": [
+        4,
+        6,
+        3,
+        1,
+        5,
+        2,
+        0
+      ],
+      "quality": {
+        "uniqueSolution": true,
+        "difficulty": 3,
+        "difficultyScore": 31,
+        "logicOnly": true,
+        "logicStepCount": 17,
+        "highestRuleLevel": 2,
+        "solverVersion": "python-1.0.1",
+        "adaptiveRepair": true
+      }
+    }
+  },
+  {
+    "reserveId": "R-7x7-035",
+    "originalStage": 35,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "stage": 35,
+      "size": 7,
+      "name": "ステージ35",
+      "difficulty": "自動判定",
+      "logicLevel": 0,
+      "regions": [
+        [
+          3,
+          3,
+          1,
+          1,
+          1,
+          2,
+          0
+        ],
+        [
+          3,
+          3,
+          3,
+          1,
+          1,
+          2,
+          0
+        ],
+        [
+          3,
+          3,
+          3,
+          1,
+          1,
+          2,
+          2
+        ],
+        [
+          3,
+          3,
+          3,
+          4,
+          1,
+          4,
+          2
+        ],
+        [
+          5,
+          5,
+          5,
+          4,
+          4,
+          4,
+          2
+        ],
+        [
+          5,
+          5,
+          5,
+          4,
+          6,
+          4,
+          4
+        ],
+        [
+          5,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ]
+      ],
+      "solution": [
+        6,
+        3,
+        5,
+        1,
+        4,
+        0,
+        2
+      ],
+      "quality": {
+        "uniqueSolution": true,
+        "difficulty": 3,
+        "difficultyScore": 31,
+        "logicOnly": true,
+        "logicStepCount": 18,
+        "highestRuleLevel": 2,
+        "solverVersion": "python-1.0.1",
+        "adaptiveRepair": true
+      }
+    }
+  },
+  {
+    "reserveId": "R-7x7-036",
+    "originalStage": 36,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "stage": 36,
+      "size": 7,
+      "name": "ステージ36",
+      "difficulty": "自動判定",
+      "logicLevel": 0,
+      "regions": [
+        [
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          2,
+          2,
+          2,
+          1,
+          3,
+          3,
+          4
+        ],
+        [
+          3,
+          2,
+          2,
+          2,
+          3,
+          4,
+          4
+        ],
+        [
+          3,
+          3,
+          3,
+          3,
+          3,
+          4,
+          4
+        ],
+        [
+          5,
+          5,
+          5,
+          5,
+          4,
+          4,
+          4
+        ],
+        [
+          5,
+          5,
+          5,
+          5,
+          6,
+          6,
+          6
+        ],
+        [
+          5,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ]
+      ],
+      "solution": [
+        0,
+        3,
+        1,
+        4,
+        6,
+        2,
+        5
+      ],
+      "quality": {
+        "uniqueSolution": true,
+        "difficulty": 3,
+        "difficultyScore": 31,
+        "logicOnly": true,
+        "logicStepCount": 14,
+        "highestRuleLevel": 2,
+        "solverVersion": "python-1.0.1",
+        "adaptiveRepair": true
+      }
+    }
+  },
+  {
+    "reserveId": "R-7x7-037",
+    "originalStage": 37,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "stage": 37,
+      "size": 7,
+      "name": "ステージ37",
+      "difficulty": "自動判定",
+      "logicLevel": 0,
+      "regions": [
+        [
+          2,
+          2,
+          2,
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          2,
+          2,
+          2,
+          2,
+          1,
+          1,
+          3
+        ],
+        [
+          5,
+          2,
+          4,
+          4,
+          3,
+          3,
+          3
+        ],
+        [
+          5,
+          2,
+          6,
+          4,
+          3,
+          3,
+          3
+        ],
+        [
+          5,
+          5,
+          6,
+          4,
+          4,
+          4,
+          3
+        ],
+        [
+          5,
+          5,
+          6,
+          4,
+          4,
+          4,
+          3
+        ],
+        [
+          5,
+          5,
+          6,
+          6,
+          6,
+          6,
+          6
+        ]
+      ],
+      "solution": [
+        6,
+        4,
+        1,
+        5,
+        3,
+        0,
+        2
+      ],
+      "quality": {
+        "uniqueSolution": true,
+        "difficulty": 3,
+        "difficultyScore": 31,
+        "logicOnly": true,
+        "logicStepCount": 19,
+        "highestRuleLevel": 2,
+        "solverVersion": "python-1.0.1",
+        "adaptiveRepair": true
+      }
+    }
+  },
+  {
+    "reserveId": "R-7x7-038",
+    "originalStage": 38,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "stage": 38,
+      "size": 7,
+      "name": "ステージ38",
+      "difficulty": "自動判定",
+      "logicLevel": 0,
+      "regions": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2
+        ],
+        [
+          0,
+          0,
+          1,
+          1,
+          2,
+          0,
+          2
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          2,
+          2,
+          2
+        ],
+        [
+          3,
+          3,
+          3,
+          1,
+          2,
+          2,
+          2
+        ],
+        [
+          3,
+          3,
+          4,
+          4,
+          4,
+          4,
+          5
+        ],
+        [
+          3,
+          4,
+          4,
+          4,
+          5,
+          5,
+          5
+        ],
+        [
+          3,
+          5,
+          5,
+          5,
+          5,
+          5,
+          6
+        ]
+      ],
+      "solution": [
+        1,
+        3,
+        5,
+        0,
+        2,
+        4,
+        6
+      ],
+      "quality": {
+        "uniqueSolution": true,
+        "difficulty": 2,
+        "difficultyScore": 21,
+        "logicOnly": true,
+        "logicStepCount": 13,
+        "highestRuleLevel": 1,
+        "solverVersion": "python-1.0.1",
+        "adaptiveRepair": true
+      }
+    }
+  },
+  {
+    "reserveId": "R-7x7-039",
+    "originalStage": 39,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "stage": 39,
+      "size": 7,
+      "name": "ステージ39",
+      "difficulty": "自動判定",
+      "logicLevel": 0,
+      "regions": [
+        [
+          4,
+          3,
+          3,
+          1,
+          1,
+          2,
+          0
+        ],
+        [
+          4,
+          3,
+          3,
+          1,
+          1,
+          2,
+          0
+        ],
+        [
+          4,
+          6,
+          3,
+          3,
+          1,
+          2,
+          2
+        ],
+        [
+          4,
+          6,
+          3,
+          3,
+          1,
+          1,
+          2
+        ],
+        [
+          4,
+          6,
+          6,
+          6,
+          5,
+          5,
+          2
+        ],
+        [
+          4,
+          6,
+          6,
+          5,
+          5,
+          5,
+          2
+        ],
+        [
+          4,
+          6,
+          6,
+          5,
+          5,
+          5,
+          2
+        ]
+      ],
+      "solution": [
+        6,
+        3,
+        5,
+        2,
+        0,
+        4,
+        1
+      ],
+      "quality": {
+        "uniqueSolution": true,
+        "difficulty": 3,
+        "difficultyScore": 31,
+        "logicOnly": true,
+        "logicStepCount": 17,
+        "highestRuleLevel": 2,
+        "solverVersion": "python-1.0.1",
+        "adaptiveRepair": true
+      }
+    }
+  },
+  {
+    "reserveId": "R-7x7-040",
+    "originalStage": 40,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "stage": 40,
+      "size": 7,
+      "name": "ステージ40",
+      "difficulty": "自動判定",
+      "logicLevel": 0,
+      "regions": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          2,
+          2,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          2,
+          2,
+          2,
+          4,
+          1,
+          3,
+          3
+        ],
+        [
+          5,
+          2,
+          5,
+          4,
+          4,
+          6,
+          3
+        ],
+        [
+          5,
+          5,
+          5,
+          5,
+          4,
+          6,
+          3
+        ],
+        [
+          4,
+          4,
+          4,
+          4,
+          4,
+          6,
+          3
+        ]
+      ],
+      "solution": [
+        0,
+        3,
+        1,
+        6,
+        4,
+        2,
+        5
+      ],
+      "quality": {
+        "uniqueSolution": true,
+        "difficulty": 3,
+        "difficultyScore": 31,
+        "logicOnly": true,
+        "logicStepCount": 22,
+        "highestRuleLevel": 2,
+        "solverVersion": "python-1.0.1",
+        "adaptiveRepair": true
+      }
+    }
+  },
+  {
+    "reserveId": "R-8x8-041",
+    "originalStage": 41,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "stage": 41,
+      "size": 8,
+      "name": "ステージ41",
+      "difficulty": "自動判定",
+      "logicLevel": 0,
+      "regions": [
+        [
+          2,
+          2,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          2,
+          2,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          2,
+          2,
+          2,
+          4,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          2,
+          2,
+          4,
+          4,
+          5,
+          1,
+          3,
+          5
+        ],
+        [
+          4,
+          4,
+          4,
+          4,
+          5,
+          5,
+          5,
+          5
+        ],
+        [
+          4,
+          4,
+          4,
+          4,
+          5,
+          5,
+          5,
+          5
+        ],
+        [
+          4,
+          4,
+          4,
+          4,
+          4,
+          6,
+          6,
+          5
+        ],
+        [
+          7,
+          4,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ]
+      ],
+      "solution": [
+        2,
+        4,
+        1,
+        6,
+        3,
+        7,
+        5,
+        0
+      ],
+      "quality": {
+        "uniqueSolution": true,
+        "difficulty": 3,
+        "difficultyScore": 31,
+        "logicOnly": true,
+        "logicStepCount": 20,
+        "highestRuleLevel": 2,
+        "solverVersion": "python-1.0.1",
+        "adaptiveRepair": true
+      }
+    }
+  },
+  {
+    "reserveId": "R-8x8-042",
+    "originalStage": 42,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "stage": 42,
+      "size": 8,
+      "name": "ステージ42",
+      "difficulty": "自動判定",
+      "logicLevel": 0,
+      "regions": [
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          3
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          3,
+          3
+        ],
+        [
+          1,
+          2,
+          2,
+          0,
+          3,
+          3,
+          3,
+          3
+        ],
+        [
+          5,
+          2,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        [
+          5,
+          5,
+          7,
+          3,
+          4,
+          4,
+          6,
+          3
+        ],
+        [
+          5,
+          5,
+          7,
+          7,
+          6,
+          6,
+          6,
+          3
+        ],
+        [
+          5,
+          7,
+          7,
+          7,
+          7,
+          6,
+          3,
+          3
+        ],
+        [
+          7,
+          7,
+          7,
+          7,
+          7,
+          3,
+          3,
+          3
+        ]
+      ],
+      "solution": [
+        6,
+        0,
+        2,
+        7,
+        4,
+        1,
+        5,
+        3
+      ],
+      "generationProfile": {
+        "type": "constructed-8x8",
+        "anchorCount": 3,
+        "profileVersion": "1.0.4"
+      },
+      "quality": {
+        "uniqueSolution": true,
+        "difficulty": 3,
+        "difficultyScore": 31,
+        "logicOnly": true,
+        "logicStepCount": 17,
+        "highestRuleLevel": 2,
+        "solverVersion": "python-1.0.4",
+        "adaptiveRepair": true,
+        "generationProfile": "constructed-8x8"
+      }
+    }
+  },
+  {
+    "reserveId": "R-8x8-043",
+    "originalStage": 43,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "stage": 43,
+      "size": 8,
+      "name": "ステージ43",
+      "difficulty": "自動判定",
+      "logicLevel": 0,
+      "regions": [
+        [
+          4,
+          4,
+          4,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          4,
+          4,
+          2,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          4,
+          2,
+          2,
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          4,
+          4,
+          4,
+          6,
+          3,
+          3,
+          1,
+          5
+        ],
+        [
+          4,
+          4,
+          4,
+          6,
+          3,
+          3,
+          3,
+          5
+        ],
+        [
+          4,
+          4,
+          6,
+          6,
+          3,
+          5,
+          5,
+          5
+        ],
+        [
+          4,
+          4,
+          6,
+          6,
+          6,
+          6,
+          7,
+          5
+        ],
+        [
+          4,
+          4,
+          6,
+          6,
+          6,
+          6,
+          7,
+          7
+        ]
+      ],
+      "solution": [
+        3,
+        6,
+        1,
+        4,
+        0,
+        5,
+        2,
+        7
+      ],
+      "generationProfile": {
+        "type": "constructed-8x8",
+        "anchorCount": 2,
+        "profileVersion": "1.0.4"
+      },
+      "quality": {
+        "uniqueSolution": true,
+        "difficulty": 3,
+        "difficultyScore": 31,
+        "logicOnly": true,
+        "logicStepCount": 18,
+        "highestRuleLevel": 2,
+        "solverVersion": "python-1.0.4",
+        "adaptiveRepair": true,
+        "generationProfile": "constructed-8x8"
+      }
+    }
+  },
+  {
+    "reserveId": "R-8x8-044",
+    "originalStage": 44,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "stage": 44,
+      "size": 8,
+      "name": "ステージ44",
+      "difficulty": "自動判定",
+      "logicLevel": 0,
+      "regions": [
+        [
+          2,
+          2,
+          2,
+          2,
+          0,
+          1,
+          1,
+          1
+        ],
+        [
+          2,
+          2,
+          2,
+          3,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          2,
+          2,
+          3,
+          3,
+          1,
+          3,
+          3,
+          1
+        ],
+        [
+          2,
+          2,
+          2,
+          3,
+          3,
+          3,
+          1,
+          1
+        ],
+        [
+          4,
+          2,
+          2,
+          2,
+          3,
+          3,
+          1,
+          6
+        ],
+        [
+          4,
+          4,
+          4,
+          5,
+          5,
+          3,
+          3,
+          6
+        ],
+        [
+          7,
+          4,
+          7,
+          7,
+          5,
+          6,
+          3,
+          6
+        ],
+        [
+          7,
+          7,
+          7,
+          7,
+          7,
+          6,
+          6,
+          6
+        ]
+      ],
+      "solution": [
+        4,
+        6,
+        1,
+        5,
+        0,
+        3,
+        7,
+        2
+      ],
+      "generationProfile": {
+        "type": "constructed-8x8",
+        "anchorCount": 4,
+        "profileVersion": "1.0.4"
+      },
+      "quality": {
+        "uniqueSolution": true,
+        "difficulty": 3,
+        "difficultyScore": 31,
+        "logicOnly": true,
+        "logicStepCount": 21,
+        "highestRuleLevel": 2,
+        "solverVersion": "python-1.0.4",
+        "adaptiveRepair": true,
+        "generationProfile": "constructed-8x8"
+      }
+    }
+  },
+  {
+    "reserveId": "R-8x8-045",
+    "originalStage": 45,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "stage": 45,
+      "size": 8,
+      "name": "ステージ45",
+      "difficulty": "自動判定",
+      "logicLevel": 0,
+      "regions": [
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2,
+          2
+        ],
+        [
+          1,
+          1,
+          0,
+          3,
+          3,
+          0,
+          0,
+          2
+        ],
+        [
+          1,
+          0,
+          0,
+          3,
+          2,
+          2,
+          2,
+          2
+        ],
+        [
+          4,
+          4,
+          3,
+          3,
+          3,
+          2,
+          2,
+          2
+        ],
+        [
+          4,
+          4,
+          4,
+          3,
+          2,
+          2,
+          2,
+          2
+        ],
+        [
+          4,
+          4,
+          4,
+          6,
+          5,
+          5,
+          5,
+          2
+        ],
+        [
+          4,
+          4,
+          4,
+          6,
+          5,
+          5,
+          5,
+          5
+        ],
+        [
+          7,
+          4,
+          4,
+          6,
+          6,
+          5,
+          5,
+          5
+        ]
+      ],
+      "solution": [
+        5,
+        1,
+        7,
+        4,
+        2,
+        6,
+        3,
+        0
+      ],
+      "generationProfile": {
+        "type": "constructed-8x8",
+        "anchorCount": 3,
+        "profileVersion": "1.0.4"
+      },
+      "quality": {
+        "uniqueSolution": true,
+        "difficulty": 3,
+        "difficultyScore": 31,
+        "logicOnly": true,
+        "logicStepCount": 18,
+        "highestRuleLevel": 2,
+        "solverVersion": "python-1.0.4",
+        "adaptiveRepair": true,
+        "generationProfile": "constructed-8x8"
+      }
+    }
+  },
+  {
+    "reserveId": "R-8x8-046",
+    "originalStage": 46,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "stage": 46,
+      "size": 8,
+      "name": "ステージ46",
+      "difficulty": "自動判定",
+      "logicLevel": 0,
+      "regions": [
+        [
+          0,
+          2,
+          2,
+          2,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          1,
+          1
+        ],
+        [
+          2,
+          2,
+          2,
+          3,
+          3,
+          3,
+          1,
+          3
+        ],
+        [
+          4,
+          4,
+          6,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        [
+          4,
+          4,
+          6,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        [
+          4,
+          4,
+          6,
+          6,
+          6,
+          3,
+          5,
+          3
+        ],
+        [
+          6,
+          6,
+          6,
+          6,
+          6,
+          7,
+          7,
+          7
+        ],
+        [
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7,
+          7
+        ]
+      ],
+      "solution": [
+        0,
+        7,
+        2,
+        4,
+        1,
+        6,
+        3,
+        5
+      ],
+      "generationProfile": {
+        "type": "constructed-8x8",
+        "anchorCount": 2,
+        "profileVersion": "1.0.4"
+      },
+      "quality": {
+        "uniqueSolution": true,
+        "difficulty": 3,
+        "difficultyScore": 31,
+        "logicOnly": true,
+        "logicStepCount": 19,
+        "highestRuleLevel": 2,
+        "solverVersion": "python-1.0.4",
+        "adaptiveRepair": true,
+        "generationProfile": "constructed-8x8"
+      }
+    }
+  },
+  {
+    "reserveId": "R-8x8-047",
+    "originalStage": 47,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "stage": 47,
+      "size": 8,
+      "name": "ステージ47",
+      "difficulty": "自動判定",
+      "logicLevel": 0,
+      "regions": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          2,
+          2,
+          0,
+          4,
+          4,
+          4
+        ],
+        [
+          0,
+          0,
+          2,
+          3,
+          3,
+          4,
+          4,
+          4
+        ],
+        [
+          0,
+          0,
+          2,
+          5,
+          4,
+          4,
+          4,
+          4
+        ],
+        [
+          2,
+          2,
+          2,
+          5,
+          4,
+          4,
+          4,
+          4
+        ],
+        [
+          2,
+          7,
+          7,
+          5,
+          4,
+          4,
+          4,
+          6
+        ],
+        [
+          2,
+          7,
+          5,
+          5,
+          5,
+          5,
+          4,
+          4
+        ]
+      ],
+      "solution": [
+        0,
+        5,
+        2,
+        4,
+        6,
+        3,
+        7,
+        1
+      ],
+      "generationProfile": {
+        "type": "constructed-8x8",
+        "anchorCount": 4,
+        "profileVersion": "1.0.4"
+      },
+      "quality": {
+        "uniqueSolution": true,
+        "difficulty": 3,
+        "difficultyScore": 31,
+        "logicOnly": true,
+        "logicStepCount": 17,
+        "highestRuleLevel": 2,
+        "solverVersion": "python-1.0.4",
+        "adaptiveRepair": true,
+        "generationProfile": "constructed-8x8"
+      }
+    }
+  },
+  {
+    "reserveId": "R-8x8-048",
+    "originalStage": 48,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "stage": 48,
+      "size": 8,
+      "name": "ステージ48",
+      "difficulty": "自動判定",
+      "logicLevel": 0,
+      "regions": [
+        [
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          0,
+          0,
+          4,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          0,
+          4,
+          4,
+          2,
+          2,
+          2
+        ],
+        [
+          1,
+          1,
+          5,
+          4,
+          4,
+          3,
+          6,
+          2
+        ],
+        [
+          1,
+          1,
+          5,
+          4,
+          4,
+          4,
+          6,
+          6
+        ],
+        [
+          1,
+          5,
+          5,
+          4,
+          4,
+          4,
+          4,
+          6
+        ],
+        [
+          5,
+          5,
+          4,
+          4,
+          4,
+          6,
+          6,
+          6
+        ],
+        [
+          5,
+          5,
+          7,
+          7,
+          4,
+          6,
+          6,
+          6
+        ]
+      ],
+      "solution": [
+        4,
+        0,
+        7,
+        5,
+        3,
+        1,
+        6,
+        2
+      ],
+      "generationProfile": {
+        "type": "constructed-8x8",
+        "anchorCount": 3,
+        "profileVersion": "1.0.4"
+      },
+      "quality": {
+        "uniqueSolution": true,
+        "difficulty": 3,
+        "difficultyScore": 31,
+        "logicOnly": true,
+        "logicStepCount": 18,
+        "highestRuleLevel": 2,
+        "solverVersion": "python-1.0.4",
+        "adaptiveRepair": true,
+        "generationProfile": "constructed-8x8"
+      }
+    }
+  },
+  {
+    "reserveId": "R-8x8-049",
+    "originalStage": 49,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "stage": 49,
+      "size": 8,
+      "name": "ステージ49",
+      "difficulty": "自動判定",
+      "logicLevel": 0,
+      "regions": [
+        [
+          2,
+          2,
+          2,
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          2,
+          2,
+          2,
+          1,
+          3,
+          1,
+          3,
+          3
+        ],
+        [
+          2,
+          6,
+          2,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        [
+          6,
+          6,
+          6,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        [
+          4,
+          6,
+          6,
+          6,
+          3,
+          3,
+          3,
+          5
+        ],
+        [
+          6,
+          6,
+          6,
+          3,
+          3,
+          5,
+          5,
+          5
+        ],
+        [
+          6,
+          6,
+          7,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        [
+          7,
+          7,
+          7,
+          7,
+          5,
+          5,
+          5,
+          5
+        ]
+      ],
+      "solution": [
+        7,
+        5,
+        2,
+        4,
+        0,
+        6,
+        1,
+        3
+      ],
+      "generationProfile": {
+        "type": "constructed-8x8",
+        "anchorCount": 2,
+        "profileVersion": "1.0.4"
+      },
+      "quality": {
+        "uniqueSolution": true,
+        "difficulty": 3,
+        "difficultyScore": 31,
+        "logicOnly": true,
+        "logicStepCount": 16,
+        "highestRuleLevel": 2,
+        "solverVersion": "python-1.0.4",
+        "adaptiveRepair": true,
+        "generationProfile": "constructed-8x8"
+      }
+    }
+  },
+  {
+    "reserveId": "R-8x8-050",
+    "originalStage": 50,
+    "reason": "v0.4.10-size-rebalance",
+    "puzzle": {
+      "stage": 50,
+      "size": 8,
+      "name": "ステージ50",
+      "difficulty": "自動判定",
+      "logicLevel": 0,
+      "regions": [
+        [
+          0,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          3,
+          3,
+          3,
+          3
+        ],
+        [
+          0,
+          7,
+          1,
+          1,
+          3,
+          3,
+          3,
+          2
+        ],
+        [
+          7,
+          7,
+          6,
+          6,
+          3,
+          3,
+          3,
+          5
+        ],
+        [
+          7,
+          4,
+          4,
+          6,
+          3,
+          5,
+          5,
+          5
+        ],
+        [
+          7,
+          7,
+          6,
+          6,
+          3,
+          3,
+          5,
+          5
+        ],
+        [
+          7,
+          7,
+          7,
+          6,
+          6,
+          3,
+          5,
+          5
+        ],
+        [
+          7,
+          7,
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ]
+      ],
+      "solution": [
+        0,
+        3,
+        7,
+        5,
+        2,
+        6,
+        4,
+        1
+      ],
+      "generationProfile": {
+        "type": "constructed-8x8",
+        "anchorCount": 4,
+        "profileVersion": "1.0.4"
+      },
+      "quality": {
+        "uniqueSolution": true,
+        "difficulty": 3,
+        "difficultyScore": 31,
+        "logicOnly": true,
+        "logicStepCount": 16,
+        "highestRuleLevel": 2,
+        "solverVersion": "python-1.0.4",
+        "adaptiveRepair": true,
+        "generationProfile": "constructed-8x8"
+      }
+    }
+  }
+]

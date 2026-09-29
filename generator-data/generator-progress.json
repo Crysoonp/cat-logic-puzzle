@@ -1,0 +1,10 @@
+{
+  "34": {
+    "attempts": 250000,
+    "updated": "2026-09-29 17:40:23",
+    "rejected": {
+      "multiple": 249999,
+      "not_logic_only": 1
+    }
+  }
+}

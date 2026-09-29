@@ -146,7 +146,7 @@ function updateHint(){
 }
 function hintMenu(){if(p().tutorial||p().bonus){useHint(3);return}show('ヒントを選ぶ',`<p>所持カリカリ：<b>${state.kibble}</b></p><p>猫じゃらし：注目エリア（1個）<br>またたび：正解位置を光らせる（2個）<br>ネコ缶：猫を1匹開く（3個）</p>`,[['猫じゃらし 1','h1'],['またたび 2','h2'],['ネコ缶 3','h3'],['閉じる','close']])}
 function useHint(level){let cost=p().tutorial||p().bonus?0:level;if(state.kibble<cost){show('カリカリが足りません','<p>ボーナスステージなどでカリカリを集められます。</p>',[['閉じる','close']]);return}state.kibble-=cost;state.score=Math.max(0,state.score-cost*5);save();let id=Array.from({length:p().size},(_,r)=>key(r,p().solution[r])).find(x=>!state.revealed.has(x));if(!id)return;if(level===3&&!p().tutorial&&!p().bonus){openTile(id)}else{let t=board.querySelector(`[data-id="${id}"]`);t.classList.add('hinting');setTimeout(()=>t.classList.remove('hinting'),3500)}record('HINT',id,level);updateHint()}
-function finishResult(){state.history[p().stage]=Math.max(state.history[p().stage]||0,state.score);if(p().bonus)state.kibble+=3;save();let line=p().tutorial?['よくできたのう、テコちゃん。','見事じゃ。仲間をみんな見つけたぞい。','また一つ、修行を終えたのう。'][p().stage%3]:['仲間を見つけたニャン！','無事に再会できたニャン！','みんな見つかったニャン！'][p().stage%3];let speaker=p().tutorial?'にゃんこ爺さん':'テコちゃん';let extra=p().bonus?'<p>カリカリを3個獲得しました！</p>':'';let finish=p().stage===10?'<p>よく覚えたのう、テコちゃん。基本の修行はこれで終わりじゃ。ここから先は、まだ見ぬ仲間たちと、お母さんの手掛かりが待っておるぞい。</p>':'';let result=()=>show(p().hard?'エリートにゃんこを追い払った！':'STAGE CLEAR',`<p><b>${speaker}：</b> ${line}</p><p>スコアは <b>${state.score}点</b> です。${state.score===100?' ノーミスでクリアできました！':' クリアできました！'}</p>${extra}${finish}`,state.i<STAGES.length-1?[['次のステージ','next']]:[['Ver.0.3.2 完了','close']]);if(p().hard)runElite(result);else result()}
+function finishResult(){state.history[p().stage]=Math.max(state.history[p().stage]||0,state.score);if(p().bonus)state.kibble+=3;save();let line=p().tutorial?['よくできたのう、テコちゃん。','見事じゃ。仲間をみんな見つけたぞい。','また一つ、修行を終えたのう。'][p().stage%3]:['仲間を見つけたニャン！','無事に再会できたニャン！','みんな見つかったニャン！'][p().stage%3];let speaker=p().tutorial?'にゃんこ爺さん':'テコちゃん';let extra=p().bonus?'<p>カリカリを3個獲得しました！</p>':'';let finish=p().stage===10?'<p>よく覚えたのう、テコちゃん。基本の修行はこれで終わりじゃ。ここから先は、まだ見ぬ仲間たちと、お母さんの手掛かりが待っておるぞい。</p>':'';let result=()=>show(p().hard?'エリートにゃんこを追い払った！':'STAGE CLEAR',`<p><b>${speaker}：</b> ${line}</p><p>スコアは <b>${state.score}点</b> です。${state.score===100?' ノーミスでクリアできました！':' クリアできました！'}</p>${extra}${finish}`,state.i<STAGES.length-1?[['次のステージ','next']]:[['Ver.0.4.10.3 完了','close']]);if(p().hard)runElite(result);else result()}
 function celebrateBoard(done){
   board.classList.add('board-complete');
   board.querySelectorAll('.tile.revealed span').forEach((cat,i)=>{cat.style.animationDelay=`${i*70}ms`;cat.classList.add('cat-celebrate')});
@@ -157,7 +157,38 @@ function runElite(done){let e=document.createElement('div');e.className='elite-r
 function heartZero(){state.locked=true;show('ハートがなくなりました',`<p>少し時間を置いて遊んでね。</p><p>将来は時間経過、広告視聴、カリカリ交換で回復できる予定です。</p>`,[['タイトルへ戻る','title'],['DEBUG：全回復','recover']])}
 function rules(){show('ルール',`<details open><summary><b>基本ルール</b></summary><ul><li>各行・各列・各色エリアに猫は1匹</li><li>猫同士は周囲8マスで隣り合わない</li></ul></details><details><summary><b>操作</b></summary><p>1回タップで×・？・△、素早い2回タップで開きます。△は仮置き推理用です。</p></details>`,[['閉じる','close']])}
 function show(title,body,btns){$('dlgTitle').textContent=title;$('dlgBody').innerHTML=body;$('dlgActions').innerHTML='';btns.forEach(([text,a])=>{let b=document.createElement('button');b.className='primary';b.textContent=text;b.onclick=()=>{if(a.startsWith('h')){dlg.close();useHint(Number(a[1]));return}dlg.close();if(a==='next'){state.i++;resetBoard()}if(a==='recover'){state.hearts=5;state.locked=false;save();render()}if(a==='title'){state.i=0;resetBoard()}if(a==='resetStage'){state.score=100;state.revealed.clear();state.marks.clear();state.locked=false;state.streak=0;render()}};$('dlgActions').appendChild(b)});dlg.showModal()}
-function history(){let g=$('historyGrid');g.innerHTML='';let groups=[['チュートリアル 1～9',1,9],['修行の仕上げ・ハード 10',10,10],['第1章 11～15',11,15]];groups.forEach(([title,a,z])=>{let h=document.createElement('h3');h.className='history-heading';h.textContent=title;g.appendChild(h);let wrap=document.createElement('div');wrap.className='history-section';for(let k=a;k<=z;k++){if(!state.history[k])continue;let b=document.createElement('button'),s=STAGES[k-1],score=state.history[k];b.className=(score===100?'gold ':'')+(s.hard||s.bonus?'special':'');b.innerHTML=`<b>${k}</b><br><small>${k<=9?'チュートリアル・':''}${s.bonus?'BONUS・':''}${score}点</small>`;b.onclick=()=>{$('historyDlg').close();state.i=k-1;resetBoard()};wrap.appendChild(b)}if(!wrap.children.length)wrap.innerHTML='<p class="history-empty">まだ記録がありません</p>';g.appendChild(wrap)});$('historyDlg').showModal()}
+function devUnlockedTo(){return Math.max(1,Math.min(STAGES.length,Number(localStorage.getItem('clpDevUnlockedTo')||1)))}
+function isStageUnlocked(stageNo){return stageNo===1||Boolean(state.history[stageNo-1])||stageNo<=devUnlockedTo()}
+function specialStageLabel(stageNo){if(stageNo===50)return 'BOSS候補';if([20,30,40].includes(stageNo))return 'ELITE候補';return ''}
+window.CLPDevUnlockToStage=function(stageNo=STAGES.length){const target=Math.max(1,Math.min(STAGES.length,Number(stageNo)||1));localStorage.setItem('clpDevUnlockedTo',String(target));goodToast(`STAGE ${target}まで開発用解放`);history();return target};
+window.CLPDevUnlockAllStages=function(){return window.CLPDevUnlockToStage(STAGES.length)};
+window.CLPDevResetStageProgress=function(){localStorage.removeItem('clpDevUnlockedTo');state.history={};save();state.i=0;resetBoard();goodToast('進行データを初期化しました');return true};
+function history(){
+ let g=$('historyGrid');g.innerHTML='';
+ const groups=[
+  ['チュートリアル 1～9',1,9],
+  ['修行の仕上げ 10',10,10],
+  ['第1章 11～20',11,20],
+  ['第2章 21～30',21,30],
+  ['第3章 31～40',31,40],
+  ['まよい森 41～50',41,50]
+ ];
+ groups.forEach(([title,a,z])=>{
+  let h=document.createElement('h3');h.className='history-heading';h.textContent=title;g.appendChild(h);
+  let wrap=document.createElement('div');wrap.className='history-section';
+  for(let k=a;k<=Math.min(z,STAGES.length);k++){
+   if(!isStageUnlocked(k))continue;
+   let b=document.createElement('button'),s=STAGES[k-1],score=Number(state.history[k]||0),special=specialStageLabel(k);
+   b.className=(score===100?'gold ':'')+((s&& (s.hard||s.bonus))||special?'special ':'')+(score?'cleared':'unplayed');
+   b.innerHTML=`<b>${k}</b><br><small>${s.size}×${s.size}${special?'・'+special:''}<br>${score?score+'点':'未クリア'}</small>`;
+   b.onclick=()=>{$('historyDlg').close();state.i=k-1;resetBoard()};
+   wrap.appendChild(b);
+  }
+  if(!wrap.children.length)wrap.innerHTML='<p class="history-empty">前のステージをクリアすると解放されます</p>';
+  g.appendChild(wrap);
+ });
+ $('historyDlg').showModal();
+}
 let storyIndex=0;function showStory(reset=false){if(reset)storyIndex=0;let s=STORY[storyIndex];$('storyArt').textContent=s[1];$('storyPage').textContent=`${storyIndex+1} / ${STORY.length}`;$('storyTitle').textContent=s[0];$('storyText').textContent=s[2];$('storyNext').textContent=storyIndex===STORY.length-1?'修行を始める':'次へ';$('storyDlg').showModal()}$('storyNext').onclick=()=>{if(storyIndex<STORY.length-1){storyIndex++;$('storyDlg').close();showStory()}else{$('storyDlg').close();localStorage.setItem('clpStorySeen','1')}};
 function spendKibble(cost){if(p().tutorial||p().bonus)return true;if(state.kibble<cost){show('カリカリが足りません','<p>ボーナスステージでカリカリを集めるニャン。</p>',[['閉じる','close']]);return false}state.kibble-=cost;state.score=Math.max(0,state.score-cost*5);save();renderLife();$('scoreLabel').textContent=`${state.score}点`;return true}
 function clearHintGlow(){board.querySelectorAll('.hinting,.hint-focus,.hint-safe-x').forEach(x=>x.classList.remove('hinting','hint-focus'))}
@@ -225,10 +256,104 @@ function directHint(type){
     show('肉球チェック','<p>間違った×を1つ直したニャン。</p>',[['閉じる','close']]);
   }
 }
-function openSettings(){show('設定',`<div class="settings-list"><button id="setReset">最初からやり直す</button><button id="setRules">ルールを見る</button><button id="setHistory">過去ステージ</button><button id="setTitle">タイトルへ戻る</button><label><input id="setVibrate" type="checkbox" ${localStorage.getItem('clpVibrate')==='0'?'':'checked'}> 振動を使う</label></div>`,[['閉じる','close']]);setTimeout(()=>{const a=$('setReset'),b=$('setRules'),c=$('setHistory'),d=$('setTitle'),v=$('setVibrate');a&&(a.onclick=()=>{dlg.close();show('確認','<p>このステージを最初からやり直しますか？ ハートは回復しません。</p>',[['やり直す','resetStage'],['キャンセル','close']])});b&&(b.onclick=()=>{dlg.close();rules()});c&&(c.onclick=()=>{dlg.close();history()});d&&(d.onclick=()=>{dlg.close();state.i=0;resetBoard()});v&&(v.onchange=()=>localStorage.setItem('clpVibrate',v.checked?'1':'0'))},0)}
+function openSettings(){show('設定',`<div class="settings-list"><button id="setReset">最初からやり直す</button><button id="setRules">ルールを見る</button><button id="setHistory">過去ステージ</button><button id="setTitle">タイトルへ戻る</button><label><input id="setVibrate" type="checkbox" ${localStorage.getItem('clpVibrate')==='0'?'':'checked'}> 振動を使う</label></div>`,[['閉じる','close']]);setTimeout(()=>{const a=$('setReset'),b=$('setRules'),c=$('setHistory'),d=$('setTitle'),v=$('setVibrate');a&&(a.onclick=()=>{dlg.close();show('確認','<p>このステージを最初からやり直しますか？ ハートは消費しません。現在の盤面だけ最初に戻ります。</p>',[['やり直す','resetStage'],['キャンセル','close']])});b&&(b.onclick=()=>{dlg.close();rules()});c&&(c.onclick=()=>{dlg.close();history()});d&&(d.onclick=()=>{dlg.close();state.i=0;resetBoard()});v&&(v.onchange=()=>localStorage.setItem('clpVibrate',v.checked?'1':'0'))},0)}
 function setMode(m){state.mode=m;['X','Q','T'].forEach(x=>$('mode'+x).classList.toggle('active',x.toLowerCase()===m))}
 $('modeX').onclick=()=>setMode('x');$('modeQ').onclick=()=>setMode('q');$('modeT').onclick=()=>setMode('t');$('historyBtn').onclick=history;$('historyClose').onclick=()=>$('historyDlg').close();
-$('debugOpen').onclick=()=>$('debugDlg').showModal();$('debugClose').onclick=()=>$('debugDlg').close();$('dbgHeart').onclick=()=>{state.hearts=5;state.locked=false;save();render();goodToast('HEART FULL!')};$('dbgKibble').onclick=()=>{state.kibble+=10;save();render()};$('dbgClear').onclick=complete;$('dbgUnlock').onclick=()=>{for(let i=1;i<=STAGES.length;i++)state.history[i]=state.history[i]||1;save();render()};$('dbgAnswer').onclick=()=>{state.debugAnswer=!state.debugAnswer;build()};$('dbgLog').onclick=()=>$('debugLog').textContent=state.log.join('\n');$('dbgStory').onclick=()=>{storyIndex=0;$('debugDlg').close();showStory()};$('dbgReset').onclick=()=>{localStorage.clear();location.reload()};
+$('debugOpen').onclick=()=>$('debugDlg').showModal();$('debugClose').onclick=()=>$('debugDlg').close();$('dbgHeart').onclick=()=>{state.hearts=5;state.locked=false;save();render();goodToast('HEART FULL!')};$('dbgKibble').onclick=()=>{state.kibble+=10;save();render()};$('dbgClear').onclick=complete;$('dbgUnlock').onclick=()=>{window.CLPDevUnlockAllStages();$('debugDlg').close()};$('dbgAnswer').onclick=()=>{state.debugAnswer=!state.debugAnswer;build()};$('dbgLog').onclick=()=>$('debugLog').textContent=state.log.join('\n');$('dbgStory').onclick=()=>{storyIndex=0;$('debugDlg').close();showStory()};$('dbgReset').onclick=()=>{localStorage.clear();location.reload()};
+function runDifficultyReport(){
+  const report=window.CLPLogic.analyzeAll(STAGES);
+  window.CLPDifficultyReport=report;
+  console.group('猫ロジック Ver.0.4.3 論理ルール判定');
+  console.table(report.map(x=>({stage:x.stage,size:`${x.boardSize}x${x.boardSize}`,difficulty:x.difficulty,score:x.difficultyScore,logicOnly:x.logicOnly,steps:x.logicStepCount,maxChain:x.maxChainLength,highestRule:x.highestRuleLevel,solveType:x.solveType})));
+  const unresolved=report.filter(x=>!x.logicOnly);
+  if(unresolved.length)console.warn('現在の解法エンジンだけでは完全解決できないステージ:',unresolved.map(x=>x.stage));
+  console.groupEnd();
+  return report;
+}
+window.CLPRunDifficultyReport=runDifficultyReport;
+function runQualityReport(){
+  const report=window.CLPQuality.inspectAll(STAGES);
+  window.CLPQualityReport=report;
+  console.group('猫ロジック Ver.0.4.4 問題品質検査');
+  console.table(report.map(x=>({stage:x.stage,size:x.size,valid:x.valid,solutions:x.solutionCount,unique:x.uniqueSolution,duplicate:x.duplicateType,duplicateOf:x.duplicateOf||'',fingerprint:x.fingerprint,decision:x.decision,reasons:x.reasons.join(' / ')})));
+  const rejected=report.filter(x=>x.decision==='rejected');
+  if(rejected.length)console.warn('不採用判定ステージ:',rejected.map(x=>({stage:x.stage,reasons:x.reasons})));
+  else console.info('全ステージが品質検査を通過しました。');
+  console.groupEnd();
+  return report;
+}
+window.CLPRunQualityReport=runQualityReport;
+
+
+function runFinalDifficultyReport(){return window.CLPDifficultyManager.printReport(STAGES);}
+window.CLPRunFinalDifficultyReport=runFinalDifficultyReport;
+function runAssumptionReport(){return window.CLPAssumption.printReport(STAGES);}
+window.CLPRunAssumptionReport=runAssumptionReport;
+function runStallReport(){return window.CLPAnalysis.printReport(STAGES);}
+window.CLPRunStallReport=runStallReport;
+runDifficultyReport();
+runQualityReport();
+runStallReport();
+runAssumptionReport();
+runFinalDifficultyReport();
+window.CLPGenerateNextStage=async function(){return await window.CLPGenerator.generateNext(16,50);};
+window.CLPGenerateStages16to50=async function(){return await window.CLPGenerator.generateSeveral(1,16,50);};
+window.CLPGenerateSeveralStages=async function(count=1){return await window.CLPGenerator.generateSeveral(count,16,50);};
+window.CLPStopGeneration=function(){return window.CLPGenerator.requestStop();};
+window.CLPGenerationStatus=function(){return window.CLPGenerator.status(16,50);};
+window.CLPExportGeneratedStages=function(){return window.CLPGenerator.exportText();};
+window.CLPClearGeneratedStages=function(){return window.CLPGenerator.clearAll();};
+
+/* Ver.0.4.10.2 semantic hint colors
+   blue + X = mark this cell with X
+   yellow + cat paw = open the cat cell */
+function clpHintMeaningForTile(tile){
+  if(!tile||!tile.dataset||!tile.dataset.id)return null;
+  const parts=tile.dataset.id.split('-').map(Number);
+  if(parts.length!==2||parts.some(Number.isNaN))return null;
+  const [r,c]=parts,stage=p();
+  return stage&&Array.isArray(stage.solution)&&stage.solution[r]===c?'cat':'x';
+}
+function clpTileHasVisualHint(tile){
+  if(!tile||!tile.classList)return false;
+  const semanticNames=/hint|glow|guide|target|tutorial|focus|highlight|pulse/i;
+  return [...tile.classList].some(name=>semanticNames.test(name)&&!/^clp-hint-/.test(name));
+}
+function clpApplySemanticHint(tile){
+  if(!tile||!tile.classList||!tile.classList.contains('tile'))return;
+  const hasHint=clpTileHasVisualHint(tile);
+  if(!hasHint){
+    tile.classList.remove('clp-hint-x','clp-hint-cat');
+    return;
+  }
+  const meaning=clpHintMeaningForTile(tile);
+  tile.classList.toggle('clp-hint-x',meaning==='x');
+  tile.classList.toggle('clp-hint-cat',meaning==='cat');
+}
+function clpRefreshSemanticHints(root=document){
+  if(root&&root.classList&&root.classList.contains('tile'))clpApplySemanticHint(root);
+  if(root&&root.querySelectorAll)root.querySelectorAll('.tile').forEach(clpApplySemanticHint);
+}
+const clpHintObserver=new MutationObserver(records=>{
+  records.forEach(record=>{
+    if(record.type==='attributes')clpApplySemanticHint(record.target);
+    record.addedNodes&&record.addedNodes.forEach(node=>clpRefreshSemanticHints(node));
+  });
+  requestAnimationFrame(()=>clpRefreshSemanticHints(board));
+});
+if(board){
+  clpHintObserver.observe(board,{subtree:true,attributes:true,attributeFilter:['class'],childList:true});
+  requestAnimationFrame(()=>clpRefreshSemanticHints(board));
+  setTimeout(()=>clpRefreshSemanticHints(board),80);
+}
+window.CLPRefreshHintColors=()=>clpRefreshSemanticHints(board);
+
+/* Ver.0.4.10.3: refresh semantic marks after UI changes */
+const clpSemanticRefreshTimer=setInterval(()=>{
+  if(document.visibilityState==='visible')clpRefreshSemanticHints(board);
+},250);
+
+
 resetBoard();if(!localStorage.getItem('clpStorySeen'))showStory();
 const settingsButton=$('settingsBtn');if(settingsButton){settingsButton.disabled=false;settingsButton.onclick=openSettings;}document.querySelectorAll('[data-hint]').forEach(b=>b.onclick=()=>directHint(b.dataset.hint));
 

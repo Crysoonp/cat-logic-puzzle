@@ -1,0 +1,10 @@
+{
+  "41": {
+    "attempts": 250000,
+    "updated": "2026-09-29 18:39:30",
+    "rejected": {
+      "multiple_unrepaired": 250000
+    },
+    "generatorVersion": "1.0.2"
+  }
+}
