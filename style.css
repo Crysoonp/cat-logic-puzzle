@@ -393,3 +393,11 @@
 @media (prefers-reduced-motion:reduce){
   .tile.clp-hint-x::before,.tile.clp-hint-cat::before{animation:none !important;opacity:.85;transform:none}
 }
+
+/* Ver.0.5.0: Stage 50 boss foundation */
+.boss-banner{display:flex;align-items:center;gap:10px;margin:13px 0 -2px;padding:11px 14px;border:1px solid #78936f;border-radius:18px;background:linear-gradient(135deg,#edf5df,#d3e8cd 56%,#f7e5bf);box-shadow:0 10px 26px rgba(55,88,49,.2)}
+.boss-banner .boss-paw{font-size:1.8rem}.boss-banner div{display:grid;flex:1}.boss-banner small{color:#58704f;font-weight:900;letter-spacing:.1em}.boss-banner b{color:#40553b}.boss-banner>span:last-child{padding:5px 9px;border-radius:999px;background:#fff9e9;color:#6d573c;font-weight:900}
+.boss-stage .panel{border-color:#91a986;box-shadow:0 0 0 4px rgba(104,139,88,.18),0 12px 30px rgba(57,79,52,.2)}
+.boss-stage .board{background:#514f43;border-color:#514f43;box-shadow:0 0 24px rgba(75,109,62,.3)}
+.boss-dialog-art{text-align:center;font-size:2.6rem;padding:12px;margin-bottom:10px;border-radius:14px;background:linear-gradient(135deg,#e7f1d9,#f8e8c9)}
+@media(max-width:390px){.boss-banner{padding:9px 10px}.boss-banner b{font-size:.82rem}}
