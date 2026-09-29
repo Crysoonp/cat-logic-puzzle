@@ -401,3 +401,330 @@
 .boss-stage .board{background:#514f43;border-color:#514f43;box-shadow:0 0 24px rgba(75,109,62,.3)}
 .boss-dialog-art{text-align:center;font-size:2.6rem;padding:12px;margin-bottom:10px;border-radius:14px;background:linear-gradient(135deg,#e7f1d9,#f8e8c9)}
 @media(max-width:390px){.boss-banner{padding:9px 10px}.boss-banner b{font-size:.82rem}}
+
+/* Ver.0.5.1: color-independent nature motifs */
+.tile{position:relative;isolation:isolate;overflow:hidden}
+.tile::before{position:absolute;inset:0;display:grid;place-items:center;z-index:-1;font-weight:900;font-family:"Yu Gothic UI Symbol","Segoe UI Symbol",sans-serif;font-size:clamp(1.25rem,4.8vw,2rem);line-height:1;opacity:.27;text-shadow:0 1px 0 #fff8;pointer-events:none}
+.tile>span{position:relative;z-index:2}
+.tile.r0{background-color:#b8ddf0;background-image:none}.tile.r0::before{content:"≋";color:#145f88;font-size:2.2rem} /* 海 */
+.tile.r1{background-color:#f5dda0;background-image:none}.tile.r1::before{content:"●  ·";color:#805d19;letter-spacing:.12em} /* 砂と小石 */
+.tile.r2{background-color:#cce4af;background-image:none}.tile.r2::before{content:"♧";color:#35723c;font-size:2rem} /* 草原 */
+.tile.r3{background-color:#f2c3d2;background-image:none}.tile.r3::before{content:"✿";color:#9b315c;font-size:1.8rem} /* 花畑 */
+.tile.r4{background-color:#d7cbee;background-image:none}.tile.r4::before{content:"▲";color:#5e4784;letter-spacing:.06em} /* 山 */
+.tile.r5{background-color:#efd0a7;background-image:none}.tile.r5::before{content:"〰";color:#995b30;font-size:2rem} /* 風 */
+.tile.r6{background-color:#bfe1d2;background-image:none}.tile.r6::before{content:"❧";color:#216b56;font-size:2rem} /* 森の葉 */
+.tile.r7{background-color:#e6cee6;background-image:none}.tile.r7::before{content:"╱ ╱";color:#754475;font-size:1.7rem;letter-spacing:-.2em} /* 雨 */
+.boss-banner{margin-bottom:12px}
+.boss-stage .panel{margin-top:0}
+.boss-story{display:grid;gap:14px}.speech-row{display:flex;gap:9px;align-items:flex-end}.speech-row.right{flex-direction:row-reverse}.speaker-icon{display:grid;place-items:center;min-width:48px;height:48px;border-radius:50%;background:#fff1dc;font-size:1.6rem}.speech-wrap{position:relative;max-width:78%;padding:10px 12px;border-radius:17px;background:#eef5e8;border:1px solid #b9cdae}.speech-row.right .speech-wrap{background:#fff0de;border-color:#efc28f}.speech-wrap::after{content:"";position:absolute;bottom:10px;left:-8px;border:8px solid transparent;border-right-color:#b9cdae;border-left:0}.speech-row.right .speech-wrap::after{left:auto;right:-8px;border-right:0;border-left:8px solid #efc28f}.speech-wrap b{font-size:.78rem;color:#4d6247}.speech-wrap p{margin:4px 0 0;line-height:1.55}.narration-card{padding:16px;border-radius:14px;background:#f4f0e8;border-top:2px solid #baa98d;border-bottom:2px solid #baa98d;text-align:center;line-height:1.75;color:#665b4c}.result-card{display:grid;gap:7px;padding:18px;border-radius:18px;background:linear-gradient(145deg,#fff8dc,#f1e3a7);border:2px solid #d4ad43;text-align:center}.result-card strong{font-size:2.2rem;color:#8b6420}.result-card span{font-weight:900;color:#9d741e}.result-card p{margin:5px 0 0}
+
+/* Ver.0.5.1.1: nature images as tile backgrounds, hint symbols on pseudo layer */
+.tile{
+  background-repeat:no-repeat !important;
+  background-position:center !important;
+  background-size:cover !important;
+}
+.tile.r0{background-image:url("assets/region-patterns/nature-sea.png") !important}
+.tile.r1{background-image:url("assets/region-patterns/nature-grassland.png") !important}
+.tile.r2{background-image:url("assets/region-patterns/nature-forest.png") !important}
+.tile.r3{background-image:url("assets/region-patterns/nature-mountain.png") !important}
+.tile.r4{background-image:url("assets/region-patterns/nature-sakura.png") !important}
+.tile.r5{background-image:url("assets/region-patterns/nature-sunflower.png") !important}
+.tile.r6{background-image:url("assets/region-patterns/nature-sand.png") !important}
+.tile.r7{background-image:url("assets/region-patterns/nature-rain.png") !important}
+.tile.r8{background-image:url("assets/region-patterns/nature-wind.png") !important}
+.tile.r9{background-image:url("assets/region-patterns/nature-snow.png") !important}
+.tile.r10{background-image:url("assets/region-patterns/nature-river.png") !important}
+.tile.r11{background-image:url("assets/region-patterns/nature-cloud.png") !important}
+
+/* Normal tiles no longer use ::before for nature art. */
+.tile:not(.clp-hint-x):not(.clp-hint-cat)::before{
+  content:none !important;
+  background:none !important;
+}
+/* Nyanii's X hint: blue, large, centered, and always above the nature image. */
+.tile.clp-hint-x::before{
+  content:"×" !important;
+  position:absolute !important;
+  inset:7% !important;
+  display:grid !important;
+  place-items:center !important;
+  z-index:40 !important;
+  color:#087fc7 !important;
+  background:rgba(222,244,255,.24) !important;
+  font-size:clamp(1.65rem,7vw,2.65rem) !important;
+  font-weight:900 !important;
+  line-height:1 !important;
+  text-shadow:0 0 3px #fff,0 0 10px rgba(20,158,229,.98) !important;
+  opacity:.8;
+  pointer-events:none;
+  animation:clpHintCenterPulse 1.05s ease-in-out infinite;
+}
+/* Nyanii's cat-open hint: yellow paw, centered, and always above the nature image. */
+.tile.clp-hint-cat::before{
+  content:"🐾" !important;
+  position:absolute !important;
+  inset:7% !important;
+  display:grid !important;
+  place-items:center !important;
+  z-index:40 !important;
+  color:#b97800 !important;
+  background:rgba(255,246,190,.25) !important;
+  font-size:clamp(1.2rem,5.5vw,2rem) !important;
+  opacity:.8;
+  filter:drop-shadow(0 0 3px #fff) drop-shadow(0 0 8px rgba(255,190,20,.98));
+  pointer-events:none;
+  animation:clpHintCenterPulse 1.05s ease-in-out infinite;
+}
+.tile.clp-hint-x::after,.tile.clp-hint-cat::after{content:none !important}
+
+/* Ver.0.5.1.2: large hint symbols and soft rounded player X */
+
+/* Hint symbols use ::after, completely separate from nature-art layers. */
+.tile.clp-hint-x::after,
+.tile.clp-hint-cat::after{
+  position:absolute !important;
+  inset:4% !important;
+  display:grid !important;
+  place-items:center !important;
+  z-index:80 !important;
+  pointer-events:none !important;
+  opacity:.92 !important;
+  transform:none !important;
+  background:transparent !important;
+  animation:clpHintMarkPulseLarge 1.05s ease-in-out infinite !important;
+}
+.tile.clp-hint-x::after{
+  content:"×" !important;
+  color:#087fc7 !important;
+  font-family:"Arial Rounded MT Bold","Arial",sans-serif !important;
+  font-size:clamp(2.4rem,10vw,4rem) !important;
+  font-weight:900 !important;
+  line-height:1 !important;
+  -webkit-text-stroke:1px rgba(255,255,255,.9);
+  text-shadow:0 0 5px #fff,0 0 13px rgba(25,157,229,.95) !important;
+}
+.tile.clp-hint-cat::after{
+  content:"🐾" !important;
+  color:#b97800 !important;
+  font-size:clamp(1.9rem,8.5vw,3.25rem) !important;
+  line-height:1 !important;
+  filter:drop-shadow(0 0 4px #fff) drop-shadow(0 0 11px rgba(255,190,20,.98)) !important;
+}
+/* Disable the older central hint symbol but keep nature art/background intact. */
+.tile.clp-hint-x::before,
+.tile.clp-hint-cat::before{
+  content:none !important;
+}
+@keyframes clpHintMarkPulseLarge{
+  0%,100%{opacity:.62;transform:scale(.88)}
+  50%{opacity:1;transform:scale(1.08)}
+}
+
+/* Player-placed X: two rounded cream bars with a soft cocoa edge. */
+.mark-x{
+  position:relative !important;
+  display:inline-block !important;
+  width:72% !important;
+  height:72% !important;
+  min-width:30px;
+  min-height:30px;
+  font-size:0 !important;
+  color:transparent !important;
+  text-shadow:none !important;
+  -webkit-text-stroke:0 !important;
+  filter:drop-shadow(0 2px 2px rgba(75,57,48,.22));
+}
+.mark-x::before,
+.mark-x::after{
+  content:"" !important;
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:22%;
+  height:100%;
+  border-radius:999px;
+  background:#fffaf1;
+  box-shadow:0 0 0 3px rgba(101,78,65,.72),inset 0 1px 1px rgba(255,255,255,.95);
+  transform-origin:center;
+}
+.mark-x::before{transform:translate(-50%,-50%) rotate(45deg)}
+.mark-x::after{transform:translate(-50%,-50%) rotate(-45deg)}
+
+@media(max-width:430px){
+  .tile.clp-hint-x::after{font-size:clamp(2.15rem,12vw,3.3rem) !important}
+  .tile.clp-hint-cat::after{font-size:clamp(1.8rem,10vw,2.8rem) !important}
+  .mark-x{width:68% !important;height:68% !important;min-width:22px;min-height:22px}
+  .mark-x::before,.mark-x::after{box-shadow:0 0 0 2px rgba(101,78,65,.68),inset 0 1px 1px rgba(255,255,255,.95)}
+}
+
+
+/* Ver.0.5.1.3: reliable hint blinking and softer player X */
+.tile.clp-hint-x{
+  animation:nmHintTileBlue 1s ease-in-out infinite alternate !important;
+}
+.tile.clp-hint-cat{
+  animation:nmHintTileYellow 1s ease-in-out infinite alternate !important;
+}
+.tile.clp-hint-x::after,
+.tile.clp-hint-cat::after{
+  position:absolute !important;
+  inset:2% !important;
+  display:grid !important;
+  place-items:center !important;
+  z-index:100 !important;
+  pointer-events:none !important;
+  background:transparent !important;
+  animation:nmHintSymbolBlink .9s ease-in-out infinite alternate !important;
+}
+.tile.clp-hint-x::after{
+  content:"×" !important;
+  color:#087fc7 !important;
+  font-family:"Arial Rounded MT Bold","Arial",sans-serif !important;
+  font-size:clamp(2.65rem,11vw,4.4rem) !important;
+  font-weight:900 !important;
+  line-height:1 !important;
+  -webkit-text-stroke:1.5px rgba(255,255,255,.96) !important;
+  text-shadow:0 0 6px #fff,0 0 15px rgba(25,157,229,.98) !important;
+  filter:none !important;
+}
+.tile.clp-hint-cat::after{
+  content:"🐾" !important;
+  color:#b97800 !important;
+  font-size:clamp(2.25rem,10vw,3.7rem) !important;
+  line-height:1 !important;
+  filter:drop-shadow(0 0 5px #fff) drop-shadow(0 0 13px rgba(255,190,20,.98)) !important;
+}
+.tile.clp-hint-x::before,.tile.clp-hint-cat::before{content:none !important}
+@keyframes nmHintSymbolBlink{
+  from{opacity:.32;transform:scale(.78)}
+  to{opacity:1;transform:scale(1.12)}
+}
+@keyframes nmHintTileBlue{
+  from{box-shadow:0 0 0 2px rgba(22,139,210,.22),0 0 8px 3px rgba(54,173,239,.3)}
+  to{box-shadow:0 0 0 5px rgba(22,139,210,.52),0 0 24px 11px rgba(54,173,239,.72)}
+}
+@keyframes nmHintTileYellow{
+  from{box-shadow:0 0 0 2px rgba(230,174,0,.24),0 0 9px 3px rgba(255,214,73,.32)}
+  to{box-shadow:0 0 0 5px rgba(230,174,0,.54),0 0 25px 12px rgba(255,214,73,.76)}
+}
+
+/* Player marker: smaller, rounded cream X with a light warm-gray edge. */
+.tile > span.mark-x{
+  position:relative !important;
+  display:block !important;
+  width:58% !important;
+  height:58% !important;
+  min-width:22px !important;
+  min-height:22px !important;
+  font-size:0 !important;
+  color:transparent !important;
+  -webkit-text-stroke:0 !important;
+  text-shadow:none !important;
+  filter:drop-shadow(0 2px 2px rgba(91,74,65,.16)) !important;
+}
+.tile > span.mark-x::before,
+.tile > span.mark-x::after{
+  content:"" !important;
+  position:absolute !important;
+  left:50% !important;
+  top:50% !important;
+  width:20% !important;
+  height:100% !important;
+  border:0 !important;
+  border-radius:999px !important;
+  background:#fffaf2 !important;
+  box-shadow:0 0 0 2px rgba(119,98,86,.48),inset 0 1px 1px rgba(255,255,255,.95) !important;
+  transform-origin:center !important;
+}
+.tile > span.mark-x::before{transform:translate(-50%,-50%) rotate(45deg) !important}
+.tile > span.mark-x::after{transform:translate(-50%,-50%) rotate(-45deg) !important}
+@media(max-width:430px){
+  .tile > span.mark-x{width:54% !important;height:54% !important;min-width:18px !important;min-height:18px !important}
+  .tile > span.mark-x::before,.tile > span.mark-x::after{box-shadow:0 0 0 1.5px rgba(119,98,86,.46),inset 0 1px 1px rgba(255,255,255,.95) !important}
+}
+
+
+/* Ver.0.5.1.4: final progression, glow and companion UI */
+.cats-mini{border:1px solid #dcc3aa;background:#fff8ee;border-radius:10px;padding:7px 9px;font-size:1rem;cursor:pointer}.cats-mini:hover{background:#fff0db}.cats-dialog{max-width:540px}.cats-lead{color:#786a63;font-size:.85rem}.cats-list{display:grid;gap:12px}.cat-card{display:grid;grid-template-columns:62px 1fr;gap:12px;padding:13px;border:1px solid #e7d8c9;border-radius:17px;background:linear-gradient(145deg,#fffaf3,#f3eadf)}.cat-card.unlocked{background:linear-gradient(145deg,#eef5e5,#fff4df);border-color:#bbcfae}.cat-card-icon{display:grid;place-items:center;width:58px;height:58px;border-radius:50%;background:#fff;font-size:2rem;box-shadow:0 4px 12px #6d4d3b18}.cat-card h3{margin:0;color:#59483f}.cat-card small{color:#98755e;font-weight:800}.cat-card p{margin:7px 0 0;line-height:1.6;font-size:.84rem}.hint-dock.hidden{display:none!important}.hint-dock:not(.hidden){grid-template-columns:1fr}.hint-dock button.hidden{display:none!important}
+
+/* Gentle player X: original readable size, warm ivory fill, thin milk-cocoa edge. */
+.tile > span.mark-x{width:70%!important;height:70%!important;min-width:28px!important;min-height:28px!important;filter:drop-shadow(0 2px 2px rgba(104,79,63,.12))!important}
+.tile > span.mark-x::before,.tile > span.mark-x::after{width:20%!important;height:100%!important;border-radius:999px!important;background:#fff8eb!important;box-shadow:0 0 0 2px rgba(168,143,125,.66),inset 0 1px 1px rgba(255,255,255,.95)!important}
+
+/* One-breath hint animation: strong blue/yellow halo plus large center symbol. */
+.tile.clp-hint-x{border-color:#168bd2!important;animation:nmBlueBreath 1s ease-in-out infinite!important}
+.tile.clp-hint-cat{border-color:#e4aa00!important;animation:nmYellowBreath 1s ease-in-out infinite!important}
+.tile.clp-hint-x::after,.tile.clp-hint-cat::after{position:absolute!important;inset:0!important;display:grid!important;place-items:center!important;z-index:120!important;pointer-events:none!important;animation:nmSymbolBreath 1s ease-in-out infinite!important}
+.tile.clp-hint-x::after{content:"×"!important;color:#0b86cc!important;font:900 clamp(2.7rem,11vw,4.5rem)/1 "Arial Rounded MT Bold","Arial",sans-serif!important;-webkit-text-stroke:1.5px #fff!important;text-shadow:0 0 7px #fff,0 0 16px #27a9ef!important}
+.tile.clp-hint-cat::after{content:"🐾"!important;font-size:clamp(2.4rem,10vw,3.9rem)!important;filter:drop-shadow(0 0 6px #fff) drop-shadow(0 0 15px #ffc928)!important}
+.tile.clp-hint-x::before,.tile.clp-hint-cat::before{content:none!important}
+@keyframes nmBlueBreath{0%,100%{box-shadow:0 0 0 2px #168bd233,0 0 6px 2px #36adef38}50%{box-shadow:0 0 0 5px #168bd28a,0 0 25px 12px #36adefbd}}
+@keyframes nmYellowBreath{0%,100%{box-shadow:0 0 0 2px #e4aa0038,0 0 7px 2px #ffd64948}50%{box-shadow:0 0 0 5px #e4aa0094,0 0 27px 13px #ffd649d6}}
+@keyframes nmSymbolBreath{0%,100%{opacity:.3;transform:scale(.78)}50%{opacity:1;transform:scale(1.12)}}
+@media(max-width:430px){.cats-mini{padding:6px 7px}.tile > span.mark-x{width:66%!important;height:66%!important;min-width:22px!important;min-height:22px!important}.cat-card{grid-template-columns:52px 1fr}.cat-card-icon{width:50px;height:50px}}
+
+
+/* Ver.0.5.1.5: force visible one-second hint breathing */
+.tile.clp-hint-x,
+.tile.clp-hint-cat{
+  position:relative !important;
+  overflow:visible !important;
+  will-change:box-shadow,filter !important;
+}
+.tile.clp-hint-x{
+  border-color:#138ad1 !important;
+  animation:nmForceBlueBreath 1s ease-in-out infinite !important;
+}
+.tile.clp-hint-cat{
+  border-color:#e4a600 !important;
+  animation:nmForceYellowBreath 1s ease-in-out infinite !important;
+}
+.tile.clp-hint-x::after,
+.tile.clp-hint-cat::after{
+  position:absolute !important;
+  inset:0 !important;
+  display:grid !important;
+  place-items:center !important;
+  z-index:200 !important;
+  pointer-events:none !important;
+  will-change:opacity,transform,filter !important;
+  animation:nmForceSymbolBreath 1s ease-in-out infinite !important;
+}
+.tile.clp-hint-x::after{
+  content:"×" !important;
+  color:#087fc7 !important;
+  font:900 clamp(2.8rem,11vw,4.6rem)/1 "Arial Rounded MT Bold","Arial",sans-serif !important;
+  -webkit-text-stroke:1.5px rgba(255,255,255,.98) !important;
+  text-shadow:0 0 7px #fff,0 0 17px #23a9ef !important;
+}
+.tile.clp-hint-cat::after{
+  content:"🐾" !important;
+  font-size:clamp(2.45rem,10vw,4rem) !important;
+  filter:drop-shadow(0 0 6px #fff) drop-shadow(0 0 16px #ffc928) !important;
+}
+.tile.clp-hint-x::before,.tile.clp-hint-cat::before{content:none !important}
+@keyframes nmForceBlueBreath{
+  0%,100%{box-shadow:0 0 0 1px rgba(19,138,209,.16),0 0 3px 1px rgba(35,169,239,.16) !important;filter:brightness(.96)}
+  50%{box-shadow:0 0 0 6px rgba(19,138,209,.76),0 0 30px 15px rgba(35,169,239,.88) !important;filter:brightness(1.18)}
+}
+@keyframes nmForceYellowBreath{
+  0%,100%{box-shadow:0 0 0 1px rgba(228,166,0,.18),0 0 4px 1px rgba(255,201,40,.18) !important;filter:brightness(.97)}
+  50%{box-shadow:0 0 0 6px rgba(228,166,0,.82),0 0 32px 16px rgba(255,201,40,.94) !important;filter:brightness(1.2)}
+}
+@keyframes nmForceSymbolBreath{
+  0%,100%{opacity:.22;transform:scale(.72)}
+  50%{opacity:1;transform:scale(1.15)}
+}
+
+
+/* Ver.0.5.2-0.5.3: hagure cat nature gimmicks */
+.board{position:relative}.special-fx{position:absolute;inset:0;z-index:35;overflow:hidden;border-radius:inherit;pointer-events:none}.special-fx i{position:absolute;left:var(--x);top:var(--y);transition:opacity .65s ease,transform .65s ease;animation-delay:var(--d)}.special-fx i.cleared{opacity:0!important;transform:translateY(-24px) scale(.7)!important}
+.fx-cloud i{width:28%;height:15%;margin-left:-14%;margin-top:-7%;border-radius:999px;background:rgba(255,255,255,.72);box-shadow:18px -8px 0 2px rgba(255,255,255,.68),-17px -5px 0 rgba(255,255,255,.64),0 5px 14px rgba(125,145,155,.2);animation:nmCloudFloat 4.5s ease-in-out infinite alternate}.fx-cloud.fx-weak i{opacity:.38}
+.fx-rain{background:linear-gradient(rgba(96,151,190,.10),rgba(96,151,190,.03))}.fx-rain i{width:3px;height:17%;border-radius:999px;background:linear-gradient(#bdeaffaa,#389bd7bb);transform:rotate(13deg);animation:nmRainDrop 1.15s linear infinite}.fx-rain.fx-weak i{opacity:.35;animation-duration:1.8s}
+.fx-leaves i{width:20px;height:12px;border-radius:80% 15% 80% 15%;background:linear-gradient(135deg,#efb04c,#cb7138);box-shadow:inset 0 0 0 1px #9b5f3155;animation:nmLeafDrift 3.2s ease-in-out infinite alternate}.fx-leaves i:nth-child(3n){background:linear-gradient(135deg,#b9ce67,#6b9d52)}.fx-leaves.fx-weak i{opacity:.4}
+.hagure-stage .panel{box-shadow:0 0 0 4px rgba(144,112,82,.16),0 12px 30px #6d4d3b20}.hagure-note{padding:10px;border-radius:12px;background:#f5efe5;color:#745f4f;font-size:.82rem}
+@keyframes nmCloudFloat{from{transform:translateX(-8px) scale(.96)}to{transform:translateX(10px) scale(1.04)}}
+@keyframes nmRainDrop{0%{transform:translate(-8px,-45px) rotate(13deg);opacity:0}25%{opacity:.72}100%{transform:translate(20px,230px) rotate(13deg);opacity:0}}
+@keyframes nmLeafDrift{from{transform:translate(-9px,-5px) rotate(-20deg)}to{transform:translate(14px,15px) rotate(55deg)}}
+@media(prefers-reduced-motion:reduce){.special-fx i{animation:none!important}.fx-rain i{opacity:.28}.fx-cloud i,.fx-leaves i{opacity:.42}}
