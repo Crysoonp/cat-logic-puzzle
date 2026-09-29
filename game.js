@@ -24,7 +24,7 @@ function idsAround(id){if(!id)return[];const [r,c]=id.split('-').map(Number),out
 function stage1AdjacentRemaining(){if(p().stage!==1||state.revealed.size!==1)return[];return idsAround(stage1FoundId()).filter(id=>!state.marks.has(id)&&!state.revealed.has(id))}
 function stage1LineRemaining(){if(p().stage!==1||state.revealed.size!==1)return[];const id=stage1FoundId(),[r,c]=id.split('-').map(Number),out=[];for(let i=0;i<p().size;i++){for(const x of [`${r}-${i}`,`${i}-${c}`])if(x!==id&&!state.revealed.has(x)&&!state.marks.has(x)&&!out.includes(x))out.push(x)}return out}
 function stage1ExclusionsRemaining(){if(p().stage!==1||state.revealed.size!==2)return[];const latest=Array.from(state.revealed).at(-1),[r,c]=latest.split('-').map(Number),reg=p().regions[r][c],out=[];for(let rr=0;rr<p().size;rr++)for(let cc=0;cc<p().size;cc++){const id=`${rr}-${cc}`;if(id===latest||state.revealed.has(id)||state.marks.has(id))continue;if(rr===r||cc===c||Math.abs(rr-r)<=1&&Math.abs(cc-c)<=1||p().regions[rr][cc]===reg)out.push(id)}return out}
-function stage1HighlightIds(){if(p().stage!==1)return[];if(state.revealed.size===1){const around=stage1AdjacentRemaining();return around.length?around:stage1LineRemaining()}if(state.revealed.size===2){const x=stage1ExclusionsRemaining();return x.length?x:['3-1']}if(state.revealed.size===3)return['2-3'];return[]}
+function stage1HighlightIds(){if(p().stage!==1)return[];if(state.revealed.size===1){const around=stage1AdjacentRemaining();if(around.length)return around;const line=stage1LineRemaining();return line.length?line:['0-2']}if(state.revealed.size===2){const x=stage1ExclusionsRemaining();return x.length?x:['3-1']}if(state.revealed.size===3)return['2-3'];return[]}
 function tutorialText(){let s=p();if(s.stage===1){
   if(state.revealed.size===0)return 'まずはタイルの開き方じゃ。1マスだけの色エリアを、素早く2回タップして開くんじゃ。';
   if(state.revealed.size===1&&stage1AdjacentRemaining().length)return 'よくできたのう。今の猫は盤面の端にいるから、周囲で確認するのは5マスじゃ。光っている5マスへ×を付けるんじゃ。';
@@ -291,11 +291,13 @@ function runAssumptionReport(){return window.CLPAssumption.printReport(STAGES);}
 window.CLPRunAssumptionReport=runAssumptionReport;
 function runStallReport(){return window.CLPAnalysis.printReport(STAGES);}
 window.CLPRunStallReport=runStallReport;
-runDifficultyReport();
-runQualityReport();
-runStallReport();
-runAssumptionReport();
-runFinalDifficultyReport();
+// Ver.0.4.10.4: 起動時の全50ステージ一括解析を停止
+// 必要なときだけ開発者コンソールから各レポート関数を実行する。
+// runDifficultyReport();
+// runQualityReport();
+// runStallReport();
+// runAssumptionReport();
+// runFinalDifficultyReport();
 window.CLPGenerateNextStage=async function(){return await window.CLPGenerator.generateNext(16,50);};
 window.CLPGenerateStages16to50=async function(){return await window.CLPGenerator.generateSeveral(1,16,50);};
 window.CLPGenerateSeveralStages=async function(count=1){return await window.CLPGenerator.generateSeveral(count,16,50);};
@@ -334,24 +336,22 @@ function clpRefreshSemanticHints(root=document){
   if(root&&root.classList&&root.classList.contains('tile'))clpApplySemanticHint(root);
   if(root&&root.querySelectorAll)root.querySelectorAll('.tile').forEach(clpApplySemanticHint);
 }
+// Ver.0.4.10.5: class変更を監視対象にすると、ヒント用classの更新を
+// MutationObserver自身が再検出し続けるため、childList監視だけに限定する。
 const clpHintObserver=new MutationObserver(records=>{
   records.forEach(record=>{
-    if(record.type==='attributes')clpApplySemanticHint(record.target);
     record.addedNodes&&record.addedNodes.forEach(node=>clpRefreshSemanticHints(node));
   });
-  requestAnimationFrame(()=>clpRefreshSemanticHints(board));
 });
 if(board){
-  clpHintObserver.observe(board,{subtree:true,attributes:true,attributeFilter:['class'],childList:true});
+  clpHintObserver.observe(board,{subtree:true,childList:true});
   requestAnimationFrame(()=>clpRefreshSemanticHints(board));
   setTimeout(()=>clpRefreshSemanticHints(board),80);
 }
 window.CLPRefreshHintColors=()=>clpRefreshSemanticHints(board);
 
-/* Ver.0.4.10.3: refresh semantic marks after UI changes */
-const clpSemanticRefreshTimer=setInterval(()=>{
-  if(document.visibilityState==='visible')clpRefreshSemanticHints(board);
-},250);
+/* Ver.0.4.10.5: 250ms周期の全タイル再走査を停止。
+   ヒント表示時は既存処理と CLPRefreshHintColors から必要時だけ更新する。 */
 
 
 resetBoard();if(!localStorage.getItem('clpStorySeen'))showStory();
