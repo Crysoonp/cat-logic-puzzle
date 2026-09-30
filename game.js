@@ -18,8 +18,39 @@ const HAGURE_STAGES={
 const hagureIntroSeen=new Set();
 function hagureConfig(){return HAGURE_STAGES[p().stage]||null}
 function isHagureStage(){return Boolean(hagureConfig())}
-function hagureTalk(){const x=hagureConfig();return x?x.intro:''}
+function hagureStory(){return window.CLPStories&&window.CLPStories.hagure?window.CLPStories.hagure[p().stage]:null}function hagureTalk(){const x=hagureStory();return x?x.intro:(hagureConfig()?hagureConfig().intro:'')}
 function hagureClearTitle(){return isHagureStage()?hagureConfig().label:'STAGE CLEAR'}
+function randomizeSpecialFx(){
+  const fx=board.querySelector('.special-fx');if(!fx)return;
+  [...fx.children].forEach((e,i)=>{
+    if(fx.classList.contains('fx-rain')){
+      e.style.setProperty('--rx',(Math.random()*96).toFixed(1)+'%');
+      e.style.setProperty('--delay',(-Math.random()*1.8).toFixed(2)+'s');
+      e.style.setProperty('--speed',(0.48+Math.random()*.58).toFixed(2)+'s');
+      e.style.setProperty('--drift',(-18+Math.random()*36).toFixed(0)+'px');
+    }
+    if(fx.classList.contains('fx-leaves')){
+      e.style.setProperty('--leaf-start',(Math.random()*96).toFixed(1)+'%');
+      e.style.setProperty('--leaf-delay',(-Math.random()*5).toFixed(2)+'s');
+      e.style.setProperty('--leaf-speed',(3.5+Math.random()*4).toFixed(2)+'s');
+      e.style.setProperty('--leaf-drift',(-50+Math.random()*100).toFixed(0)+'px');
+    }
+  });
+}
+function installLeafSwipe(){return}
+function installLeafTilt(){
+  if(window.clpLeafTiltInstalled)return;window.clpLeafTiltInstalled=true;
+  let last=0;
+  window.addEventListener('deviceorientation',e=>{
+    const now=performance.now();if(now-last<50)return;last=now;
+    if(!isHagureStage()||hagureConfig().kind!=='leaves')return;
+    const pile=board.querySelector('.leaf-pile');if(!pile)return;
+    const gamma=Math.max(-24,Math.min(24,Number(e.gamma)||0));
+    const beta=Math.max(-18,Math.min(18,(Number(e.beta)||0)-45));
+    pile.style.setProperty('--tilt-x',(gamma*1.35).toFixed(1)+'px');
+    pile.style.setProperty('--tilt-y',(beta*.55).toFixed(1)+'px');
+  },{passive:true});
+}
 function updateSpecialStageFx(){
   const cfg=hagureConfig();
   let fx=board.querySelector('.special-fx');
@@ -27,13 +58,18 @@ function updateSpecialStageFx(){
   document.body.classList.add('hagure-stage');
   if(!fx||!fx.classList.contains('fx-'+cfg.kind)){
     if(fx)fx.remove();fx=document.createElement('div');fx.className='special-fx fx-'+cfg.kind;
-    const counts={cloud:7,rain:22,leaves:12};
-    for(let i=0;i<counts[cfg.kind];i++){const e=document.createElement('i');e.style.setProperty('--i',i);e.style.setProperty('--x',((i*37+11)%91)+'%');e.style.setProperty('--y',((i*53+7)%86)+'%');e.style.setProperty('--d',(i%5)*.16+'s');fx.appendChild(e)}
-    board.appendChild(fx)
+    if(cfg.kind==='rain'){const glass=document.createElement('div');glass.className='wet-glass';for(let j=0;j<14;j++){const d=document.createElement('span');d.style.setProperty('--gx',(4+Math.random()*92).toFixed(1)+'%');d.style.setProperty('--gy',(3+Math.random()*72).toFixed(1)+'%');d.style.setProperty('--gs',(12+Math.random()*25).toFixed(0)+'px');d.style.setProperty('--gr',(-12+Math.random()*24).toFixed(1)+'deg');glass.appendChild(d)}fx.appendChild(glass)}
+    if(cfg.kind==='leaves'){const pile=document.createElement('div');pile.className='leaf-pile';for(let j=0;j<34;j++){const leaf=document.createElement('span');leaf.style.setProperty('--px',(Math.random()*96).toFixed(1)+'%');leaf.style.setProperty('--pr',(-55+Math.random()*110).toFixed(0)+'deg');leaf.style.setProperty('--ps',(16+Math.random()*20).toFixed(0)+'px');pile.appendChild(leaf)}fx.appendChild(pile)}
+    const counts={cloud:10,rain:48,leaves:42};
+    for(let i=0;i<counts[cfg.kind];i++){const e=document.createElement('i');e.style.setProperty('--i',i);e.style.setProperty('--x',((i*37+11)%91)+'%');e.style.setProperty('--y',((i*53+7)%86)+'%');e.style.setProperty('--d',(i%5)*.16+'s');if(cfg.kind==='cloud'){e.style.setProperty('--cloud-speed',(42+(i%4)*7)+'s');e.style.setProperty('--cloud-delay',(-i*4.1)+'s');e.style.setProperty('--cloud-y',((i*19+4)%78)+'%')}fx.appendChild(e)}
+    board.appendChild(fx);randomizeSpecialFx()
   }
   const progress=Math.min(1,state.revealed.size/Math.max(1,p().size));
   fx.classList.toggle('fx-weak',localStorage.getItem('clpSpecialFxWeak')==='1');
-  [...fx.children].forEach((e,i)=>e.classList.toggle('cleared',i<Math.floor(progress*fx.children.length)));
+  const particles=[...fx.children].filter(e=>e.tagName==='I');particles.forEach((e,i)=>e.classList.toggle('cleared',i<Math.floor(progress*particles.length)));
+  fx.style.setProperty('--progress',progress.toFixed(3));
+  const glass=fx.querySelector('.wet-glass');if(glass){glass.style.opacity=String(Math.max(.10,.96-progress*.84));glass.style.setProperty('--wet-progress',progress.toFixed(3));}
+  const pile=fx.querySelector('.leaf-pile');if(pile){const pileLeaves=[...pile.querySelectorAll('span')].slice(0,12);const hideCount=Math.min(pileLeaves.length,Math.floor(progress*pileLeaves.length));pile.style.setProperty('--pile-level','1');pileLeaves.forEach((leaf,i)=>leaf.classList.toggle('leaf-gone',i<pileLeaves.length-hideCount?false:true));pile.classList.toggle('swept',progress>=.98)}
 }
 const $=x=>document.getElementById(x),board=$('board'),dlg=$('dlg'),isBossStage=()=>STAGES[state.i]&&STAGES[state.i].stage===50,p=()=>isBossStage()&&Array.isArray(window.CLP_BOSS_PHASES)?window.CLP_BOSS_PHASES[state.bossPhase-1]:STAGES[state.i],key=(r,c)=>`${r}-${c}`;
 function save(){localStorage.setItem('clpHearts',state.hearts);localStorage.setItem('clpKibble',state.kibble);localStorage.setItem('clpHistory',JSON.stringify(state.history));localStorage.setItem('clpBossPhase',String(state.bossPhase))}
@@ -63,7 +99,7 @@ function travelComment(){const comments=['まずは行と列を見比べるニ�
 function startIdle(){clearTimeout(state.idle);state.idle=setTimeout(()=>{if(p().tutorial)say('🐱','ニャンじい','迷ったときは、わしの光らせるマスをよく見るんじゃ。青は×、黄色は猫を開く合図じゃぞ。','left');else say('🐱','テコちゃん',travelComment(),'right')},17000)}
 function resetBoard(){state.drag.active=false;state.drag.visited=new Set();state.timers.forEach(clearTimeout);state.timers.clear();if(!isBossStage()){state.bossPhase=1;state.bossIntroShown=false;localStorage.setItem('clpBossPhase','1')}state.score=100;state.revealed.clear();state.marks.clear();state.locked=false;state.streak=0;state.tutorialStep=0;record('START');render();startIdle();showBossIntro()}
 function say(face,name,text,side='left',enemy=false){$('talkFace').textContent=face;$('talkName').textContent=name;$('talkText').textContent=text;$('talk').className=`talk ${side}${enemy?' enemy':''}`}
-function render(){let s=p();renderBossBanner();$('stageLabel').innerHTML=isBossStage()?`STAGE 50<br><small>BOSS ${state.bossPhase}/3</small>`:isHagureStage()?`STAGE ${s.stage}<br><small>${hagureConfig().label}</small>`:s.bonus?`STAGE ${s.stage}<br><small>BONUS</small>`:s.hard?`STAGE ${s.stage}<br><small>HARD</small>`:`STAGE ${s.stage}`;$('scoreLabel').textContent=`${state.score}点`;$('panel').className='panel'+(s.hard?' hard':'')+(s.bonus?' bonus':'');updateProgressiveUI();$('historyBtn').classList.toggle('hidden',!state.history['10']);if(isHagureStage())say('😼',hagureConfig().label,hagureTalk(),'right',true);else if(s.hard&&s.stage!==10)say('😼','はぐれにゃんこ','何か用かニャン？','right',true);else if(s.tutorial)say('🐱','ニャンじい',tutorialText(),'left');else say('🐱','テコちゃん',s.stage===11?'ここからが本当の旅の始まりニャン。ハートを大切にして、仲間とお母さんの手掛かりを探すニャン！':travelComment(),'right');renderLife();build();updateSpecialStageFx();updateHint()}
+function render(){let s=p();renderBossBanner();$('stageLabel').innerHTML=isBossStage()?`STAGE 50<br><small>BOSS ${state.bossPhase}/3</small>`:isHagureStage()?`STAGE ${s.stage}<br><small>${hagureConfig().label}</small>`:s.bonus?`STAGE ${s.stage}<br><small>BONUS</small>`:s.hard?`STAGE ${s.stage}<br><small>HARD</small>`:`STAGE ${s.stage}`;$('scoreLabel').textContent=`${state.score}点`;$('panel').className='panel'+(s.hard?' hard':'')+(s.bonus?' bonus':'');updateProgressiveUI();$('historyBtn').classList.add('hidden');if(isHagureStage()){const hs=hagureStory();say(hs?hs.introFace:'🐱',hs?hs.introSpeaker:hagureConfig().label,hagureTalk(),hs&&hs.introSpeaker==='テコちゃん'?'right':'left',false);}else if(s.hard&&s.stage!==10)say('😼','はぐれにゃんこ','何か用かニャン？','right',true);else if(s.tutorial)say('🐱','ニャンじい',tutorialText(),'left');else say('🐱','テコちゃん',s.stage===11?'ここからが本当の旅の始まりニャン。ハートを大切にして、仲間とお母さんの手掛かりを探すニャン！':travelComment(),'right');renderLife();build();updateSpecialStageFx();updateHint()}
 function stage1FoundId(){return Array.from(state.revealed)[0]||''}
 function idsAround(id){if(!id)return[];const [r,c]=id.split('-').map(Number),out=[];for(let rr=Math.max(0,r-1);rr<=Math.min(p().size-1,r+1);rr++)for(let cc=Math.max(0,c-1);cc<=Math.min(p().size-1,c+1);cc++)if(rr!==r||cc!==c)out.push(`${rr}-${cc}`);return out}
 function stage1AdjacentRemaining(){if(p().stage!==1||state.revealed.size!==1)return[];return idsAround(stage1FoundId()).filter(id=>!state.marks.has(id)&&!state.revealed.has(id))}
@@ -88,8 +124,8 @@ function tutorialText(){let s=p();if(s.stage===10)return state.revealed.size===0
   if(state.revealed.size===3)return '残りはあと1匹じゃ。行・列・色エリアを見比べて、最後の1マスを見つけるんじゃ。';
   return '見事じゃ。前の修行を自分の力で繰り返せたのう。';
 }if(s.stage===3){if(!state.marks.has('0-3')&&state.revealed.size===0)return 'A1・A2・A3は同じ青エリアじゃ。青の猫はA行のどこかにいるから、A4には猫はいない。まずA4へ×を付けるんじゃ。';if(!state.revealed.has('1-3'))return 'A4へ×を付けたから、黄色エリアで残ったB4に猫がいるぞい。B4を素早く2回タップじゃ。';if(!state.revealed.has('3-2'))return 'B4の猫から行・列・周囲を消すと、3列目で残るD3に猫がいると分かるぞい。D3を開くんじゃ。';if(!state.revealed.has('2-0'))return '次はC1じゃ。ここまでの×と色エリアを見比べて開いてみるんじゃ。';return '残りは頑張るんじゃ。ここまで覚えた基本で解けるぞい。'}if(s.stage===4)return 'ここからは5×5じゃ。まずは1マスだけの色エリアを探すんじゃ。盤面が広くなっても基本は同じじゃよ。';if(s.stage===7)return 'いよいよ6×6じゃ。最初から確定できる場所が二つあるぞい。落ち着いて探すんじゃ。';if(s.stage===9)return 'すぐ決められないときは、△で「ここにいる」と仮に考える方法もあるんじゃ。これを仮置き推理というぞい。';return s.guide}
-function renderLife(){let b=$('lifeBox');b.innerHTML='';if(p().tutorial||p().bonus)b.innerHTML='<span class="training">チュートリアル：ハートは減りません<br><small>解放済みのヒントは使い放題です</small></span>';else{b.innerHTML='<label>LIFE</label>';for(let i=0;i<5;i++){let h=document.createElement('span');h.className='life'+(i<state.hearts?'':' empty');h.textContent=i<state.hearts?'♥':'♡';b.appendChild(h)}b.insertAdjacentHTML('beforeend',`<span class="kibble">カリカリ ${state.kibble}</span>`)}}
-function build(){let s=p(),n=s.size;board.innerHTML='';board.style.gridTemplateColumns=`repeat(${n},minmax(0,1fr))`;board.style.gridTemplateRows=`repeat(${n},minmax(0,1fr))`;board.style.setProperty('--gap',n<=4?'5px':n<=6?'3px':'2px');board.style.setProperty('--pad',n<=4?'6px':'3px');board.style.setProperty('--radius',n<=4?'11px':n<=6?'6px':'4px');$('coordTop').style.gridTemplateColumns=`repeat(${n},1fr)`;$('coordTop').innerHTML=Array.from({length:n},(_,i)=>`<span>${i+1}</span>`).join('');$('coordSide').style.gridTemplateRows=`repeat(${n},1fr)`;$('coordSide').innerHTML=Array.from({length:n},(_,i)=>`<span>${String.fromCharCode(65+i)}</span>`).join('');let target=firstLogicalTarget();for(let r=0;r<n;r++)for(let c=0;c<n;c++){let id=key(r,c),b=document.createElement('button'),m=state.marks.get(id);b.className=`tile r${s.regions[r][c]}`+(state.revealed.has(id)?' revealed':'')+(state.debugAnswer&&answer(id)?' hinting':'')+(((s.stage===1&&state.revealed.size===0&&id===target)||(s.stage===3&&id===stage3Target()))?' tutorial-target':'')+(stage1HighlightIds().includes(id)?' tutorial-focus':'');b.dataset.id=id;if(state.revealed.has(id))b.innerHTML='<span>🐱</span>';else if(m)b.innerHTML=`<span class="${m==='x'?'mark-x':m==='q'?'mark-q':'mark-t'}">${m==='x'?'×':m==='q'?'？':'△'}</span>`;b.onpointerdown=e=>pointerStart(e,id);board.appendChild(b)}}
+function renderLife(){let b=$('lifeBox');b.innerHTML='';if(p().tutorial||p().bonus)b.innerHTML='<span class="training">チュートリアル：ハートは減りません</span>';else{b.innerHTML='<label>LIFE</label>';for(let i=0;i<5;i++){let h=document.createElement('span');h.className='life'+(i<state.hearts?'':' empty');h.textContent=i<state.hearts?'♥':'♡';b.appendChild(h)}b.insertAdjacentHTML('beforeend',`<span class="kibble">カリカリ ${state.kibble}</span>`)}}
+function build(){let s=p(),n=s.size,preservedFx=board.querySelector('.special-fx');if(preservedFx)preservedFx.remove();board.innerHTML='';board.style.gridTemplateColumns=`repeat(${n},minmax(0,1fr))`;board.style.gridTemplateRows=`repeat(${n},minmax(0,1fr))`;board.style.setProperty('--gap',n<=4?'5px':n<=6?'3px':'2px');board.style.setProperty('--pad',n<=4?'6px':'3px');board.style.setProperty('--radius',n<=4?'11px':n<=6?'6px':'4px');$('coordTop').style.gridTemplateColumns=`repeat(${n},1fr)`;$('coordTop').innerHTML=Array.from({length:n},(_,i)=>`<span>${i+1}</span>`).join('');$('coordSide').style.gridTemplateRows=`repeat(${n},1fr)`;$('coordSide').innerHTML=Array.from({length:n},(_,i)=>`<span>${String.fromCharCode(65+i)}</span>`).join('');let target=firstLogicalTarget();for(let r=0;r<n;r++)for(let c=0;c<n;c++){let id=key(r,c),b=document.createElement('button'),m=state.marks.get(id);b.className=`tile r${s.regions[r][c]}`+(state.revealed.has(id)?' revealed':'')+(state.debugAnswer&&answer(id)?' hinting':'')+(((s.stage===1&&state.revealed.size===0&&id===target)||(s.stage===3&&id===stage3Target()))?' tutorial-target':'')+(stage1HighlightIds().includes(id)?' tutorial-focus':'');b.dataset.id=id;if(state.revealed.has(id))b.innerHTML='<span>🐱</span>';else if(m)b.innerHTML=`<span class="${m==='x'?'mark-x':m==='q'?'mark-q':'mark-t'}">${m==='x'?'×':m==='q'?'？':'△'}</span>`;b.onpointerdown=e=>pointerStart(e,id);board.appendChild(b)}if(preservedFx)board.appendChild(preservedFx)}
 function stage3Target(){if(p().stage!==3)return '';if(!state.marks.has('0-3')&&state.revealed.size===0)return '0-3';if(!state.revealed.has('1-3'))return '1-3';if(!state.revealed.has('3-2'))return '3-2';if(!state.revealed.has('2-0'))return '2-0';return ''}
 function firstLogicalTarget(){let s=p(),counts={};for(let r=0;r<s.size;r++)for(let c=0;c<s.size;c++)counts[s.regions[r][c]]=(counts[s.regions[r][c]]||0)+1;for(let r=0;r<s.size;r++){let c=s.solution[r];if(counts[s.regions[r][c]]===1)return key(r,c)}return key(0,s.solution[0])}
 function markForDrag(id, action){
@@ -205,6 +241,12 @@ function showBossResult(){
     <div class="narration-card">誤解が解け、タイジュは迷い森の案内役として、テコちゃんの旅に力を貸してくれることになりました。</div>
     <div class="result-card"><small>STAGE 50　BOSS CLEAR</small><strong>${state.score}点</strong><span>${state.score===100?'金枠・ノーミスクリア':'クリア'}</span><p>新しい仲間　<b>タイジュ</b><br><small>「猫じゃらし」が使えるようになりました</small></p></div>`,[['第1章クリア','close']],'result');
 }
+function showHagureStoryResult(nextButtons){
+  const hs=hagureStory();if(!hs){show('STAGE CLEAR','<p>ステージをクリアしました。</p>',nextButtons);return}
+  let page=0;
+  const draw=()=>{const row=hs.result[page],last=page===hs.result.length-1;const body=row.speaker==='ナレーション'?`<div class="narration-card">${row.text}</div>`:`<div class="speech-row ${row.speaker==='テコちゃん'?'right':'left'}"><div class="speaker-icon">${row.face}</div><div class="speech-wrap"><b>${row.speaker}</b><p>${row.text}</p></div></div>`;show(hs.resultTitle,body,last?nextButtons:[['次へ','hagureStoryNext']]);window.clpHagureNext=()=>{page++;draw()}}
+  draw();
+}
 function finishResult(){
   if(isBossStage()){
     if(state.bossPhase<3){
@@ -218,7 +260,7 @@ function finishResult(){
     showBossTruth();
     return;
   }
-  state.history[p().stage]=Math.max(state.history[p().stage]||0,state.score);if(p().bonus)state.kibble+=3;save();let line=p().tutorial?['よくできたのう、テコちゃん。','見事じゃ。仲間をみんな見つけたぞい。','また一つ、修行を終えたのう。'][p().stage%3]:['仲間を見つけたニャン！','無事に再会できたニャン！','みんな見つかったニャン！'][p().stage%3];let speaker=p().tutorial?'ニャンじい':'テコちゃん';let extra=p().bonus?'<p>カリカリを3個獲得しました！</p>':'';let finish=p().stage===10?'<p>よく覚えたのう、テコちゃん。基本の修行はこれで終わりじゃ。ここから先は、まだ見ぬ仲間たちと、お母さんの手掛かりが待っておるぞい。</p>':'';if(isHagureStage()){speaker=hagureConfig().label;line=hagureConfig().clear;finish='<p class="hagure-note">このはぐれにゃんこは仲間にはならず、旅の途中でまたどこかへ向かっていきました。</p>';}let result=()=>show(hagureClearTitle(),`<p><b>${speaker}：</b> ${line}</p><p>スコアは <b>${state.score}点</b> です。${state.score===100?' ノーミスでクリアできました！':' クリアできました！'}</p>${extra}${finish}`,state.i<STAGES.length-1?[['次のステージ','next']]:[['Ver.0.5.3 完了','close']]);if(p().hard&&p().stage!==10&&!isHagureStage())runElite(result);else result()
+  state.history[p().stage]=Math.max(state.history[p().stage]||0,state.score);let tutorialGift='';if(p().stage===10&&localStorage.getItem('clpTutorialGift')!=='1'){state.kibble+=10;localStorage.setItem('clpTutorialGift','1');tutorialGift='<p><b>ニャンじい：</b> 旅がつらくなったら、このカリカリを食べるんじゃよ。</p><p><b>テコちゃん：</b> ありがとう、ニャンじい！ カリカリを10個受け取ったニャン！</p>';}if(p().bonus)state.kibble+=3;save();let line=p().tutorial?['よくできたのう、テコちゃん。','見事じゃ。仲間をみんな見つけたぞい。','また一つ、修行を終えたのう。'][p().stage%3]:['仲間を見つけたニャン！','無事に再会できたニャン！','みんな見つかったニャン！'][p().stage%3];let speaker=p().tutorial?'ニャンじい':'テコちゃん';let extra=p().bonus?'<p>カリカリを3個獲得しました！</p>':'';let finish=p().stage===10?'<p>よく覚えたのう、テコちゃん。基本の修行はこれで終わりじゃ。ここから先は、まだ見ぬ仲間たちと、お母さんの手掛かりが待っておるぞい。</p>':'';if(isHagureStage()){speaker=hagureConfig().label;line=hagureConfig().clear;finish='<p class="hagure-note">このはぐれにゃんこは仲間にはならず、旅の途中でまたどこかへ向かっていきました。</p>';}let result=()=>{const buttons=state.i<STAGES.length-1?[['次のステージ','next']]:[['Ver.0.5.6.2 完了','close']];if(isHagureStage()){showHagureStoryResult(buttons);return}show(hagureClearTitle(),`<p><b>${speaker}：</b> ${line}</p><p>スコアは <b>${state.score}点</b> です。${state.score===100?' ノーミスでクリアできました！':' クリアできました！'}</p>${extra}${tutorialGift}${finish}`,buttons)};if(p().hard&&p().stage!==10&&!isHagureStage())runElite(result);else result()
 }
 function celebrateBoard(done){
   board.classList.add('board-complete');
@@ -229,7 +271,7 @@ function complete(){state.locked=true;haptic([40,30,60,40,130]);goodToast('や�
 function runElite(done){let e=document.createElement('div');e.className='elite-run';e.textContent='😼💨';document.body.appendChild(e);setTimeout(()=>e.remove(),1500);setTimeout(done,1600)}
 function heartZero(){state.locked=true;show('ハートがなくなりました',`<p>少し時間を置いて遊んでね。</p><p>将来は時間経過、広告視聴、カリカリ交換で回復できる予定です。</p>`,[['タイトルへ戻る','title'],['DEBUG：全回復','recover']])}
 function rules(){show('ルール',`<details open><summary><b>基本ルール</b></summary><ul><li>各行・各列・各色エリアに猫は1匹</li><li>猫同士は周囲8マスで隣り合わない</li></ul></details><details><summary><b>操作</b></summary><p>1回タップで×・？・△、素早い2回タップで開きます。△は仮置き推理用です。</p></details>`,[['閉じる','close']])}
-function show(title,body,btns){$('dlgTitle').textContent=title;$('dlgBody').innerHTML=body;$('dlgActions').innerHTML='';btns.forEach(([text,a])=>{let b=document.createElement('button');b.className='primary';b.textContent=text;b.onclick=()=>{if(a.startsWith('h')){dlg.close();useHint(Number(a[1]));return}dlg.close();if(a==='next'){state.i++;resetBoard()}if(a==='bossNext'){state.bossPhase=Math.min(3,state.bossPhase+1);save();resetBoard()}if(a==='bossTruth'){showBossTruth()}if(a==='bossReunion'){showBossReunion()}if(a==='bossResult'){showBossResult()}if(a==='recover'){state.hearts=5;state.locked=false;save();render()}if(a==='title'){state.i=0;resetBoard()}if(a==='resetStage'){state.score=100;state.revealed.clear();state.marks.clear();state.locked=false;state.streak=0;render()}};$('dlgActions').appendChild(b)});dlg.showModal()}
+function show(title,body,btns){$('dlgTitle').textContent=title;$('dlgBody').innerHTML=body;$('dlgActions').innerHTML='';btns.forEach(([text,a])=>{let b=document.createElement('button');b.className='primary';b.textContent=text;b.onclick=()=>{if(a==='hagureStoryNext'){dlg.close();if(window.clpHagureNext)window.clpHagureNext();return}if(/^h[123]$/.test(a)){dlg.close();useHint(Number(a[1]));return}dlg.close();if(a==='next'){state.i++;resetBoard()}if(a==='bossNext'){state.bossPhase=Math.min(3,state.bossPhase+1);save();resetBoard()}if(a==='bossTruth'){showBossTruth()}if(a==='bossReunion'){showBossReunion()}if(a==='bossResult'){showBossResult()}if(a==='recover'){state.hearts=5;state.locked=false;save();render()}if(a==='title'){state.i=0;resetBoard()}if(a==='resetStage'){state.score=100;state.revealed.clear();state.marks.clear();state.locked=false;state.streak=0;render()}if(a==='fullReset'){completeReset()}};$('dlgActions').appendChild(b)});dlg.showModal()}
 function devUnlockedTo(){return Math.max(1,Math.min(STAGES.length,Number(localStorage.getItem('clpDevUnlockedTo')||1)))}
 function isStageUnlocked(stageNo){return stageNo===1||Boolean(state.history[stageNo-1])||stageNo<=devUnlockedTo()}
 function specialStageLabel(stageNo){if(stageNo===50)return 'BOSS';if([20,30,40].includes(stageNo))return 'はぐれにゃんこ';return ''}
@@ -239,29 +281,24 @@ window.CLPDevResetStageProgress=function(){localStorage.removeItem('clpDevUnlock
 function history(){
  let g=$('historyGrid');g.innerHTML='';
  const groups=[
-  ['チュートリアル 1～9',1,9],
-  ['修行の仕上げ 10',10,10],
-  ['第1章 11～20',11,20],
-  ['第2章 21～30',21,30],
-  ['第3章 31～40',31,40],
-  ['まよい森 41～50',41,50]
+  ['チュートリアル',1,9],['修行の仕上げ',10,10],['第1章',11,20],['第2章',21,30],['第3章',31,40],['まよい森',41,50]
  ];
  groups.forEach(([title,a,z])=>{
-  let h=document.createElement('h3');h.className='history-heading';h.textContent=title;g.appendChild(h);
   let wrap=document.createElement('div');wrap.className='history-section';
   for(let k=a;k<=Math.min(z,STAGES.length);k++){
    if(!isStageUnlocked(k))continue;
    let b=document.createElement('button'),s=STAGES[k-1],score=Number(state.history[k]||0),special=specialStageLabel(k);
-   b.className=(score===100?'gold ':'')+((s&& (s.hard||s.bonus))||special?'special ':'')+(score?'cleared':'unplayed');
+   b.className=(score===100?'gold ':'')+((s&&(s.hard||s.bonus))||special?'special ':'')+(score?'cleared':'unplayed');
    b.innerHTML=`<b>${k}</b><br><small>${s.size}×${s.size}${special?'・'+special:''}<br>${score?score+'点':'未クリア'}</small>`;
-   b.onclick=()=>{$('historyDlg').close();state.i=k-1;resetBoard()};
-   wrap.appendChild(b);
+   b.onclick=()=>{$('historyDlg').close();state.i=k-1;resetBoard()};wrap.appendChild(b);
   }
-  if(!wrap.children.length)wrap.innerHTML='<p class="history-empty">前のステージをクリアすると解放されます</p>';
-  g.appendChild(wrap);
+  if(!wrap.children.length)return;
+  let h=document.createElement('h3');h.className='history-heading';h.textContent=title;g.appendChild(h);g.appendChild(wrap);
  });
+ if(!g.children.length)g.innerHTML='<p class="history-empty">ゲームを始めるとステージが表示されます</p>';
  $('historyDlg').showModal();
 }
+
 let storyIndex=0;function showStory(reset=false){if(reset)storyIndex=0;let s=STORY[storyIndex];$('storyArt').textContent=s[1];$('storyPage').textContent=`${storyIndex+1} / ${STORY.length}`;$('storyTitle').textContent=s[0];$('storyText').textContent=s[2];$('storyNext').textContent=storyIndex===STORY.length-1?'修行を始める':'次へ';$('storyDlg').showModal()}$('storyNext').onclick=()=>{if(storyIndex<STORY.length-1){storyIndex++;$('storyDlg').close();showStory()}else{$('storyDlg').close();localStorage.setItem('clpStorySeen','1')}};
 function spendKibble(cost){if(p().tutorial||p().bonus)return true;if(state.kibble<cost){show('カリカリが足りません','<p>ボーナスステージでカリカリを集めるニャン。</p>',[['閉じる','close']]);return false}state.kibble-=cost;state.score=Math.max(0,state.score-cost*5);save();renderLife();$('scoreLabel').textContent=`${state.score}点`;return true}
 function clearHintGlow(){board.querySelectorAll('.hinting,.hint-focus,.hint-safe-x').forEach(x=>x.classList.remove('hinting','hint-focus'))}
@@ -329,9 +366,29 @@ function directHint(type){
     show('肉球チェック','<p>間違った×を1つ直したニャン。</p>',[['閉じる','close']]);
   }
 }
-function openSettings(){show('設定',`<div class="settings-list"><button id="setReset">最初からやり直す</button><button id="setRules">ルールを見る</button><button id="setHistory">過去ステージ</button><button id="setTitle">タイトルへ戻る</button><label><input id="setSpecialFx" type="checkbox" ${localStorage.getItem('clpSpecialFxWeak')==='1'?'checked':''}> 特別演出を弱くする</label><label><input id="setVibrate" type="checkbox" ${localStorage.getItem('clpVibrate')==='0'?'':'checked'}> 振動を使う</label></div>`,[['閉じる','close']]);setTimeout(()=>{const a=$('setReset'),b=$('setRules'),c=$('setHistory'),d=$('setTitle'),v=$('setVibrate'),fx=$('setSpecialFx');a&&(a.onclick=()=>{dlg.close();show('確認','<p>このステージを最初からやり直しますか？ ハートは消費しません。現在の盤面だけ最初に戻ります。</p>',[['やり直す','resetStage'],['キャンセル','close']])});b&&(b.onclick=()=>{dlg.close();rules()});c&&(c.onclick=()=>{dlg.close();history()});d&&(d.onclick=()=>{dlg.close();state.i=0;resetBoard()});fx&&(fx.onchange=()=>{localStorage.setItem('clpSpecialFxWeak',fx.checked?'1':'0');updateSpecialStageFx()});v&&(v.onchange=()=>localStorage.setItem('clpVibrate',v.checked?'1':'0'))},0)}
+function showTitle(){
+  const t=$('titleScreen');if(!t)return;
+  t.classList.remove('hidden');
+  const played=Boolean(localStorage.getItem('clpStorySeen'))||Object.keys(state.history||{}).length>0;$('titleContinue').textContent=played?'つづきから':'ゲームを始める';$('titleStages').classList.toggle('hidden',!played);$('titleNew').classList.toggle('hidden',!played);
+}
+function hideTitle(){const t=$('titleScreen');if(t)t.classList.add('hidden')}
+function completeReset(){
+  const keepVibrate=localStorage.getItem('clpVibrate');
+  localStorage.clear();
+  if(keepVibrate!==null)localStorage.setItem('clpVibrate',keepVibrate);
+  location.reload();
+}
+function startNatureBreeze(){
+  clearInterval(window.clpNatureBreezeTimer);
+  window.clpNatureBreezeTimer=setInterval(()=>{
+    if(document.hidden||localStorage.getItem('clpSpecialFxWeak')==='1'||document.querySelector('dialog[open]')||!$('titleScreen').classList.contains('hidden')||state.locked)return;
+    const tiles=[...board.querySelectorAll('.tile:not(.revealed)')].filter(tile=>!tile.querySelector('.mark-x,.mark-q,.mark-t'));
+    tiles.forEach(tile=>{const [r,c]=(tile.dataset.id||'0-0').split('-').map(Number);const diagonal=(r+c)*85;setTimeout(()=>{tile.classList.add('nature-breeze');setTimeout(()=>tile.classList.remove('nature-breeze'),1450)},diagonal)});
+  },10000);
+}
+function openSettings(){show('設定',`<div class="settings-list"><button id="setReset">このステージを最初から</button><button id="setRules">ルールを見る</button><button id="setTitle">タイトルへ戻る</button><button id="setFullReset" class="danger-soft">データを完全初期化</button><label><input id="setSpecialFx" type="checkbox" ${localStorage.getItem('clpSpecialFxWeak')==='1'?'checked':''}> 特別演出を弱くする</label><label><input id="setVibrate" type="checkbox" ${localStorage.getItem('clpVibrate')==='0'?'':'checked'}> 振動を使う</label></div>`,[['閉じる','close']]);setTimeout(()=>{const a=$('setReset'),b=$('setRules'),d=$('setTitle'),full=$('setFullReset'),v=$('setVibrate'),fx=$('setSpecialFx');a&&(a.onclick=()=>{dlg.close();show('確認','<p>現在の盤面を最初からやり直しますか？ ハートは消費しません。</p>',[['やり直す','resetStage'],['キャンセル','close']])});b&&(b.onclick=()=>{dlg.close();rules()});d&&(d.onclick=()=>{dlg.close();showTitle()});full&&(full.onclick=()=>{dlg.close();show('完全初期化','<p>ステージ履歴、仲間、ヒント、カリカリ、ハート、物語の既読状態をすべて消してStage 1へ戻します。</p>',[['すべて初期化','fullReset'],['キャンセル','close']])});fx&&(fx.onchange=()=>{localStorage.setItem('clpSpecialFxWeak',fx.checked?'1':'0');updateSpecialStageFx()});v&&(v.onchange=()=>localStorage.setItem('clpVibrate',v.checked?'1':'0'))},0)}
 function setMode(m){state.mode=m;['X','Q','T'].forEach(x=>$('mode'+x).classList.toggle('active',x.toLowerCase()===m))}
-$('modeX').onclick=()=>setMode('x');$('modeQ').onclick=()=>setMode('q');$('modeT').onclick=()=>setMode('t');$('historyBtn').onclick=history;$('historyClose').onclick=()=>$('historyDlg').close();$('catsBtn').onclick=openCats;$('catsClose').onclick=()=>$('catsDlg').close();$('catsDlg').addEventListener('click',e=>{if(e.target===$('catsDlg'))$('catsDlg').close()});
+$('stageSelectBtn').onclick=history;$('titleContinue').onclick=()=>{hideTitle();resetBoard();if(!localStorage.getItem('clpStorySeen'))showStory()};$('titleStages').onclick=()=>{hideTitle();history()};$('titleSettings').onclick=openSettings;$('titleNew').onclick=()=>show('最初から始める','<p>すべての進行を消してStage 1から始めますか？</p>',[['最初から','fullReset'],['キャンセル','close']]);$('modeX').onclick=()=>setMode('x');$('modeQ').onclick=()=>setMode('q');$('modeT').onclick=()=>setMode('t');$('historyBtn').onclick=history;$('historyClose').onclick=()=>$('historyDlg').close();$('catsBtn').onclick=openCats;$('catsClose').onclick=()=>$('catsDlg').close();$('catsDlg').addEventListener('click',e=>{if(e.target===$('catsDlg'))$('catsDlg').close()});
 $('debugOpen').onclick=()=>$('debugDlg').showModal();$('debugClose').onclick=()=>$('debugDlg').close();$('dbgHeart').onclick=()=>{state.hearts=5;state.locked=false;save();render();goodToast('HEART FULL!')};$('dbgKibble').onclick=()=>{state.kibble+=10;save();render()};$('dbgClear').onclick=complete;$('dbgUnlock').onclick=()=>{window.CLPDevUnlockAllStages();$('debugDlg').close()};$('dbgAnswer').onclick=()=>{state.debugAnswer=!state.debugAnswer;build()};$('dbgLog').onclick=()=>$('debugLog').textContent=state.log.join('\n');$('dbgStory').onclick=()=>{storyIndex=0;$('debugDlg').close();showStory()};$('dbgReset').onclick=()=>{localStorage.clear();location.reload()};
 function runDifficultyReport(){
   const report=window.CLPLogic.analyzeAll(STAGES);
@@ -427,7 +484,7 @@ window.CLPRefreshHintColors=()=>clpRefreshSemanticHints(board);
    ヒント表示時は既存処理と CLPRefreshHintColors から必要時だけ更新する。 */
 
 
-resetBoard();if(!localStorage.getItem('clpStorySeen'))showStory();
+resetBoard();installLeafSwipe();installLeafTilt();startNatureBreeze();showTitle();
 const settingsButton=$('settingsBtn');if(settingsButton){settingsButton.disabled=false;settingsButton.onclick=openSettings;}document.querySelectorAll('[data-hint]').forEach(b=>b.onclick=()=>directHint(b.dataset.hint));
 
 const hintDescriptions={toy:['猫じゃらし','安全に×を付けられるマスを1つ教えます。光ったマスへプレイヤー自身で×を付けます。'],matatabi:['またたび','盤面を論理的に前進させる有効な一手を、理由付きで教えます。猫を開く手や安全な×など、状況に合う一手を案内します。'],can:['ネコ缶','正解の猫を1匹、その場で自動的に開く強力なヒントです。'],paw:['肉球チェック','間違って付けた×を1つ見つけて直します。間違いがなければ消費しません。']};
