@@ -1,0 +1,128 @@
+[
+  {
+    "name": "テコちゃん",
+    "role": "主人公",
+    "source_file": "teko1.png",
+    "archive_file": "01_主人公_テコちゃん/01_テコちゃん_原案A.png",
+    "status_note": "正式デザイン比較候補A"
+  },
+  {
+    "name": "テコちゃん",
+    "role": "主人公",
+    "source_file": "teko2.png",
+    "archive_file": "01_主人公_テコちゃん/02_テコちゃん_原案B.png",
+    "status_note": "正式デザイン比較候補B"
+  },
+  {
+    "name": "テコちゃん",
+    "role": "主人公",
+    "source_file": "teko3.png",
+    "archive_file": "01_主人公_テコちゃん/03_テコちゃん_原案C.png",
+    "status_note": "正式デザイン比較候補C"
+  },
+  {
+    "name": "ニャンじい",
+    "role": "育ての親・師匠",
+    "source_file": "nyanjii.png",
+    "archive_file": "02_主要人物_家族と案内役/01_ニャンじい_原案A.png",
+    "status_note": "比較候補A"
+  },
+  {
+    "name": "ニャンじい",
+    "role": "育ての親・師匠",
+    "source_file": "nyanjii2.png",
+    "archive_file": "02_主要人物_家族と案内役/02_ニャンじい_原案B.png",
+    "status_note": "比較候補B"
+  },
+  {
+    "name": "ミヤ",
+    "role": "母",
+    "source_file": "mia.png",
+    "archive_file": "02_主要人物_家族と案内役/03_ミヤ.png",
+    "status_note": "第1部ステージ1000で再会"
+  },
+  {
+    "name": "タイジュ",
+    "role": "森の仲間",
+    "source_file": "taijyu.png",
+    "archive_file": "03_仲間候補_地域別/01_タイジュ.png",
+    "status_note": "ステージ50・猫じゃらし"
+  },
+  {
+    "name": "ミナモ",
+    "role": "草原・水辺の仲間候補",
+    "source_file": "minamo.png",
+    "archive_file": "03_仲間候補_地域別/02_ミナモ.png",
+    "status_note": "ステージ100・またたび候補"
+  },
+  {
+    "name": "カナメ",
+    "role": "山岳の仲間候補",
+    "source_file": "kaname.png",
+    "archive_file": "03_仲間候補_地域別/03_カナメ.png",
+    "status_note": "ステージ150・肉球チェック候補"
+  },
+  {
+    "name": "シオネ",
+    "role": "海辺の仲間候補",
+    "source_file": "shione.png",
+    "archive_file": "03_仲間候補_地域別/04_シオネ.png",
+    "status_note": "ステージ200・ネコ缶候補"
+  },
+  {
+    "name": "クオン",
+    "role": "古道の記録守",
+    "source_file": "kuon.png",
+    "archive_file": "04_第1部後半_物語人物/01_クオン.png",
+    "status_note": "ステージ201～400"
+  },
+  {
+    "name": "ヨル",
+    "role": "謎の案内役",
+    "source_file": "yoru.png",
+    "archive_file": "04_第1部後半_物語人物/02_ヨル.png",
+    "status_note": "ステージ401～600・知りたきゃついてこい"
+  },
+  {
+    "name": "アマネ",
+    "role": "共同体の元連絡役",
+    "source_file": "amane.png",
+    "archive_file": "04_第1部後半_物語人物/03_アマネ.png",
+    "status_note": "ステージ601～800"
+  },
+  {
+    "name": "レン",
+    "role": "超ボスにゃんこ候補",
+    "source_file": "ren1.png",
+    "archive_file": "04_第1部後半_物語人物/04_レン_原案A.png",
+    "status_note": "比較候補A・ミヤの戦友"
+  },
+  {
+    "name": "レン",
+    "role": "超ボスにゃんこ候補",
+    "source_file": "ren2.png",
+    "archive_file": "04_第1部後半_物語人物/05_レン_原案B.png",
+    "status_note": "比較候補B・ミヤの戦友"
+  },
+  {
+    "name": "クロバネ",
+    "role": "カラス・物と情報の収集役",
+    "source_file": "kurobane.png",
+    "archive_file": "05_他種族_カラスとキツネ/01_クロバネ.png",
+    "status_note": "ステージ201～400で初登場"
+  },
+  {
+    "name": "コガネ",
+    "role": "キツネ・一時的ないたずら役",
+    "source_file": "kogane.png",
+    "archive_file": "05_他種族_カラスとキツネ/02_コガネ.png",
+    "status_note": "ステージ401～600で初登場"
+  },
+  {
+    "name": "サンバガラス",
+    "role": "カラス三兄弟",
+    "source_file": "sanbakarasu.png",
+    "archive_file": "05_他種族_カラスとキツネ/03_サンバガラス.png",
+    "status_note": "別案・集団キャラクター候補"
+  }
+]
