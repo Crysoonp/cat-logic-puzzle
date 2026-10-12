@@ -973,14 +973,6 @@ button.tile > span.mark-x::after{transform:translate(-50%,-50%) rotate(-47deg)!i
 .leaf-pile span{opacity:.42!important}
 
 /* Reserved approved assets for future nature gimmicks. */
-.gimmick-wind{background-image:url("assets/gimmicks/wind.png")}
-.gimmick-petals{background-image:url("assets/gimmicks/petals.png")}
-.gimmick-snowfall{background-image:url("assets/gimmicks/snowfall.png")}
-.gimmick-snowflake{background-image:url("assets/gimmicks/snowflake.png")}
-.gimmick-snow-pile{background-image:url("assets/gimmicks/snow-pile.png")}
-.gimmick-sand-wind{background-image:url("assets/gimmicks/sand-wind.png")}
-.gimmick-sand-paw{background-image:url("assets/gimmicks/sand-paw.png")}
-.gimmick-puddle{background-image:url("assets/gimmicks/puddle.png")}
 
 
 /* Ver.0.5.6.1 corrected asset layering */

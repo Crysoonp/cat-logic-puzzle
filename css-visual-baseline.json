@@ -1,0 +1,204 @@
+{
+  "baselineVersion": "0.8.29",
+  "styleSha256": "6e3c7a01660043b85c881114789c6f5217c82c007fd46d37473158b413160a69",
+  "styleBytes": 98564,
+  "styleLines": 1475,
+  "selectorEntries": 916,
+  "uniqueSelectors": 494,
+  "selectorsRedefined2Plus": 171,
+  "selectorsRedefined4Plus": 33,
+  "importantDeclarations": 853,
+  "mediaQueries": 13,
+  "keyframes": 51,
+  "assetReferences": 37,
+  "protectedFamilies": [
+    "cloud-effect",
+    "clp-hint-cat",
+    "clp-hint-x",
+    "fx-leaves",
+    "fx-rain",
+    "leaf-pile",
+    "mark-x"
+  ],
+  "firstCleanupCandidate": {
+    "id": "dormant-gimmick-image-utilities",
+    "status": "removed",
+    "selectors": [
+      ".gimmick-wind",
+      ".gimmick-petals",
+      ".gimmick-snowfall",
+      ".gimmick-snowflake",
+      ".gimmick-snow-pile",
+      ".gimmick-sand-wind",
+      ".gimmick-sand-paw",
+      ".gimmick-puddle"
+    ],
+    "reason": "Each selector is defined once, has no reference in index.html, game.js, or stages.js, and is outside protected board, tile, mark, hint, dialog, title, stage, and frozen-effect families.",
+    "styleSha256Before": "6e3c7a01660043b85c881114789c6f5217c82c007fd46d37473158b413160a69",
+    "requiredNextProof": [
+      "confirm asset references and file ownership",
+      "move exact blocks to quarantine CSS or remove in one isolated version",
+      "run all foundation tests",
+      "compare approved visual baseline views"
+    ],
+    "removalAuthorized": true,
+    "removedInVersion": "0.8.26",
+    "styleSha256After": "7615d0a51bc20ddf5e314d3aade781747491ef1576f5f687f4ea821a180ddb2e",
+    "removedBlockCount": 8,
+    "assetsRetained": true,
+    "sharedKeyframesRemoved": false
+  },
+  "cleanupBlockedReason": "First isolated cleanup is complete. Further CSS deletion is paused until a standards-aware parser and cleaner project baseline are available.",
+  "requiredViews": [
+    "title-desktop",
+    "title-mobile",
+    "board-normal",
+    "stage-select",
+    "story-dialog",
+    "settings-dialog",
+    "cats-dialog",
+    "debug-dialog",
+    "boss-7x7",
+    "boss-8x8-phase2",
+    "boss-8x8-phase3",
+    "rain-effect",
+    "leaves-effect",
+    "cloud-effect",
+    "leaf-pile-effect"
+  ],
+  "approvedViews": [
+    {
+      "id": "title-desktop",
+      "status": "approved",
+      "evidence": "user screenshot 2026-10-12 17:24 JST"
+    },
+    {
+      "id": "title-new-session-desktop",
+      "status": "approved",
+      "evidence": "user screenshot 2026-10-12 17:24 JST"
+    },
+    {
+      "id": "board-normal",
+      "status": "approved",
+      "evidence": "user screenshot with cat, X, question, triangle and hint marks"
+    },
+    {
+      "id": "stage-select",
+      "status": "approved",
+      "evidence": "user screenshot with completed, available and locked stages"
+    },
+    {
+      "id": "settings-dialog",
+      "status": "approved",
+      "evidence": "user screenshot with reset, rules, title, full reset and vibration controls"
+    },
+    {
+      "id": "rules-dialog",
+      "status": "approved",
+      "evidence": "user screenshot with basic rules and operation sections"
+    },
+    {
+      "id": "cats-dialog",
+      "status": "approved",
+      "evidence": "user screenshot 2026-10-12 17:27 JST; two companion cards, close control, scrollable dialog"
+    },
+    {
+      "id": "debug-dialog",
+      "status": "approved",
+      "evidence": "user screenshot 2026-10-12 17:28 JST; eight debug controls, log area, close button"
+    },
+    {
+      "id": "boss-result-dialog",
+      "status": "approved",
+      "evidence": "user screenshot 2026-10-12 17:28 JST; chapter clear, score breakdown, companion unlock"
+    },
+    {
+      "id": "title-mobile",
+      "status": "approved",
+      "evidence": "375x804 responsive screenshot; logo, four controls, version and background fit within viewport"
+    },
+    {
+      "id": "board-mobile",
+      "status": "approved",
+      "evidence": "375x804 responsive screenshot; header, 4x4 board, coordinates, MARK control and lower panel fit with vertical scrolling"
+    },
+    {
+      "id": "story-dialog",
+      "status": "approved",
+      "evidence": "user screenshot; story page 1/8 with illustration, title, body and next control centered without clipping"
+    },
+    {
+      "id": "boss-7x7",
+      "status": "approved",
+      "evidence": "375x804 responsive screenshot; Stage 50 boss phase 1/3, 7 columns and rows A-G visible without overlap"
+    },
+    {
+      "id": "boss-8x8-phase2",
+      "status": "approved",
+      "evidence": "375x804 responsive screenshot; Stage 50 boss phase 2/3, 8 columns and rows A-H visible without overlap"
+    },
+    {
+      "id": "boss-8x8-phase3",
+      "status": "approved",
+      "evidence": "375x804 responsive screenshot; Stage 50 boss phase 3/3, 8 columns and rows A-H visible without overlap"
+    }
+  ],
+  "approvedViewCount": 15,
+  "remainingRequiredViews": [],
+  "additionalApprovedViews": [
+    "boss-result-dialog",
+    "board-mobile"
+  ],
+  "frozenNotApplicableViews": [
+    {
+      "id": "rain-effect",
+      "status": "frozen-not-applicable",
+      "reason": "feature/effect was previously frozen and is not present in current stages"
+    },
+    {
+      "id": "leaves-effect",
+      "status": "frozen-not-applicable",
+      "reason": "feature/effect was previously frozen and is not present in current stages"
+    },
+    {
+      "id": "cloud-effect",
+      "status": "frozen-not-applicable",
+      "reason": "feature/effect was previously frozen because it obstructed play and did not materially support the logic puzzle"
+    },
+    {
+      "id": "leaf-pile-effect",
+      "status": "frozen-not-applicable",
+      "reason": "feature/effect was previously frozen and is not present in current stages"
+    }
+  ],
+  "visualBaselineComplete": true,
+  "cssDeletionGate": "audit-required",
+  "currentStyleSha256": "7615d0a51bc20ddf5e314d3aade781747491ef1576f5f687f4ea821a180ddb2e",
+  "nextCleanupCandidate": null,
+  "nextCandidateDecision": "No safe second family selected from the current audit",
+  "dynamicSelectorProtections": [
+    ".r0",
+    ".r1",
+    ".r2",
+    ".r3",
+    ".r4",
+    ".r5",
+    ".r6",
+    ".r7",
+    ".hint-locked",
+    ".hint-locked .mystery-icon",
+    ".hint-locked b",
+    ".hint-locked small",
+    ".gold-sparkle i",
+    ".gold-sparkle i:nth-child(1)",
+    ".gold-sparkle i:nth-child(2)",
+    ".gold-sparkle i:nth-child(3)"
+  ],
+  "cascadeAuditDecision": "No second CSS cleanup candidate approved",
+  "cascadeAuditLimitations": [
+    "The audit parser misclassified keyframe percentages such as 100%, 50%, and to as selectors",
+    "It also split rgba() and function values into false selector fragments such as 255 and inset 0 1px 1px rgba(255",
+    "The remaining real selector chains are intentional overrides, responsive rules, dynamic visual families, or protected effects",
+    "Git working tree contains many modified and untracked foundation, audit, backup, and update artifacts, so broad cleanup is unsafe"
+  ]
+}

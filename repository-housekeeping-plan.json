@@ -1,0 +1,65 @@
+{
+  "version": "0.8.31",
+  "auditCollectedAt": "2026-10-12T17:57:34",
+  "projectFiles": 340,
+  "projectSizeMiB": 46.91,
+  "classification": {
+    "keep": [
+      "current source and assets",
+      "foundation manifests",
+      "active foundation tests",
+      "story and character reference files",
+      "latest successful update script update_nekomichi_v109.py until Ver.0.8.30 succeeds"
+    ],
+    "ignoreFromGit": [
+      ".nekomichi-backups/",
+      "update_nekomichi_v*.py",
+      "AUDIT_NEKOMICHI_*.py",
+      "NEKOMICHI_*_BEFORE_V*.txt",
+      "NEKOMICHI_FOUNDATION_AUDIT.txt",
+      "__pycache__/",
+      "*.pyc"
+    ],
+    "archiveLater": [
+      "old update scripts v080-v109",
+      "audit scripts and generated audit reports",
+      "historical .nekomichi-backups snapshots"
+    ],
+    "safeDeleteLater": [
+      "__pycache__ files after the next clean checkpoint"
+    ]
+  },
+  "protectedLargeArea": {
+    "path": "character_reference",
+    "sizeMiB": 39.67,
+    "decision": "keep; it contains tracked source artwork and is outside this housekeeping deletion scope"
+  },
+  "backupTree": {
+    "files": 140,
+    "sizeMiB": 1.33,
+    "decision": "ignore now; archive or prune only after a clean Git checkpoint"
+  },
+  "actionsPerformed": [
+    "extended .gitignore",
+    "recorded classification plan",
+    "added automated housekeeping contract"
+  ],
+  "actionsNotPerformed": [
+    "no deletion",
+    "no move",
+    "no Git add",
+    "no commit",
+    "no reset",
+    "no clean",
+    "no source or asset change"
+  ],
+  "checkpointAction": "stage exact formal allowlist and create one local Git commit",
+  "checkpointExclusions": [
+    ".nekomichi-backups",
+    "update scripts",
+    "audit scripts",
+    "audit reports",
+    "Python cache"
+  ],
+  "pushPerformed": false
+}

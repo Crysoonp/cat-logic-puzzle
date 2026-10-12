@@ -1,7 +1,13 @@
-﻿backup-before-*/
+backup-before-*/
 update_*.py
 __pycache__/
 *.pyc
 .vscode/
 fix_*.py
 *.before-*
+
+# Nekomichi generated development artifacts
+.nekomichi-backups/
+AUDIT_NEKOMICHI_*.py
+NEKOMICHI_*_BEFORE_V*.txt
+NEKOMICHI_FOUNDATION_AUDIT.txt

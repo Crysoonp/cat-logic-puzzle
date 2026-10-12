@@ -1,0 +1,42 @@
+{
+  "foundationVersion": "0.8.31",
+  "saveSchemaVersion": 1,
+  "boardSaveVersion": 1,
+  "stageCount": 50,
+  "knownLogicOnlyGapStages": [
+    37,
+    38,
+    39
+  ],
+  "bossPhaseSizes": [
+    7,
+    8,
+    8
+  ],
+  "services": [
+    "app-config.js",
+    "storage-service.js",
+    "game-state.js",
+    "screen-service.js",
+    "dialog-action-router.js",
+    "event-service.js"
+  ],
+  "protectedCoreFiles": [
+    "index.html",
+    "style.css",
+    "game.js",
+    "app-config.js",
+    "storage-service.js",
+    "game-state.js",
+    "screen-service.js",
+    "dialog-action-router.js",
+    "event-service.js",
+    "stages.js",
+    "logic-engine.js",
+    "quality-engine.js"
+  ],
+  "nextSafeWork": "After checkpoint success, archive ignored update/audit artifacts separately; do not mix archive deletion with game changes",
+  "cssBaseline": "css-visual-baseline.json",
+  "repositoryHousekeepingPlan": "repository-housekeeping-plan.json",
+  "gitCheckpoint": "Ver.0.8.31 foundation and housekeeping checkpoint"
+}

@@ -9,7 +9,7 @@ const STORY=[
 ["色と模様のタイル","❌❓△","行・列・色エリアの手掛かりを使って、仲間の猫を探します。"],
 ["最初の約束","🐱❤️","修行中はハートが減りません。失敗を恐れず試してみましょう。"],
 ["ステージ1へ","🐱✨","『わかったニャン！ 最初の仲間を見つけるニャン！』"]];
-const state={i:0,hearts:Number(localStorage.getItem('clpHearts')||5),kibble:Number(localStorage.getItem('clpKibble')||0),score:0,mistakes:0,hintsUsed:0,totalFound:0,mode:'x',revealed:new Set(),marks:new Map(),timers:new Map(),locked:false,streak:0,history:JSON.parse(localStorage.getItem('clpHistory')||'{}'),log:[],tutorialStep:0,idle:null,debugAnswer:false,bossPhase:Math.max(1,Math.min(3,Number(localStorage.getItem('clpBossPhase')||1))),bossIntroShown:false,drag:{active:false,moved:false,pointerId:null,startX:0,startY:0,startId:'',action:'add',visited:new Set()}};
+const state=window.CLPGameState.createInitialState();
 const HAGURE_STAGES={
   20:{kind:'cloud',label:'はぐれにゃんこ',intro:'旅の途中で、はぐれにゃんこが道をふさいでいるニャン。いつもより難しい盤面を解いて、先へ進む力を見せるニャン。',clear:'難しい盤面を解ききったニャン。はぐれにゃんこは満足そうに森の奥へ帰っていったニャン。'},
   30:{kind:'rain',label:'はぐれにゃんこ',intro:'また、はぐれにゃんこが現れたニャン。今度は前より難しい問題を用意しているみたいだニャン。',clear:'今回の難しい盤面も解けたニャン。はぐれにゃんこは静かに道を譲ってくれたニャン。'},
@@ -75,7 +75,7 @@ function updateSpecialStageFx(){
     board.appendChild(fx);randomizeSpecialFx()
   }
   const progress=Math.min(1,state.revealed.size/Math.max(1,p().size));
-  fx.classList.toggle('fx-weak',localStorage.getItem('clpSpecialFxWeak')==='1');
+  fx.classList.toggle('fx-weak',window.CLPStorage.getItem(window.CLPStorage.KEYS.specialFxWeak)==='1');
   const particles=[...fx.children].filter(e=>e.tagName==='I');particles.forEach((e,i)=>e.classList.toggle('cleared',i<Math.floor(progress*particles.length)));
   fx.style.setProperty('--progress',progress.toFixed(3));
   const glass=fx.querySelector('.wet-glass');if(glass){glass.style.opacity=String(Math.max(.10,.96-progress*.84));glass.style.setProperty('--wet-progress',progress.toFixed(3));}
@@ -87,40 +87,38 @@ function updateRunScore(){const target=Math.max(1,scoreTarget());state.score=Mat
 function finalScore(){return 80+(state.mistakes===0?10:0)+(state.hintsUsed===0?10:0)}
 function scoreBreakdown(){const noMiss=state.mistakes===0,hintFree=state.hintsUsed===0,total=finalScore();return `<div class="score-breakdown"><div><span>盤面クリア</span><b>80点</b></div><div><span>ノーミス</span><b>${noMiss?'10点':'今回は未獲得'}</b></div><div><span>ヒントなし</span><b>${hintFree?'10点':'今回は未獲得'}</b></div><hr><div class="score-total"><span>合計</span><strong>${total}点</strong></div>${total===100?'<p class="gold-earned">金枠を獲得しました！</p>':''}</div>`}
 /* Ver.0.7.4: heart recovery and interrupted-board resume */
-const HEART_MAX=5,HEART_RECOVERY_MS=30*60*1000,HEART_KIBBLE_COST=1,BOARD_SAVE_KEY='clpCurrentBoard';
+const HEART_MAX=5,HEART_RECOVERY_MS=30*60*1000,HEART_KIBBLE_COST=1,BOARD_SAVE_KEY=window.CLPStorage.KEYS.currentBoard;
 function syncHeartRecovery(){
-  if(state.hearts>=HEART_MAX){state.hearts=HEART_MAX;localStorage.removeItem('clpHeartUpdatedAt');return 0}
-  let base=Number(localStorage.getItem('clpHeartUpdatedAt')||Date.now());
+  if(state.hearts>=HEART_MAX){state.hearts=HEART_MAX;window.CLPStorage.removeItem(window.CLPStorage.KEYS.heartUpdatedAt);return 0}
+  let base=Number(window.CLPStorage.getItem(window.CLPStorage.KEYS.heartUpdatedAt)||Date.now());
   if(!Number.isFinite(base)||base<=0)base=Date.now();
   const recovered=Math.floor((Date.now()-base)/HEART_RECOVERY_MS);
   if(recovered>0){state.hearts=Math.min(HEART_MAX,state.hearts+recovered);base+=recovered*HEART_RECOVERY_MS;}
-  if(state.hearts>=HEART_MAX)localStorage.removeItem('clpHeartUpdatedAt');else localStorage.setItem('clpHeartUpdatedAt',String(base));
+  if(state.hearts>=HEART_MAX)window.CLPStorage.removeItem(window.CLPStorage.KEYS.heartUpdatedAt);else window.CLPStorage.setItem(window.CLPStorage.KEYS.heartUpdatedAt,String(base));
   return recovered;
 }
-function startHeartTimerAfterLoss(){if(state.hearts<HEART_MAX&&!localStorage.getItem('clpHeartUpdatedAt'))localStorage.setItem('clpHeartUpdatedAt',String(Date.now()))}
+function startHeartTimerAfterLoss(){if(state.hearts<HEART_MAX&&!window.CLPStorage.getItem(window.CLPStorage.KEYS.heartUpdatedAt))window.CLPStorage.setItem(window.CLPStorage.KEYS.heartUpdatedAt,String(Date.now()))}
 function heartTimeText(){
   if(state.hearts>=HEART_MAX)return 'ハートは満タンです';
-  const base=Number(localStorage.getItem('clpHeartUpdatedAt')||Date.now());
+  const base=Number(window.CLPStorage.getItem(window.CLPStorage.KEYS.heartUpdatedAt)||Date.now());
   const remain=Math.max(0,HEART_RECOVERY_MS-(Date.now()-base));
   const minutes=Math.max(1,Math.ceil(remain/60000));
   return `次の回復まで約${minutes}分`;
 }
 function saveBoard(){
   if(!STAGES[state.i]||state.locked)return;
-  const data={version:1,stageIndex:state.i,bossPhase:state.bossPhase,score:state.score,mistakes:state.mistakes,hintsUsed:state.hintsUsed,totalFound:state.totalFound,mode:state.mode,revealed:[...state.revealed],marks:[...state.marks.entries()],streak:state.streak,savedAt:Date.now()};
-  localStorage.setItem(BOARD_SAVE_KEY,JSON.stringify(data));
+  const data=window.CLPGameState.boardSnapshot(state);
+  window.CLPStorage.setItem(BOARD_SAVE_KEY,JSON.stringify(data));
 }
-function clearBoardSave(){localStorage.removeItem(BOARD_SAVE_KEY)}
+function clearBoardSave(){window.CLPStorage.removeItem(BOARD_SAVE_KEY)}
 function restoreBoard(){
-  let data=null;try{data=JSON.parse(localStorage.getItem(BOARD_SAVE_KEY)||'null')}catch(_e){clearBoardSave();return false}
-  if(!data||!Number.isInteger(data.stageIndex)||data.stageIndex<0||data.stageIndex>=STAGES.length)return false;
-  state.i=data.stageIndex;state.bossPhase=Math.max(1,Math.min(3,Number(data.bossPhase)||1));
-  state.score=Number(data.score)||0;state.mistakes=Number(data.mistakes)||0;state.hintsUsed=Number(data.hintsUsed)||0;state.totalFound=Number(data.totalFound)||0;
-  state.mode=['x','q','t'].includes(data.mode)?data.mode:'x';state.revealed=new Set(Array.isArray(data.revealed)?data.revealed:[]);state.marks=new Map(Array.isArray(data.marks)?data.marks:[]);state.streak=Number(data.streak)||0;
-  state.locked=false;state.tutorialStep=0;state.bossIntroShown=true;render();startIdle();return true;
+  const raw=window.CLPStorage.getJSON(BOARD_SAVE_KEY,null);
+  const snapshot=window.CLPGameState.restoreBoardSnapshot(raw,STAGES);
+  if(!snapshot){if(raw!==null)clearBoardSave();return false}
+  window.CLPGameState.applyBoardSnapshot(state,snapshot);render();startIdle();return true;
 }
-function save(){syncHeartRecovery();localStorage.setItem('clpHearts',state.hearts);localStorage.setItem('clpKibble',state.kibble);localStorage.setItem('clpHistory',JSON.stringify(state.history));localStorage.setItem('clpBossPhase',String(state.bossPhase))}
-function hasTaiju(){return localStorage.getItem('clpTaijuJoined')==='1'}
+function save(){syncHeartRecovery();window.CLPStorage.setItem(window.CLPStorage.KEYS.hearts,state.hearts);window.CLPStorage.setItem(window.CLPStorage.KEYS.kibble,state.kibble);window.CLPStorage.setItem(window.CLPStorage.KEYS.history,JSON.stringify(state.history));window.CLPStorage.setItem(window.CLPStorage.KEYS.bossPhase,String(state.bossPhase))}
+function hasTaiju(){return window.CLPStorage.getItem(window.CLPStorage.KEYS.taijuJoined)==='1'}
 function updateProgressiveUI(){
   const dock=$('hintDock');
   if(dock)dock.classList.toggle('hidden',!hasTaiju());
@@ -132,15 +130,15 @@ function renderCats(){
   if(hasTaiju())cards.push(`<article class="cat-card unlocked"><div class="cat-card-icon">🐈‍⬛</div><div><h3>タイジュ</h3><small>まよい森の案内役・STAGE 50</small><p>まよい森で出会った大きなにゃんこ。迷子の小さな猫たちを守っていた。森の道に詳しく、仲間になったあとは「猫じゃらし」で安全な×を教えてくれる。</p></div></article>`);
   list.innerHTML=cards.join('');
 }
-function openCats(){renderCats();$('catsDlg').showModal()}
+function openCats(){renderCats();window.CLPScreens.openDialog('cats')}
 
 function renderBossBanner(){const banner=$('bossBanner');if(!banner)return;banner.classList.toggle('hidden',!isBossStage());document.body.classList.toggle('boss-stage',isBossStage());if(isBossStage()){const labels=['足あとを追う','しっぽの向こう側','迷子猫を守る大きなにゃんこ'];$('bossPhaseLabel').textContent=`第${state.bossPhase}フェーズ　${labels[state.bossPhase-1]}`;$('bossPhaseCount').textContent=`${state.bossPhase} / 3`;}}
 function showBossIntro(){if(!isBossStage()||state.bossIntroShown)return;state.bossIntroShown=true;setTimeout(()=>show('まよい森の大きなにゃんこ','<div class="boss-dialog-art">🌲🐾🐈🌲</div><p><b>テコちゃん：</b> 森の奥から、大きな足あとが続いているニャン……。</p><p><b>大きなにゃんこ：</b> ここから先へ来るなら、迷子たちを見つける力を見せておくれ。</p><p>3つの盤面を解いて、大きなにゃんこの事情を確かめよう。</p>',[['ボスステージ開始','close']]),180)}
 function record(action,id='',result=''){state.log.push(`${new Date().toLocaleTimeString()} | S${p().stage} | ${action} ${id} ${result}`);if(state.log.length>200)state.log.shift()}
-function haptic(pattern){try{if(localStorage.getItem('clpVibrate')!=='0'&&navigator.vibrate)navigator.vibrate(pattern)}catch(e){}}
+function haptic(pattern){try{if(window.CLPStorage.getItem(window.CLPStorage.KEYS.vibrate)!=='0'&&navigator.vibrate)navigator.vibrate(pattern)}catch(e){}}
 function travelComment(){const comments=['まずは行と列を見比べるニャン。','同じ色エリアに残ったマスを探すニャン。','焦らず、確定できるところから進めるニャン。','仲間の手掛かりが見つかりそうだニャン。'];return comments[p().stage%comments.length]}
 function startIdle(){clearTimeout(state.idle);state.idle=setTimeout(()=>{if(p().tutorial)say('🐱','ニャンじい','迷ったときは、わしの光らせるマスをよく見るんじゃ。青は×、黄色は猫を開く合図じゃぞ。','left');else say('🐱','テコちゃん',travelComment(),'right')},17000)}
-function resetBoard(preserveRun=false){state.drag.active=false;state.drag.visited=new Set();state.timers.forEach(clearTimeout);state.timers.clear();if(!isBossStage()){state.bossPhase=1;state.bossIntroShown=false;localStorage.setItem('clpBossPhase','1')}if(!preserveRun){state.score=0;state.mistakes=0;state.hintsUsed=0;state.totalFound=0}state.revealed.clear();state.marks.clear();state.locked=false;state.streak=0;state.tutorialStep=0;record('START');render();startIdle();showBossIntro()}
+function resetBoard(preserveRun=false){const preserveBoss=isBossStage();window.CLPGameState.resetBoardState(state,{preserveRun,preserveBoss});if(!preserveBoss)window.CLPStorage.setItem(window.CLPStorage.KEYS.bossPhase,'1');record('START');render();startIdle();showBossIntro()}
 function say(face,name,text,side='left',enemy=false){$('talkFace').textContent=face;$('talkName').textContent=name;$('talkText').textContent=text;$('talk').className=`talk ${side}${enemy?' enemy':''}`}
 function render(){let s=p();renderBossBanner();const guide=$('operationGuide');if(guide){guide.classList.toggle('hidden',!s.tutorial);guide.classList.toggle('compact',s.tutorial&&s.stage>=4)}$('scoreLabel').textContent=`評価 ${state.score} / 100`;$('stageLabel').innerHTML=isBossStage()?`STAGE 50<br><small>BOSS ${state.bossPhase}/3</small>`:isHagureStage()?`STAGE ${s.stage}<br><small>${hagureConfig().label}</small>`:s.bonus?`STAGE ${s.stage}<br><small>BONUS</small>`:s.hard?`STAGE ${s.stage}<br><small>HARD</small>`:`STAGE ${s.stage}`;$('panel').className='panel'+(s.hard?' hard':'')+(s.bonus?' bonus':'');updateProgressiveUI();$('historyBtn').classList.add('hidden');if(isHagureStage()){const hs=hagureStory();say(hs?hs.introFace:'🐱',hs?hs.introSpeaker:hagureConfig().label,hagureTalk(),hs&&hs.introSpeaker==='テコちゃん'?'right':'left',false);}else if(s.hard&&s.stage!==10)say('😼','はぐれにゃんこ','何か用かニャン？','right',true);else if(s.tutorial)say('🐱','ニャンじい',tutorialText(),'left');else say('🐱','テコちゃん',s.stage===11?'ここからが本当の旅の始まりニャン。ハートを大切にして、仲間とお母さんの手掛かりを探すニャン！':travelComment(),'right');renderLife();build();updateSpecialStageFx();updateHint()}
 function stage1FoundId(){return Array.from(state.revealed)[0]||''}
@@ -173,7 +171,7 @@ let heartHelpTimer=0;
 function heartRemainText(){
   syncHeartRecovery();
   if(state.hearts>=HEART_MAX)return 'ハートは満タンです';
-  const base=Number(localStorage.getItem('clpHeartUpdatedAt')||Date.now());
+  const base=Number(window.CLPStorage.getItem(window.CLPStorage.KEYS.heartUpdatedAt)||Date.now());
   const remain=Math.max(0,HEART_RECOVERY_MS-(Date.now()-base));
   const mm=Math.floor(remain/60000),ss=Math.floor((remain%60000)/1000);
   return `次の回復まで ${mm}分${String(ss).padStart(2,'0')}秒`;
@@ -199,7 +197,7 @@ function recoverHeartFromPanel(){
   syncHeartRecovery();
   if(state.hearts>=HEART_MAX||state.kibble<HEART_KIBBLE_COST){refreshHeartHelp();return}
   state.kibble-=HEART_KIBBLE_COST;state.hearts++;
-  if(state.hearts>=HEART_MAX)localStorage.removeItem('clpHeartUpdatedAt');else startHeartTimerAfterLoss();
+  if(state.hearts>=HEART_MAX)window.CLPStorage.removeItem(window.CLPStorage.KEYS.heartUpdatedAt);else startHeartTimerAfterLoss();
   state.locked=false;save();saveBoard();renderLife();openHeartHelp();haptic(25);
 }
 function renderLife(){syncHeartRecovery();let b=$('lifeBox');b.innerHTML='';if(p().tutorial||p().bonus)b.innerHTML='<span class="training">ニャンじいのチュートリアル中は、ハートは減りません</span>';else{b.classList.add('life-help-host');b.setAttribute('tabindex','0');b.setAttribute('aria-label','ハート回復の説明を表示');b.innerHTML='<label>LIFE</label>';for(let i=0;i<HEART_MAX;i++){let h=document.createElement('span');h.className='life'+(i<state.hearts?'':' empty');h.textContent=i<state.hearts?'♥':'♡';b.appendChild(h)}b.insertAdjacentHTML('beforeend',`<span class="kibble">カリカリ ${state.kibble}</span><span class="heart-help-pop" role="dialog">${heartHelpText()}</span>`);b.onclick=toggleHeartHelp;b.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){toggleHeartHelp(e)}}}}
@@ -345,11 +343,11 @@ function finishResult(){
     }
     state.score=finalScore();$('scoreLabel').textContent=`評価 ${state.score} / 100`;
     state.history[50]=Math.max(state.history[50]||0,state.score);
-    localStorage.setItem('clpTaijuJoined','1');localStorage.removeItem('clpBossPhase');state.bossPhase=1;save();
+    window.CLPStorage.setItem(window.CLPStorage.KEYS.taijuJoined,'1');window.CLPStorage.removeItem(window.CLPStorage.KEYS.bossPhase);state.bossPhase=1;save();
     showBossTruth();
     return;
   }
-  state.score=finalScore();$('scoreLabel').textContent=`評価 ${state.score} / 100`;state.history[p().stage]=Math.max(state.history[p().stage]||0,state.score);let tutorialGift='';if(p().stage===10&&localStorage.getItem('clpTutorialGift')!=='1'){state.kibble+=10;localStorage.setItem('clpTutorialGift','1');tutorialGift='<p><b>ニャンじい：</b> 旅がつらくなったら、このカリカリを食べるんじゃよ。</p><p><b>テコちゃん：</b> ありがとう、ニャンじい！ カリカリを10個受け取ったニャン！</p>';}if(p().bonus)state.kibble+=3;save();let line=p().tutorial?['よくできたのう、テコちゃん。','見事じゃ。仲間をみんな見つけたぞい。','また一つ、修行を終えたのう。'][p().stage%3]:['仲間を見つけたニャン！','無事に再会できたニャン！','みんな見つかったニャン！'][p().stage%3];let speaker=p().tutorial?'ニャンじい':'テコちゃん';let extra=p().bonus?'<p>カリカリを3個獲得しました！</p>':'';let finish=p().stage===10?'<p>よく覚えたのう、テコちゃん。基本の修行はこれで終わりじゃ。ここから先は、まだ見ぬ仲間たちと、お母さんの手掛かりが待っておるぞい。</p>':'';if(isHagureStage()){speaker=hagureConfig().label;line=hagureConfig().clear;finish='<p class="hagure-note">このはぐれにゃんこは仲間にはならず、旅の途中でまたどこかへ向かっていきました。</p>';}let result=()=>{const buttons=state.i<STAGES.length-1?[['次のステージ','next']]:[['Ver.0.7.9 完了','close']];if(isHagureStage()){showHagureStoryResult(buttons);return}show(hagureClearTitle(),`<p><b>${speaker}：</b> ${line}</p>${scoreBreakdown()}${extra}${tutorialGift}${finish}`,buttons)};if(p().hard&&p().stage!==10&&!isHagureStage())runElite(result);else result()
+  state.score=finalScore();$('scoreLabel').textContent=`評価 ${state.score} / 100`;state.history[p().stage]=Math.max(state.history[p().stage]||0,state.score);let tutorialGift='';if(p().stage===10&&window.CLPStorage.getItem(window.CLPStorage.KEYS.tutorialGift)!=='1'){state.kibble+=10;window.CLPStorage.setItem(window.CLPStorage.KEYS.tutorialGift,'1');tutorialGift='<p><b>ニャンじい：</b> 旅がつらくなったら、このカリカリを食べるんじゃよ。</p><p><b>テコちゃん：</b> ありがとう、ニャンじい！ カリカリを10個受け取ったニャン！</p>';}if(p().bonus)state.kibble+=3;save();let line=p().tutorial?['よくできたのう、テコちゃん。','見事じゃ。仲間をみんな見つけたぞい。','また一つ、修行を終えたのう。'][p().stage%3]:['仲間を見つけたニャン！','無事に再会できたニャン！','みんな見つかったニャン！'][p().stage%3];let speaker=p().tutorial?'ニャンじい':'テコちゃん';let extra=p().bonus?'<p>カリカリを3個獲得しました！</p>':'';let finish=p().stage===10?'<p>よく覚えたのう、テコちゃん。基本の修行はこれで終わりじゃ。ここから先は、まだ見ぬ仲間たちと、お母さんの手掛かりが待っておるぞい。</p>':'';if(isHagureStage()){speaker=hagureConfig().label;line=hagureConfig().clear;finish='<p class="hagure-note">このはぐれにゃんこは仲間にはならず、旅の途中でまたどこかへ向かっていきました。</p>';}let result=()=>{const buttons=state.i<STAGES.length-1?[['次のステージ','next']]:[[window.CLP_APP_VERSION_LABEL+' 完了','close']];if(isHagureStage()){showHagureStoryResult(buttons);return}show(hagureClearTitle(),`<p><b>${speaker}：</b> ${line}</p>${scoreBreakdown()}${extra}${tutorialGift}${finish}`,buttons)};if(p().hard&&p().stage!==10&&!isHagureStage())runElite(result);else result()
 }
 function celebrateBoard(done){
   board.classList.add('board-complete');
@@ -360,13 +358,32 @@ function complete(){state.locked=true;clearBoardSave();haptic([40,30,60,40,130])
 function runElite(done){let e=document.createElement('div');e.className='elite-run';e.textContent='😼💨';document.body.appendChild(e);setTimeout(()=>e.remove(),1500);setTimeout(done,1600)}
 function heartZero(){syncHeartRecovery();if(state.hearts>0){state.locked=false;render();return}state.locked=true;show('ハートがなくなりました',`<p>ハートは30分ごとに1個回復します。</p><p>${heartTimeText()}</p><p>カリカリ1個を使うと、ハートを1個すぐ回復できます。</p>`,[['カリカリ1個で♥1回復','recoverKibble'],['タイトルへ戻る','title'],['DEBUG：全回復','recover']])}
 function rules(){show('ルール',`<details open><summary><b>基本ルール</b></summary><ul><li>各行・各列・各色エリアに猫は1匹</li><li>猫同士は周囲8マスで隣り合わない</li></ul></details><details><summary><b>操作</b></summary><p><b>1回タップ：</b>選択中の印を付ける<br><b>素早く2回タップ：</b>猫のマスを開く<br><b>なぞる：</b>連続で×を付ける</p><p>MARKボタンをタップすると、× → ？ → △の順に切り替わります。△は仮置き推理用です。</p></details>`,[['閉じる','close']])}
-function show(title,body,btns){$('dlgTitle').textContent=title;$('dlgBody').innerHTML=body;$('dlgActions').innerHTML='';btns.forEach(([text,a])=>{let b=document.createElement('button');b.className='primary';b.textContent=text;b.onclick=()=>{if(a==='hagureStoryNext'){dlg.close();if(window.clpHagureNext)window.clpHagureNext();return}if(a==='useToy'){dlg.close();castToyHint();return}if(/^h[123]$/.test(a)){dlg.close();useHint(Number(a[1]));return}dlg.close();if(a==='next'){state.i++;resetBoard()}if(a==='bossNext'){state.bossPhase=Math.min(3,state.bossPhase+1);save();resetBoard(true)}if(a==='bossTruth'){showBossTruth()}if(a==='bossReunion'){showBossReunion()}if(a==='bossResult'){showBossResult()}if(a==='recover'){state.hearts=HEART_MAX;state.locked=false;localStorage.removeItem('clpHeartUpdatedAt');save();render()}if(a==='recoverKibble'){if(state.kibble>=HEART_KIBBLE_COST&&state.hearts<HEART_MAX){state.kibble-=HEART_KIBBLE_COST;state.hearts++;state.locked=false;if(state.hearts>=HEART_MAX)localStorage.removeItem('clpHeartUpdatedAt');save();saveBoard();render()}else{show('回復できません',state.kibble<HEART_KIBBLE_COST?'<p>カリカリが足りないニャン。</p>':'<p>ハートは満タンです。</p>',[['閉じる','close']])}}if(a==='title'){showTitle()}if(a==='resetStage'){clearBoardSave();state.score=0;state.mistakes=0;state.hintsUsed=0;state.totalFound=0;state.revealed.clear();state.marks.clear();state.locked=false;state.streak=0;render();saveBoard()}if(a==='fullReset'){completeReset()}};$('dlgActions').appendChild(b)});dlg.showModal()}
-function devUnlockedTo(){return Math.max(1,Math.min(STAGES.length,Number(localStorage.getItem('clpDevUnlockedTo')||1)))}
+function installDialogActions(){
+  const router=window.CLPDialogActions;
+  const close=()=>window.CLPScreens.closeDialog('main');
+  router.register('close',close);
+  router.register('hagureStoryNext',()=>{close();if(window.clpHagureNext)window.clpHagureNext()});
+  router.register('useToy',()=>{close();castToyHint()});
+  router.registerPattern(/^h[123]$/,(_context,action)=>{close();useHint(Number(action[1]))});
+  router.register('next',()=>{close();state.i++;resetBoard()});
+  router.register('bossNext',()=>{close();state.bossPhase=Math.min(3,state.bossPhase+1);save();resetBoard(true)});
+  router.register('bossTruth',()=>{close();showBossTruth()});
+  router.register('bossReunion',()=>{close();showBossReunion()});
+  router.register('bossResult',()=>{close();showBossResult()});
+  router.register('recover',()=>{close();state.hearts=HEART_MAX;state.locked=false;window.CLPStorage.removeItem(window.CLPStorage.KEYS.heartUpdatedAt);save();render()});
+  router.register('recoverKibble',()=>{close();if(state.kibble>=HEART_KIBBLE_COST&&state.hearts<HEART_MAX){state.kibble-=HEART_KIBBLE_COST;state.hearts++;state.locked=false;if(state.hearts>=HEART_MAX)window.CLPStorage.removeItem(window.CLPStorage.KEYS.heartUpdatedAt);save();saveBoard();render()}else{show('回復できません',state.kibble<HEART_KIBBLE_COST?'<p>カリカリが足りないニャン。</p>':'<p>ハートは満タンです。</p>',[['閉じる','close']])}});
+  router.register('title',()=>{close();showTitle()});
+  router.register('resetStage',()=>{close();clearBoardSave();window.CLPGameState.resetBoardState(state,{preserveBoss:isBossStage()});render();startIdle();showBossIntro();saveBoard()});
+  router.register('fullReset',()=>{close();completeReset()});
+}
+installDialogActions();
+function show(title,body,btns){$('dlgTitle').textContent=title;$('dlgBody').innerHTML=body;$('dlgActions').innerHTML='';btns.forEach(([text,a])=>{let b=document.createElement('button');b.className='primary';b.textContent=text;b.onclick=()=>{if(!window.CLPDialogActions.dispatch(a,{title,body,button:b}))window.CLPScreens.closeDialog('main')};$('dlgActions').appendChild(b)});window.CLPScreens.openDialog('main')}
+function devUnlockedTo(){return Math.max(1,Math.min(STAGES.length,Number(window.CLPStorage.getItem(window.CLPStorage.KEYS.devUnlockedTo)||1)))}
 function isStageUnlocked(stageNo){return stageNo===1||Boolean(state.history[stageNo-1])||stageNo<=devUnlockedTo()}
 function specialStageLabel(stageNo){if(stageNo===50)return 'BOSS';if([20,30,40].includes(stageNo))return 'はぐれにゃんこ';return ''}
-window.CLPDevUnlockToStage=function(stageNo=STAGES.length){const target=Math.max(1,Math.min(STAGES.length,Number(stageNo)||1));localStorage.setItem('clpDevUnlockedTo',String(target));goodToast(`STAGE ${target}まで開発用解放`);history();return target};
+window.CLPDevUnlockToStage=function(stageNo=STAGES.length){const target=Math.max(1,Math.min(STAGES.length,Number(stageNo)||1));window.CLPStorage.setItem(window.CLPStorage.KEYS.devUnlockedTo,String(target));goodToast(`STAGE ${target}まで開発用解放`);history();return target};
 window.CLPDevUnlockAllStages=function(){return window.CLPDevUnlockToStage(STAGES.length)};
-window.CLPDevResetStageProgress=function(){localStorage.removeItem('clpDevUnlockedTo');state.history={};save();state.i=0;resetBoard();goodToast('進行データを初期化しました');return true};
+window.CLPDevResetStageProgress=function(){window.CLPStorage.removeItem(window.CLPStorage.KEYS.devUnlockedTo);state.history={};save();state.i=0;resetBoard();goodToast('進行データを初期化しました');return true};
 function history(){
  let g=$('historyGrid');g.innerHTML='';
  const groups=[
@@ -381,16 +398,16 @@ function history(){
    const rank=score===100?'gold':score>=90?'silver':score>=80?'bronze':'';
    b.className=(rank?rank+' ':'')+(score?'cleared':'unplayed');
    b.innerHTML=`<b>${k}</b><small>${s.size}×${s.size}</small><em>${score?score:'－'}</em>${score===100?`<span class="gold-trail" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>`:''}`;b.title=`STAGE ${k}・${s.size}×${s.size}${special?'・'+special:''}・${score?score+'点':'未クリア'}`;
-   b.onclick=()=>{$('historyDlg').close();clearBoardSave();state.i=k-1;resetBoard();saveBoard()};wrap.appendChild(b);
+   b.onclick=()=>{window.CLPScreens.closeDialog('history');clearBoardSave();state.i=k-1;resetBoard();saveBoard()};wrap.appendChild(b);
   }
   if(!wrap.children.length)return;
   let h=document.createElement('h3');h.className='history-heading';h.textContent=title;g.appendChild(h);g.appendChild(wrap);
  });
  if(!g.children.length)g.innerHTML='<p class="history-empty">ゲームを始めるとステージが表示されます</p>';
- $('historyDlg').showModal();
+ window.CLPScreens.openDialog('history');
 }
 
-let storyIndex=0;function showStory(reset=false){if(reset)storyIndex=0;let s=STORY[storyIndex];$('storyArt').textContent=s[1];$('storyPage').textContent=`${storyIndex+1} / ${STORY.length}`;$('storyTitle').textContent=s[0];$('storyText').textContent=s[2];$('storyNext').textContent=storyIndex===STORY.length-1?'修行を始める':'次へ';$('storyDlg').showModal()}$('storyNext').onclick=()=>{if(storyIndex<STORY.length-1){storyIndex++;$('storyDlg').close();showStory()}else{$('storyDlg').close();localStorage.setItem('clpStorySeen','1')}};
+let storyIndex=0;function showStory(reset=false){if(reset)storyIndex=0;let s=STORY[storyIndex];$('storyArt').textContent=s[1];$('storyPage').textContent=`${storyIndex+1} / ${STORY.length}`;$('storyTitle').textContent=s[0];$('storyText').textContent=s[2];$('storyNext').textContent=storyIndex===STORY.length-1?'修行を始める':'次へ';window.CLPScreens.openDialog('story')}$('storyNext').onclick=()=>{if(storyIndex<STORY.length-1){storyIndex++;window.CLPScreens.closeDialog('story');showStory()}else{window.CLPScreens.closeDialog('story');window.CLPStorage.setItem(window.CLPStorage.KEYS.storySeen,'1')}};
 function spendKibble(cost){if(p().tutorial||p().bonus)return true;if(state.kibble<cost){show('カリカリが足りません','<p>ボーナスステージでカリカリを集めるニャン。</p>',[['閉じる','close']]);return false}state.kibble-=cost;save();renderLife();return true}
 function registerHintUse(){if(!(p().tutorial||p().bonus)){state.hintsUsed++;record('HINT_USED','',state.hintsUsed)}}
 function clearHintGlow(){board.querySelectorAll('.hinting,.hint-focus,.hint-safe-x,.clp-hint-x,.clp-hint-cat').forEach(x=>x.classList.remove('hinting','hint-focus','hint-safe-x','clp-hint-x','clp-hint-cat'));document.body.classList.remove('hint-casting');if(window.CLPRefreshHintColors)window.CLPRefreshHintColors()}
@@ -477,30 +494,32 @@ function directHint(type){
 }
 function showTitle(){
   const t=$('titleScreen');if(!t)return;
-  t.classList.remove('hidden');
-  const played=Boolean(localStorage.getItem('clpStorySeen'))||Object.keys(state.history||{}).length>0;$('titleContinue').textContent=played?'つづきから':'ゲームを始める';$('titleStages').classList.toggle('hidden',!played);$('titleNew').classList.toggle('hidden',!played);
+  window.CLPScreens.showScreen('title');
+  const played=Boolean(window.CLPStorage.getItem(window.CLPStorage.KEYS.storySeen))||Object.keys(state.history||{}).length>0;$('titleContinue').textContent=played?'つづきから':'ゲームを始める';$('titleStages').classList.toggle('hidden',!played);$('titleNew').classList.toggle('hidden',!played);
 }
-function hideTitle(){const t=$('titleScreen');if(t)t.classList.add('hidden')}
+function hideTitle(){window.CLPScreens.hideScreen('title')}
 function completeReset(){
-  const keepVibrate=localStorage.getItem('clpVibrate');
-  localStorage.clear();
-  if(keepVibrate!==null)localStorage.setItem('clpVibrate',keepVibrate);
+  const keepVibrate=window.CLPStorage.getItem(window.CLPStorage.KEYS.vibrate);
+  window.CLPStorage.clear();
+  if(keepVibrate!==null)window.CLPStorage.setItem(window.CLPStorage.KEYS.vibrate,keepVibrate);
   location.reload();
 }
 function startNatureBreeze(){
   clearInterval(window.clpNatureBreezeTimer);
   window.clpNatureBreezeTimer=setInterval(()=>{
-    if(document.hidden||localStorage.getItem('clpSpecialFxWeak')==='1'||document.querySelector('dialog[open]')||!$('titleScreen').classList.contains('hidden')||state.locked)return;
+    if(document.hidden||window.CLPStorage.getItem(window.CLPStorage.KEYS.specialFxWeak)==='1'||window.CLPScreens.anyDialogOpen()||!$('titleScreen').classList.contains('hidden')||state.locked)return;
     const tiles=[...board.querySelectorAll('.tile:not(.revealed)')].filter(tile=>!tile.querySelector('.mark-x,.mark-q,.mark-t'));
     tiles.forEach(tile=>{const [r,c]=(tile.dataset.id||'0-0').split('-').map(Number);const diagonal=(r+c)*85;setTimeout(()=>{tile.classList.add('nature-breeze');setTimeout(()=>tile.classList.remove('nature-breeze'),1450)},diagonal)});
   },10000);
 }
-function openSettings(){show('設定',`<div class="settings-list"><button id="setReset">このステージを最初から</button><button id="setRules">ルールを見る</button><button id="setTitle">タイトルへ戻る</button><button id="setFullReset" class="danger-soft">データを完全初期化</button><label><input id="setVibrate" type="checkbox" ${localStorage.getItem('clpVibrate')==='0'?'':'checked'}> 振動を使う</label></div>`,[['閉じる','close']]);setTimeout(()=>{const a=$('setReset'),b=$('setRules'),d=$('setTitle'),full=$('setFullReset'),v=$('setVibrate');a&&(a.onclick=()=>{dlg.close();show('確認','<p>現在の盤面を最初からやり直しますか？ ハートは消費しません。</p>',[['やり直す','resetStage'],['キャンセル','close']])});b&&(b.onclick=()=>{dlg.close();rules()});d&&(d.onclick=()=>{dlg.close();showTitle()});full&&(full.onclick=()=>{dlg.close();show('完全初期化','<p>ステージ履歴、仲間、ヒント、カリカリ、ハート、物語の既読状態をすべて消してStage 1へ戻します。</p>',[['すべて初期化','fullReset'],['キャンセル','close']])});v&&(v.onchange=()=>localStorage.setItem('clpVibrate',v.checked?'1':'0'))},0)}
+function openSettings(){show('設定',`<div class="settings-list"><button id="setReset">このステージを最初から</button><button id="setRules">ルールを見る</button><button id="setTitle">タイトルへ戻る</button><button id="setFullReset" class="danger-soft">データを完全初期化</button><label><input id="setVibrate" type="checkbox" ${window.CLPStorage.getItem(window.CLPStorage.KEYS.vibrate)==='0'?'':'checked'}> 振動を使う</label></div>`,[['閉じる','close']]);setTimeout(installSettingsEvents,0)}
+function installSettingsEvents(){window.CLPEvents.unbindNamespace('settings');window.CLPEvents.bind('setReset','click',()=>{window.CLPScreens.closeDialog('main');show('確認','<p>現在の盤面を最初からやり直しますか？ ハートは消費しません。</p>',[['やり直す','resetStage'],['キャンセル','close']])},'settings');window.CLPEvents.bind('setRules','click',()=>{window.CLPScreens.closeDialog('main');rules()},'settings');window.CLPEvents.bind('setTitle','click',()=>{window.CLPScreens.closeDialog('main');showTitle()},'settings');window.CLPEvents.bind('setFullReset','click',()=>{window.CLPScreens.closeDialog('main');show('完全初期化','<p>ステージ履歴、仲間、ヒント、カリカリ、ハート、物語の既読状態をすべて消してStage 1へ戻します。</p>',[['すべて初期化','fullReset'],['キャンセル','close']])},'settings');window.CLPEvents.bind('setVibrate','change',e=>window.CLPStorage.setItem(window.CLPStorage.KEYS.vibrate,e.target.checked?'1':'0'),'settings')}
 function updateModeCycle(){const b=$('modeCycle');if(!b)return;const names={x:'×マーク',q:'？マーク',t:'△マーク'};b.innerHTML=markIcon(state.mode,true);b.dataset.mode=state.mode;b.setAttribute('aria-label',`${names[state.mode]||'×マーク'}。タップで切り替え`)}
 function setMode(m){state.mode=m;updateModeCycle();saveBoard()}
 function cycleMode(){const order=['x','q','t'],i=Math.max(0,order.indexOf(state.mode));setMode(order[(i+1)%order.length]);haptic(12)}
-$('stageSelectBtn').onclick=history;$('titleContinue').onclick=()=>{hideTitle();syncHeartRecovery();save();const resumed=restoreBoard();if(!resumed){resetBoard();saveBoard()}if(!localStorage.getItem('clpStorySeen'))showStory()};$('titleStages').onclick=()=>{hideTitle();history()};$('titleSettings').onclick=openSettings;$('titleNew').onclick=()=>show('最初から始める','<p>すべての進行を消してStage 1から始めますか？</p>',[['最初から','fullReset'],['キャンセル','close']]);$('modeCycle').onclick=cycleMode;$('historyBtn').onclick=history;$('historyClose').onclick=()=>$('historyDlg').close();$('catsBtn').onclick=openCats;$('catsClose').onclick=()=>$('catsDlg').close();$('catsDlg').addEventListener('click',e=>{if(e.target===$('catsDlg'))$('catsDlg').close()});
-$('debugOpen').onclick=()=>$('debugDlg').showModal();$('debugClose').onclick=()=>$('debugDlg').close();$('dbgHeart').onclick=()=>{state.hearts=5;state.locked=false;save();render();goodToast('HEART FULL!')};$('dbgKibble').onclick=()=>{state.kibble+=10;save();render()};$('dbgClear').onclick=complete;$('dbgUnlock').onclick=()=>{window.CLPDevUnlockAllStages();$('debugDlg').close()};$('dbgAnswer').onclick=()=>{state.debugAnswer=!state.debugAnswer;build()};$('dbgLog').onclick=()=>$('debugLog').textContent=state.log.join('\n');$('dbgStory').onclick=()=>{storyIndex=0;$('debugDlg').close();showStory()};$('dbgReset').onclick=()=>{localStorage.clear();location.reload()};
+function installPrimaryEvents(){const bind=(id,type,handler)=>window.CLPEvents.bind(id,type,handler,'primary');bind('stageSelectBtn','click',history);bind('titleContinue','click',()=>{hideTitle();syncHeartRecovery();save();const resumed=restoreBoard();if(!resumed){resetBoard();saveBoard()}if(!window.CLPStorage.getItem(window.CLPStorage.KEYS.storySeen))showStory()});bind('titleStages','click',()=>{hideTitle();history()});bind('titleSettings','click',openSettings);bind('titleNew','click',()=>show('最初から始める','<p>すべての進行を消してStage 1から始めますか？</p>',[['最初から','fullReset'],['キャンセル','close']]));bind('modeCycle','click',cycleMode);bind('historyBtn','click',history);bind('historyClose','click',()=>window.CLPScreens.closeDialog('history'));bind('catsBtn','click',openCats);bind('catsClose','click',()=>window.CLPScreens.closeDialog('cats'));bind('catsDlg','click',e=>{if(e.target===$('catsDlg'))window.CLPScreens.closeDialog('cats')})}
+function installDebugEvents(){const bind=(id,handler)=>window.CLPEvents.bind(id,'click',handler,'debug');bind('debugOpen',()=>window.CLPScreens.openDialog('debug'));bind('debugClose',()=>window.CLPScreens.closeDialog('debug'));bind('dbgHeart',()=>{state.hearts=5;state.locked=false;save();render();goodToast('HEART FULL!')});bind('dbgKibble',()=>{state.kibble+=10;save();render()});bind('dbgClear',complete);bind('dbgUnlock',()=>{window.CLPDevUnlockAllStages();window.CLPScreens.closeDialog('debug')});bind('dbgAnswer',()=>{state.debugAnswer=!state.debugAnswer;build()});bind('dbgLog',()=>$('debugLog').textContent=state.log.join('\n'));bind('dbgStory',()=>{storyIndex=0;window.CLPScreens.closeDialog('debug');showStory()});bind('dbgReset',()=>{window.CLPStorage.clear();location.reload()})}
+installPrimaryEvents();installDebugEvents();
 function runDifficultyReport(){
   const report=window.CLPLogic.analyzeAll(STAGES);
   window.CLPDifficultyReport=report;
@@ -595,10 +614,10 @@ window.CLPRefreshHintColors=()=>clpRefreshSemanticHints(board);
    ヒント表示時は既存処理と CLPRefreshHintColors から必要時だけ更新する。 */
 
 
-document.title=document.title.replace(/Ver\.0\.7\.[0-9]+/g,'Ver.0.7.9');document.querySelectorAll('body *').forEach(el=>{if(el.children.length===0&&/Ver\.0\.7\.[0-9]+/.test(el.textContent))el.textContent=el.textContent.replace(/Ver\.0\.7\.[0-9]+/g,'Ver.0.7.9')});syncHeartRecovery();save();resetBoard();installLeafSwipe();installLeafTilt();startNatureBreeze();showTitle();setInterval(()=>{const before=state.hearts;if(syncHeartRecovery()>0||state.hearts!==before){save();renderLife()}},60000);
-const settingsButton=$('settingsBtn');if(settingsButton){settingsButton.disabled=false;settingsButton.onclick=openSettings;}document.querySelectorAll('[data-hint]').forEach(b=>b.onclick=()=>directHint(b.dataset.hint));
+window.CLPApplyVersion();window.CLPStorage.ensureSchema();syncHeartRecovery();save();resetBoard();installLeafSwipe();installLeafTilt();startNatureBreeze();showTitle();setInterval(()=>{const before=state.hearts;if(syncHeartRecovery()>0||state.hearts!==before){save();renderLife()}},60000);
+const settingsButton=$('settingsBtn');if(settingsButton)settingsButton.disabled=false;window.CLPEvents.bind('settingsBtn','click',openSettings,'primary');document.querySelectorAll('[data-hint]').forEach(b=>window.CLPEvents.bind(b,'click',()=>directHint(b.dataset.hint),'hints'));
 
 const hintDescriptions={toy:['タイジュの道しるべ','猫じゃらしを使うと、猫がいないと確定できるマスを1か所、青く光らせます。青いマスには×印を付けます。消費はカリカリ1個です。'],matatabi:['またたび','盤面を論理的に前進させる有効な一手を、理由付きで教えます。猫を開く手や安全な×など、状況に合う一手を案内します。'],can:['ネコ缶','正解の猫を1匹、その場で自動的に開く強力なヒントです。'],paw:['肉球チェック','間違って付けた×を1つ見つけて直します。間違いがなければ消費しません。']};
 document.addEventListener('click',e=>{const info=e.target.closest('[data-info]');if(!info)return;e.preventDefault();e.stopPropagation();const d=hintDescriptions[info.dataset.info];if(d)show(d[0],`<p>${d[1]}</p>`,[['閉じる','close']])});
 
-$('historyDlg').addEventListener('click',e=>{if(e.target===$('historyDlg'))$('historyDlg').close()});document.addEventListener('click',e=>{const recover=e.target.closest('.heart-kibble-recover');if(recover){e.preventDefault();e.stopPropagation();recoverHeartFromPanel();return}const box=$('lifeBox');if(box&&!box.contains(e.target))closeHeartHelp()});
+window.CLPEvents.bind('historyDlg','click',e=>{if(e.target===$('historyDlg'))window.CLPScreens.closeDialog('history')},'primary');document.addEventListener('click',e=>{const recover=e.target.closest('.heart-kibble-recover');if(recover){e.preventDefault();e.stopPropagation();recoverHeartFromPanel();return}const box=$('lifeBox');if(box&&!box.contains(e.target))closeHeartHelp()});
