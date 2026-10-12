@@ -1,5 +1,5 @@
 {
-  "version": "0.8.31",
+  "version": "0.8.33",
   "auditCollectedAt": "2026-10-12T17:57:34",
   "projectFiles": 340,
   "projectSizeMiB": 46.91,
@@ -61,5 +61,9 @@
     "audit reports",
     "Python cache"
   ],
-  "pushPerformed": false
+  "pushPerformed": false,
+  "lateUntrackedArtifactsResolved": [
+    "COLLECT_NEKOMICHI_FOUNDATION_AUDIT.py",
+    "NEKOMICHI_V088_TEST_EXACT.txt"
+  ]
 }

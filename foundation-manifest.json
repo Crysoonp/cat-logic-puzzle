@@ -1,5 +1,5 @@
 {
-  "foundationVersion": "0.8.31",
+  "foundationVersion": "0.8.33",
   "saveSchemaVersion": 1,
   "boardSaveVersion": 1,
   "stageCount": 50,
@@ -35,8 +35,8 @@
     "logic-engine.js",
     "quality-engine.js"
   ],
-  "nextSafeWork": "After checkpoint success, archive ignored update/audit artifacts separately; do not mix archive deletion with game changes",
+  "nextSafeWork": "Archive ignored development artifacts separately; no game or CSS changes in the archive step",
   "cssBaseline": "css-visual-baseline.json",
   "repositoryHousekeepingPlan": "repository-housekeeping-plan.json",
-  "gitCheckpoint": "Ver.0.8.31 foundation and housekeeping checkpoint"
+  "gitCheckpoint": "Ver.0.8.33 clean working-tree checkpoint"
 }

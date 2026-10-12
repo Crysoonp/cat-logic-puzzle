@@ -1,6 +1,6 @@
 (function(){
   'use strict';
-  const VERSION='0.8.31';
+  const VERSION='0.8.33';
   const LABEL='Ver.'+VERSION;
   window.CLP_APP_VERSION=VERSION;
   window.CLP_APP_VERSION_LABEL=LABEL;
