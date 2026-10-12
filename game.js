@@ -120,17 +120,286 @@ function restoreBoard(){
 function save(){syncHeartRecovery();window.CLPStorage.setItem(window.CLPStorage.KEYS.hearts,state.hearts);window.CLPStorage.setItem(window.CLPStorage.KEYS.kibble,state.kibble);window.CLPStorage.setItem(window.CLPStorage.KEYS.history,JSON.stringify(state.history));window.CLPStorage.setItem(window.CLPStorage.KEYS.bossPhase,String(state.bossPhase))}
 function hasTaiju(){return window.CLPStorage.getItem(window.CLPStorage.KEYS.taijuJoined)==='1'}
 function updateProgressiveUI(){
+  updatePlazaAccess();
   const dock=$('hintDock');
   if(dock)dock.classList.toggle('hidden',!hasTaiju());
   updateModeCycle();
 }
+
+/* Ver.0.8.61: Forest Plaza minimum foundation. */
+function plazaUnlocked(){return hasTaiju()}
+function updatePlazaAccess(){
+  const button=$('plazaBtn');
+  if(button)button.classList.toggle('hidden',!plazaUnlocked());
+}
+function plazaRestSpotUnlocked(){return !!state.history[100]}
+function renderPlaza(){
+  refreshCatProfileNotice();
+  const stage200Ready=isStageCleared(200);
+  const messageHost=$('plazaMessage');
+  let milestone=$('plazaStage200Milestone');
+  if(messageHost&&!milestone){
+    milestone=document.createElement('div');
+    milestone.id='plazaStage200Milestone';
+    milestone.className='plaza-stage200-milestone';
+    milestone.hidden=true;
+    messageHost.parentElement.insertBefore(milestone,messageHost);
+  }
+  if(milestone){
+    milestone.hidden=!stage200Ready;
+    milestone.innerHTML='<span aria-hidden="true">🐾</span><b>Stage 200 到達</b><small>遠い道の先まで歩いた証</small>';
+  }
+  const plaza=$('plazaDlg');
+  if(plaza)plaza.classList.toggle('stage200-reached',stage200Ready);
+  const taiju=$('plazaTaiju');
+  if(taiju)taiju.classList.toggle('hidden',!hasTaiju());
+  const grass=$('plazaGrass');
+  const restReady=plazaRestSpotUnlocked();
+  if(grass){
+    grass.classList.toggle('is-rest-spot',restReady);
+    grass.setAttribute('aria-label',restReady?'草むらの休憩場所。Stage 100クリアで広場が少し発展しました':'草むら。旅を進めると変化します');
+    const icon=grass.querySelector('.plaza-grass-icon');
+    const label=grass.querySelector('.plaza-grass-label');
+    if(icon)icon.textContent=restReady?'🧺':'🌿';
+    if(label)label.textContent=restReady?'休憩場所':'草むら';
+  }
+  const message=$('plazaMessage');
+  if(message)message.textContent=stage200Ready
+    ?'Stage 200までの長い道のりを歩き、森の広場に旅の足あとが残りました。'
+    :restReady
+      ?'Stage 100までの旅を終え、草むらに小さな休憩場所ができました。'
+      :hasTaiju()
+      ?'タイジュが加わり、森の広場を使えるようになりました。大きな木から猫の記録を開けます。'
+      :'森の広場は、まよい森の奥で待っています。';
+}
+function requestPlazaReturn(){window.CLPScreens.openDialog('plazaReturn')}
+function closePlazaReturn(){window.CLPScreens.closeDialog('plazaReturn')}
+let plazaCloseDestination='puzzle';
+function confirmPlazaReturn(){
+  closePlazaReturn();
+  saveBoard();
+  plazaCloseDestination='fieldMap';
+  openPlaza('fieldMap');
+}
+function installPlazaReturnEvents(){
+  const bind=(id,type,handler)=>window.CLPEvents.bind(id,type,handler,'plaza-return');
+  bind('plazaReturnCancel','click',closePlazaReturn);
+  bind('plazaReturnConfirm','click',confirmPlazaReturn);
+  window.CLPEvents.bind('plazaReturnDlg','click',e=>{if(e.target===$('plazaReturnDlg'))closePlazaReturn()},'plaza-return');
+}
+
+function openPlaza(returnDestination='puzzle'){
+  if(!plazaUnlocked())return;
+  plazaCloseDestination=returnDestination;
+  renderPlaza();
+  window.CLPScreens.openDialog('plaza');
+}
+function closePlaza(){
+  window.CLPScreens.closeDialog('plaza');
+  const destination=plazaCloseDestination;
+  plazaCloseDestination='puzzle';
+  if(destination==='fieldMap')requestAnimationFrame(()=>requestAnimationFrame(openFieldMap));
+}
+function plazaTalk(kind){
+  const lines={
+    teko:'ここから、また次の場所へ出発するニャン。',
+    nyanjii:'焦らんでよい。ひとつずつ確かめるんじゃ。',
+    taiju:'森のまわりは、ぼくが見ておくよ。'
+  };
+  const message=$('plazaMessage');if(message)message.textContent=lines[kind]||'';
+}
+function highestUnlockedStage(){
+  let highest=1;
+  for(let stageNo=1;stageNo<=STAGES.length;stageNo++){if(isStageUnlocked(stageNo))highest=stageNo;}
+  return highest;
+}
+function renderFieldMap(){
+  const current=Math.max(1,Math.min(STAGES.length,(p()&&p().stage)||1));
+  const highest=highestUnlockedStage();
+  const scene=document.querySelector('.field-map-scene');
+  const teko=$('fieldMapTeko')||document.querySelector('.map-teko');
+  const nodes=[...document.querySelectorAll('.map-node[data-map-from]')];
+  let activeNode=nodes[0];
+  nodes.forEach(node=>{
+    const from=Number(node.dataset.mapFrom),to=Number(node.dataset.mapTo);
+    const productionAfter=Number(node.dataset.mapProductionAfter||0);
+    const productionReady=!productionAfter||!!state.history[productionAfter];
+    const unlocked=from<=highest&&productionReady;
+    const complete=to<highest || !!state.history[to];
+    const active=current>=from&&current<=to;
+    node.disabled=!unlocked;
+    node.classList.toggle('map-locked',!unlocked);
+    node.classList.toggle('map-complete',complete);
+    node.classList.toggle('map-active',active);
+    node.setAttribute('aria-disabled',String(!unlocked));
+    if(active)activeNode=node;
+  });
+  document.querySelectorAll('.map-route-segment').forEach((segment,index)=>{
+    segment.classList.toggle('route-complete',highest>((index+1)*10));
+    segment.classList.toggle('route-current',current>((index+1)*10)&&current<=((index+2)*10));
+  });
+  if(teko&&activeNode&&scene){
+    const sr=scene.getBoundingClientRect(),nr=activeNode.getBoundingClientRect();
+    const targetLeft=(nr.left-sr.left)+(nr.width*.62);
+    const targetTop=(nr.top-sr.top)+(nr.height*.16);
+    const previous=Number(sessionStorage.getItem('clpMapLastStage')||current);
+    const previousIndex=Math.max(0,Math.min(nodes.length-1,Math.floor((previous-1)/10)));
+    const previousNode=nodes[previousIndex]||activeNode;
+    const pr=previousNode.getBoundingClientRect();
+    if(previous!==current){
+      teko.classList.remove('map-teko-walking');
+      teko.style.left=((pr.left-sr.left)+(pr.width*.62))+'px';
+      teko.style.top=((pr.top-sr.top)+(pr.height*.16))+'px';
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{
+        teko.classList.add('map-teko-walking');
+        teko.style.left=targetLeft+'px';
+        teko.style.top=targetTop+'px';
+      }));
+    }else{
+      teko.style.left=targetLeft+'px';
+      teko.style.top=targetTop+'px';
+    }
+    sessionStorage.setItem('clpMapLastStage',String(current));
+  }
+  const message=$('fieldMapMessage');
+  if(message){const mapHighest=Math.min(200,highest);message.textContent=`現在地は Stage ${current}。Stage ${mapHighest} まで進めます。`;}
+}
+
+function openFieldMap(){closePlaza();window.CLPScreens.openDialog('fieldMap');requestAnimationFrame(()=>requestAnimationFrame(renderFieldMap))}
+function closeFieldMap(){window.CLPScreens.closeDialog('fieldMap')}
+function openMapStageRange(from,to){
+  closeFieldMap();
+  history();
+  requestAnimationFrame(()=>{
+    const grid=$('historyGrid');
+    if(!grid)return;
+    grid.classList.add('map-range-mode');
+    let toolbar=$('mapRangeToolbar');
+    if(!toolbar){
+      toolbar=document.createElement('div');
+      toolbar.id='mapRangeToolbar';
+      toolbar.className='map-range-toolbar';
+      toolbar.innerHTML='<div><small>旅のマップから選択</small><strong id="mapRangeTitle"></strong></div><button id="mapRangeBack" type="button">旅のマップへ戻る</button>';
+      grid.parentElement.insertBefore(toolbar,grid);
+      $('mapRangeBack').addEventListener('click',()=>{
+        window.CLPScreens.closeDialog('history');
+        openFieldMap();
+      });
+    }
+    toolbar.hidden=false;
+    const title=$('mapRangeTitle');
+    if(title)title.textContent=`Stage ${from}〜${to}`;
+    grid.querySelectorAll('.history-section').forEach(section=>{
+      let visible=0;
+      section.querySelectorAll('button').forEach(button=>{
+        const number=Number((button.querySelector('b')||{}).textContent||0);
+        const show=number>=from&&number<=to;
+        button.hidden=!show;
+        if(show)visible++;
+      });
+      section.hidden=visible===0;
+    });
+    const visibleButton=grid.querySelector('button:not([hidden])');
+    if(visibleButton)visibleButton.focus({preventScroll:true});
+  });
+}
+
+function installFieldMapEvents(){
+  const bind=(id,type,handler)=>window.CLPEvents.bind(id,type,handler,'field-map');
+  bind('fieldMapClose','click',closeFieldMap);
+  bind('fieldMapBackPlaza','click',()=>{closeFieldMap();openPlaza('fieldMap')});
+  bind('fieldMapStages','click',()=>{closeFieldMap();history()});
+  window.CLPEvents.bind('fieldMapDlg','click',e=>{if(e.target===$('fieldMapDlg'))closeFieldMap()},'field-map');
+  document.querySelectorAll('.map-node[data-map-from]').forEach(node=>node.addEventListener('click',()=>{
+    if(node.disabled)return;
+    const from=Number(node.dataset.mapFrom),to=Number(node.dataset.mapTo);
+    openMapStageRange(from,to);
+  }));
+}
+
+function installPlazaEvents(){
+  const bind=(id,type,handler)=>window.CLPEvents.bind(id,type,handler,'plaza');
+  bind('plazaBtn','click',requestPlazaReturn);
+  bind('plazaClose','click',closePlaza);
+  bind('plazaTree','click',()=>{window.CLPScreens.closeDialog('plaza');plazaCloseDestination='puzzle';openCats()});
+  bind('plazaMap','click',()=>{window.CLPScreens.closeDialog('plaza');plazaCloseDestination='puzzle';openFieldMap()});
+  bind('plazaGrass','click',()=>{const m=$('plazaMessage');if(m)m.textContent=plazaRestSpotUnlocked()?'ここなら、旅の合間にゆっくり休めそうです。':'草むらは、もう少し旅を進めると変化しそうです。'});
+  window.CLPEvents.bind('plazaDlg','click',e=>{if(e.target===$('plazaDlg'))closePlaza()},'plaza');
+  document.querySelectorAll('[data-plaza-talk]').forEach(button=>button.addEventListener('click',()=>plazaTalk(button.dataset.plazaTalk)));
+}
+
+const CAT_PROFILE_READ_KEY='clpCatProfileReadV1';
+const CAT_PROFILE_LEGACY_RECORD_GROUPS=Object.freeze({
+  teko:['journey-start','current-skills'],
+  nyanjii:['known-facts','current-relationship'],
+  taiju:['first-meeting','known-facts','helper-ability']
+});
+function migrateLegacyCatProfileReadIds(ids){
+  const migrated=new Set(ids);let changed=false;
+  for(const value of ids){
+    const match=/^(teko|nyanjii|taiju)\.section(\d+)\.line(\d+)$/.exec(value);if(!match)continue;
+    const group=CAT_PROFILE_LEGACY_RECORD_GROUPS[match[1]]?.[Number(match[2])];if(!group)continue;
+    const next=`${match[1]}.${group}.line${match[3]}`;
+    if(!migrated.has(next)){migrated.add(next);changed=true;}
+  }
+  if(changed)localStorage.setItem(CAT_PROFILE_READ_KEY,JSON.stringify([...migrated]));
+  return migrated;
+}
+function readCatProfileIds(){
+  try{const value=JSON.parse(localStorage.getItem(CAT_PROFILE_READ_KEY)||'[]');return migrateLegacyCatProfileReadIds(Array.isArray(value)?value:[])}catch(_){return new Set()}
+}
+const CAT_PROFILE_UNLOCK_RULES=Object.freeze({
+  teko:[{id:'journey-start',section:0,when:'always'},{id:'current-skills',section:1,when:'always'},{id:'taiju-companion',section:2,when:'stageCleared:50'}],
+  nyanjii:[{id:'known-facts',section:0,when:'always'},{id:'current-relationship',section:1,when:'always'}],
+  taiju:[{id:'first-meeting',section:0,when:'taijuJoined'},{id:'known-facts',section:1,when:'taijuJoined'},{id:'helper-ability',section:2,when:'taijuJoined'}]
+});
+function isStageCleared(stageNo){
+  const number=Number(stageNo);
+  return Number.isInteger(number)&&number>=1&&Number(state.history[number]||0)>0;
+}
+function catProfileConditionMet(condition){
+  if(condition==='always')return true;
+  if(condition==='taijuJoined')return hasTaiju();
+  if(condition.startsWith('stageCleared:'))return isStageCleared(condition.slice(13));
+  return false;
+}
+function unlockedCatSections(id){
+  const cat=CAT_PROFILE_DATA[id],rules=CAT_PROFILE_UNLOCK_RULES[id]||[];if(!cat)return [];
+  return rules.filter(rule=>catProfileConditionMet(rule.when)).map(rule=>({id:rule.id,section:cat.sections[rule.section]})).filter(item=>item.section);
+}
+function catRecordIds(id){
+  return unlockedCatSections(id).flatMap(item=>item.section[1].map((_,lineIndex)=>`${id}.${item.id}.line${lineIndex}`));
+}
+function hasUnreadCatProfile(id){
+  const read=readCatProfileIds();return catRecordIds(id).some(recordId=>!read.has(recordId));
+}
+function markCatProfileRead(id){
+  const read=readCatProfileIds();catRecordIds(id).forEach(recordId=>read.add(recordId));
+  localStorage.setItem(CAT_PROFILE_READ_KEY,JSON.stringify([...read]));
+}
+function hasAnyUnreadCatProfile(){return availableCatIds().some(hasUnreadCatProfile)}
+function refreshCatProfileNotice(){
+  const tree=$('plazaTree');if(tree)tree.classList.toggle('has-new-record',hasAnyUnreadCatProfile());
+}
+const CAT_PROFILE_DATA=Object.freeze({
+  teko:{name:'テコちゃん',icon:'🐱',summary:'旅を続ける小さな猫',sections:[['旅の始まり',['ニャンじいと森の外れで暮らしていた。','会えなくなった家族へつながる手掛かりを探している。']],['今できること',['盤面を見比べ、安全な道をひとつずつ見つけている。']],['新しい仲間',['まよい森でタイジュと出会い、一緒に旅をする仲間になった。']]]},
+  nyanjii:{name:'ニャンじい',icon:'🐱',summary:'テコちゃんの育ての親',sections:[['分かっていること',['テコちゃんを幼い頃から育ててくれた。','盤面の見方と、慌てず考えることを教えてくれる。','森のことをよく知っている。']],['現在の関係',['テコちゃんの育ての親であり、修行の先生。']]]},
+  taiju:{name:'タイジュ',icon:'🐈‍⬛',summary:'森で出会った大きな猫',sections:[['初めて出会った場所',['まよい森の奥。']],['分かっていること',['迷子の小さな猫たちを守っていた。','森の広場へ近づく者を警戒していた。','誤解が解け、森の広場を一緒に守る仲間になった。']],['お助け能力',['猫じゃらし。猫がいないと確定できる安全な×を1マス案内する。']]]}
+});
+function availableCatIds(){const ids=['teko','nyanjii'];if(hasTaiju())ids.push('taiju');return ids}
 function renderCats(){
   const list=$('catsList');if(!list)return;
-  const cards=[`<article class="cat-card"><div class="cat-card-icon">🐱</div><div><h3>ニャンじい</h3><small>テコちゃんの育て親・修行の先生</small><p>幼いころに迷子になったテコちゃんを助け、大きくなるまで育ててくれた恩人。旅とパズルに詳しく、困ったときには優しく道を示してくれる。</p></div></article>`];
-  if(hasTaiju())cards.push(`<article class="cat-card unlocked"><div class="cat-card-icon">🐈‍⬛</div><div><h3>タイジュ</h3><small>まよい森の案内役・STAGE 50</small><p>まよい森で出会った大きなにゃんこ。迷子の小さな猫たちを守っていた。森の道に詳しく、仲間になったあとは「猫じゃらし」で安全な×を教えてくれる。</p></div></article>`);
-  list.innerHTML=cards.join('');
+  list.innerHTML=availableCatIds().map(id=>{const cat=CAT_PROFILE_DATA[id],unread=hasUnreadCatProfile(id);return `<button class="cat-card${id==='taiju'?' unlocked':''}${unread?' has-new-record':''}" type="button" data-cat-profile="${id}"><span class="cat-card-icon">${cat.icon}</span><span class="cat-card-copy"><strong>${cat.name}</strong><small>${cat.summary}</small>${unread?'<em class="cat-new-record">新しい記録があります</em>':''}</span><span class="cat-card-arrow" aria-hidden="true">›</span></button>`}).join('');
 }
-function openCats(){renderCats();window.CLPScreens.openDialog('cats')}
+function renderCatProfile(id){
+  const host=$('catProfileContent'),cat=CAT_PROFILE_DATA[id];if(!host||!cat||!availableCatIds().includes(id))return false;
+  host.innerHTML=`<header class="cat-profile-header"><div class="cat-profile-icon">${cat.icon}</div><div><small>今まで出会った猫</small><h2 id="catProfileName">${cat.name}</h2><p>${cat.summary}</p></div></header><div class="cat-profile-sections">${unlockedCatSections(id).map(item=>{const [title,lines]=item.section;return `<section data-cat-record-group="${item.id}"><h3>${title}</h3><ul>${lines.map(line=>`<li>${line}</li>`).join('')}</ul></section>`}).join('')}</div>`;
+  return true;
+}
+function openCats(){renderCats();refreshCatProfileNotice();window.CLPScreens.openDialog('cats')}
+function closeCatsToPlaza(){window.CLPScreens.closeDialog('cats');requestAnimationFrame(()=>openPlaza('fieldMap'))}
+function openCatProfile(id){if(!renderCatProfile(id))return;markCatProfileRead(id);window.CLPScreens.closeDialog('cats');window.CLPScreens.openDialog('catProfile');refreshCatProfileNotice()}
+function closeCatProfileToList(){window.CLPScreens.closeDialog('catProfile');renderCats();window.CLPScreens.openDialog('cats')}
 
 function renderBossBanner(){const banner=$('bossBanner');if(!banner)return;banner.classList.toggle('hidden',!isBossStage());document.body.classList.toggle('boss-stage',isBossStage());if(isBossStage()){const labels=['足あとを追う','しっぽの向こう側','迷子猫を守る大きなにゃんこ'];$('bossPhaseLabel').textContent=`第${state.bossPhase}フェーズ　${labels[state.bossPhase-1]}`;$('bossPhaseCount').textContent=`${state.bossPhase} / 3`;}}
 function showBossIntro(){if(!isBossStage()||state.bossIntroShown)return;state.bossIntroShown=true;setTimeout(()=>show('まよい森の大きなにゃんこ','<div class="boss-dialog-art">🌲🐾🐈🌲</div><p><b>テコちゃん：</b> 森の奥から、大きな足あとが続いているニャン……。</p><p><b>大きなにゃんこ：</b> ここから先へ来るなら、迷子たちを見つける力を見せておくれ。</p><p>3つの盤面を解いて、大きなにゃんこの事情を確かめよう。</p>',[['ボスステージ開始','close']]),180)}
@@ -205,7 +474,7 @@ function markIcon(type,small=false){
   const cls=`mark-symbol mark-${type}${small?' mark-small':''}`;
   const paths={
     x:'<path d="M17 17 L47 47 M47 17 L17 47"/>',
-    q:'<path d="M21 24 C22 13 42 10 47 21 C52 33 39 36 33 42 L33 46"/><circle cx="33" cy="54" r="2.8" fill="currentColor" stroke="none"/>',
+    q:'<path d="M21 24 C22 13 42 10 47 21 C52 33 39 36 33 42 L33 43"/><circle class="question-dot" cx="33" cy="56" r="4.8" fill="currentColor" stroke="none"/>',
     t:'<path d="M32 14 Q33 14 34 16 L51 47 Q52 50 48 50 L16 50 Q12 50 14 47 L30 16 Q31 14 32 14 Z"/>'
   };
   return `<span class="${cls}"><svg viewBox="0 0 64 64" aria-hidden="true"><g class="mark-outline">${paths[type]||paths.x}</g><g class="mark-core">${paths[type]||paths.x}</g></svg></span>`;
@@ -216,12 +485,14 @@ function firstLogicalTarget(){let s=p(),counts={};for(let r=0;r<s.size;r++)for(l
 function markForDrag(id, action){
   if(!id||state.revealed.has(id)||state.drag.visited.has(id))return;
   state.drag.visited.add(id);
+  const dragMode=state.drag.mode;
+  if(!['x','q','t'].includes(dragMode))return;
   if(action==='remove'){
-    if(state.marks.get(id)==='x')state.marks.delete(id);
+    if(state.marks.get(id)===dragMode)state.marks.delete(id);
   }else{
-    state.marks.set(id,'x');
+    state.marks.set(id,dragMode);
   }
-  record('DRAG_MARK',id,action);
+  record('DRAG_MARK',id,`${action}:${dragMode}`);
   saveBoard();
   haptic(12);
   build();updateSpecialStageFx();
@@ -232,17 +503,16 @@ function tileIdAtPoint(x,y){
   return tile&&board.contains(tile)?tile.dataset.id:'';
 }
 function pointerStart(e,id){
-  if(state.locked||state.revealed.has(id)||state.mode!=='x'){
-    if(state.mode!=='x')tap(id);
-    return;
-  }
+  if(state.locked||state.revealed.has(id))return;
+  if(!['x','q','t'].includes(state.mode)){tap(id);return;}
   state.drag.active=true;
   state.drag.moved=false;
   state.drag.pointerId=e.pointerId;
   state.drag.startX=e.clientX;
   state.drag.startY=e.clientY;
   state.drag.startId=id;
-  state.drag.action=state.marks.get(id)==='x'?'remove':'add';
+  state.drag.mode=state.mode;
+  state.drag.action=state.marks.get(id)===state.drag.mode?'remove':'add';
   state.drag.visited=new Set();
   try{board.setPointerCapture(e.pointerId)}catch(_e){}
 }
@@ -388,7 +658,8 @@ function history(){
  let g=$('historyGrid');g.innerHTML='';
  const groups=[
   ['チュートリアル',1,10],
-  ['第1章・まよい森',11,50]
+  ['第1章・まよい森',11,50],
+  ['第2章・森を抜けた先',51,200]
  ];
  groups.forEach(([title,a,z])=>{
   let wrap=document.createElement('div');wrap.className='history-section';
@@ -424,11 +695,13 @@ function showToyReady(){
 }
 /* Ver.0.7.7: valid toy target and centered mode mark */
 function validToyStep(){
-  let step=window.CLPLogic.safeXStep(p(),state.revealed,state.marks);
-  const isEmpty=id=>{if(!id||state.revealed.has(id))return false;const [r,c]=id.split('-').map(Number);return Number.isInteger(r)&&Number.isInteger(c)&&p().solution[r]!==c&&state.marks.get(id)!=='x'};
-  if(step&&isEmpty(step.target))return step;
-  for(let r=0;r<p().size;r++)for(let c=0;c<p().size;c++){const id=`${r}-${c}`;if(isEmpty(id))return {target:id,message:'青く光るマスには猫がいないニャン。×印をつけておこう。'}}
-  return null;
+  const step=window.CLPLogic.safeXStep(p(),state.revealed,state.marks);
+  if(!step||!step.target)return null;
+  const [r,c]=step.target.split('-').map(Number);
+  const inBounds=Number.isInteger(r)&&Number.isInteger(c)&&r>=0&&c>=0&&r<p().size&&c<p().size;
+  if(!inBounds||state.revealed.has(step.target)||state.marks.has(step.target))return null;
+  if(p().solution[r]===c)return null;
+  return step;
 }
 function castToyHint(){
   clearHintGlow();
@@ -504,22 +777,72 @@ function completeReset(){
   if(keepVibrate!==null)window.CLPStorage.setItem(window.CLPStorage.KEYS.vibrate,keepVibrate);
   location.reload();
 }
+/* V222_DISPLAY_SETTINGS */
+const DISPLAY_THEME_KEY='clpDisplayThemeV1';
+const TILE_MOTION_KEY='clpTileMotionV1';
+const DISPLAY_THEMES=new Set(['pattern-pastel','pattern-vivid','plain-pastel','plain-vivid']);
+const TILE_MOTIONS=new Set(['full','reduced','off']);
+function currentDisplayTheme(){const value=localStorage.getItem(DISPLAY_THEME_KEY)||'pattern-pastel';return DISPLAY_THEMES.has(value)?value:'pattern-pastel'}
+function currentTileMotion(){const value=localStorage.getItem(TILE_MOTION_KEY)||'full';return TILE_MOTIONS.has(value)?value:'full'}
+function applyDisplaySettings(){
+  const root=document.documentElement;
+  root.dataset.boardTheme=currentDisplayTheme();
+  root.dataset.tileMotion=currentTileMotion();
+  startNatureBreeze();
+}
+function setDisplayTheme(value){if(!DISPLAY_THEMES.has(value))return;localStorage.setItem(DISPLAY_THEME_KEY,value);applyDisplaySettings()}
+function setTileMotion(value){if(!TILE_MOTIONS.has(value))return;localStorage.setItem(TILE_MOTION_KEY,value);applyDisplaySettings()}
+function displaySettingsMarkup(){
+  const theme=currentDisplayTheme(),motion=currentTileMotion();
+  const themeOption=(value,label,classes)=>`<label class="display-theme-option"><input type="radio" name="displayTheme" value="${value}" ${theme===value?'checked':''}><span class="theme-preview ${classes}" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><b>${label}</b></label>`;
+  return `<section class="display-settings-section"><h3>盤面の表示</h3><p>見やすさや好みに合わせて切り替えられます。</p><div class="display-theme-grid">${themeOption('pattern-pastel','やさしい柄','preview-pattern preview-pastel')}${themeOption('pattern-vivid','くっきりした柄','preview-pattern preview-vivid')}${themeOption('plain-pastel','やさしい無地','preview-plain preview-pastel')}${themeOption('plain-vivid','くっきりした無地','preview-plain preview-vivid')}</div></section><section class="display-settings-section"><h3>タイルの動き</h3><div class="motion-choice"><label><input type="radio" name="tileMotion" value="full" ${motion==='full'?'checked':''}> あり <small>約10秒ごと</small></label><label><input type="radio" name="tileMotion" value="reduced" ${motion==='reduced'?'checked':''}> 少なめ <small>約30秒ごと</small></label><label><input type="radio" name="tileMotion" value="off" ${motion==='off'?'checked':''}> なし</label></div></section>`;
+}
+
+applyDisplaySettings();
 function startNatureBreeze(){
   clearInterval(window.clpNatureBreezeTimer);
+  window.clpNatureBreezeTimer=0;
+  board.querySelectorAll('.nature-breeze').forEach(tile=>tile.classList.remove('nature-breeze'));
+  const motion=currentTileMotion();
+  if(motion==='off')return;
+  const interval=motion==='reduced'?30000:10000;
   window.clpNatureBreezeTimer=setInterval(()=>{
-    if(document.hidden||window.CLPStorage.getItem(window.CLPStorage.KEYS.specialFxWeak)==='1'||window.CLPScreens.anyDialogOpen()||!$('titleScreen').classList.contains('hidden')||state.locked)return;
+    if(document.hidden||window.CLPScreens.anyDialogOpen()||!$('titleScreen').classList.contains('hidden')||state.locked)return;
     const tiles=[...board.querySelectorAll('.tile:not(.revealed)')].filter(tile=>!tile.querySelector('.mark-x,.mark-q,.mark-t'));
-    tiles.forEach(tile=>{const [r,c]=(tile.dataset.id||'0-0').split('-').map(Number);const diagonal=(r+c)*85;setTimeout(()=>{tile.classList.add('nature-breeze');setTimeout(()=>tile.classList.remove('nature-breeze'),1450)},diagonal)});
-  },10000);
+    tiles.forEach(tile=>{const [r,c]=(tile.dataset.id||'0-0').split('-').map(Number);const diagonal=(r+c)*85;setTimeout(()=>{if(currentTileMotion()==='off')return;tile.classList.add('nature-breeze');setTimeout(()=>tile.classList.remove('nature-breeze'),1450)},diagonal)});
+  },interval);
 }
-function openSettings(){show('設定',`<div class="settings-list"><button id="setReset">このステージを最初から</button><button id="setRules">ルールを見る</button><button id="setTitle">タイトルへ戻る</button><button id="setFullReset" class="danger-soft">データを完全初期化</button><label><input id="setVibrate" type="checkbox" ${window.CLPStorage.getItem(window.CLPStorage.KEYS.vibrate)==='0'?'':'checked'}> 振動を使う</label></div>`,[['閉じる','close']]);setTimeout(installSettingsEvents,0)}
-function installSettingsEvents(){window.CLPEvents.unbindNamespace('settings');window.CLPEvents.bind('setReset','click',()=>{window.CLPScreens.closeDialog('main');show('確認','<p>現在の盤面を最初からやり直しますか？ ハートは消費しません。</p>',[['やり直す','resetStage'],['キャンセル','close']])},'settings');window.CLPEvents.bind('setRules','click',()=>{window.CLPScreens.closeDialog('main');rules()},'settings');window.CLPEvents.bind('setTitle','click',()=>{window.CLPScreens.closeDialog('main');showTitle()},'settings');window.CLPEvents.bind('setFullReset','click',()=>{window.CLPScreens.closeDialog('main');show('完全初期化','<p>ステージ履歴、仲間、ヒント、カリカリ、ハート、物語の既読状態をすべて消してStage 1へ戻します。</p>',[['すべて初期化','fullReset'],['キャンセル','close']])},'settings');window.CLPEvents.bind('setVibrate','change',e=>window.CLPStorage.setItem(window.CLPStorage.KEYS.vibrate,e.target.checked?'1':'0'),'settings')}
+function openSettings(){show('設定',`<div class="settings-list">${displaySettingsMarkup()}<button id="setReset">このステージを最初から</button><button id="setRules">ルールを見る</button><button id="setTitle">タイトルへ戻る</button><button id="setFullReset" class="danger-soft">データを完全初期化</button><label><input id="setVibrate" type="checkbox" ${window.CLPStorage.getItem(window.CLPStorage.KEYS.vibrate)==='0'?'':'checked'}> 振動を使う</label></div>`,[['閉じる','close']]);setTimeout(installSettingsEvents,0)}
+function installSettingsEvents(){window.CLPEvents.unbindNamespace('settings');window.CLPEvents.bind('setReset','click',()=>{window.CLPScreens.closeDialog('main');show('確認','<p>現在の盤面を最初からやり直しますか？ ハートは消費しません。</p>',[['やり直す','resetStage'],['キャンセル','close']])},'settings');window.CLPEvents.bind('setRules','click',()=>{window.CLPScreens.closeDialog('main');rules()},'settings');window.CLPEvents.bind('setTitle','click',()=>{window.CLPScreens.closeDialog('main');showTitle()},'settings');window.CLPEvents.bind('setFullReset','click',()=>{window.CLPScreens.closeDialog('main');show('完全初期化','<p>ステージ履歴、仲間、ヒント、カリカリ、ハート、物語の既読状態をすべて消してStage 1へ戻します。</p>',[['すべて初期化','fullReset'],['キャンセル','close']])},'settings');window.CLPEvents.bind('setVibrate','change',e=>window.CLPStorage.setItem(window.CLPStorage.KEYS.vibrate,e.target.checked?'1':'0'),'settings');document.querySelectorAll('input[name="displayTheme"]').forEach(input=>input.addEventListener('change',e=>setDisplayTheme(e.target.value)));document.querySelectorAll('input[name="tileMotion"]').forEach(input=>input.addEventListener('change',e=>setTileMotion(e.target.value)))}
 function updateModeCycle(){const b=$('modeCycle');if(!b)return;const names={x:'×マーク',q:'？マーク',t:'△マーク'};b.innerHTML=markIcon(state.mode,true);b.dataset.mode=state.mode;b.setAttribute('aria-label',`${names[state.mode]||'×マーク'}。タップで切り替え`)}
 function setMode(m){state.mode=m;updateModeCycle();saveBoard()}
 function cycleMode(){const order=['x','q','t'],i=Math.max(0,order.indexOf(state.mode));setMode(order[(i+1)%order.length]);haptic(12)}
-function installPrimaryEvents(){const bind=(id,type,handler)=>window.CLPEvents.bind(id,type,handler,'primary');bind('stageSelectBtn','click',history);bind('titleContinue','click',()=>{hideTitle();syncHeartRecovery();save();const resumed=restoreBoard();if(!resumed){resetBoard();saveBoard()}if(!window.CLPStorage.getItem(window.CLPStorage.KEYS.storySeen))showStory()});bind('titleStages','click',()=>{hideTitle();history()});bind('titleSettings','click',openSettings);bind('titleNew','click',()=>show('最初から始める','<p>すべての進行を消してStage 1から始めますか？</p>',[['最初から','fullReset'],['キャンセル','close']]));bind('modeCycle','click',cycleMode);bind('historyBtn','click',history);bind('historyClose','click',()=>window.CLPScreens.closeDialog('history'));bind('catsBtn','click',openCats);bind('catsClose','click',()=>window.CLPScreens.closeDialog('cats'));bind('catsDlg','click',e=>{if(e.target===$('catsDlg'))window.CLPScreens.closeDialog('cats')})}
-function installDebugEvents(){const bind=(id,handler)=>window.CLPEvents.bind(id,'click',handler,'debug');bind('debugOpen',()=>window.CLPScreens.openDialog('debug'));bind('debugClose',()=>window.CLPScreens.closeDialog('debug'));bind('dbgHeart',()=>{state.hearts=5;state.locked=false;save();render();goodToast('HEART FULL!')});bind('dbgKibble',()=>{state.kibble+=10;save();render()});bind('dbgClear',complete);bind('dbgUnlock',()=>{window.CLPDevUnlockAllStages();window.CLPScreens.closeDialog('debug')});bind('dbgAnswer',()=>{state.debugAnswer=!state.debugAnswer;build()});bind('dbgLog',()=>$('debugLog').textContent=state.log.join('\n'));bind('dbgStory',()=>{storyIndex=0;window.CLPScreens.closeDialog('debug');showStory()});bind('dbgReset',()=>{window.CLPStorage.clear();location.reload()})}
-installPrimaryEvents();installDebugEvents();
+function installPrimaryEvents(){const bind=(id,type,handler)=>window.CLPEvents.bind(id,type,handler,'primary');bind('stageSelectBtn','click',history);bind('titleContinue','click',()=>{hideTitle();syncHeartRecovery();save();const resumed=restoreBoard();if(!resumed){resetBoard();saveBoard()}if(!window.CLPStorage.getItem(window.CLPStorage.KEYS.storySeen))showStory()});bind('titleStages','click',()=>{hideTitle();history()});bind('titleSettings','click',openSettings);bind('titleNew','click',()=>show('最初から始める','<p>すべての進行を消してStage 1から始めますか？</p>',[['最初から','fullReset'],['キャンセル','close']]));bind('modeCycle','click',cycleMode);bind('historyBtn','click',history);bind('historyClose','click',()=>window.CLPScreens.closeDialog('history'));bind('catsClose','click',closeCatsToPlaza);bind('catsList','click',e=>{const card=e.target.closest('[data-cat-profile]');if(card)openCatProfile(card.dataset.catProfile)});bind('catProfileBack','click',closeCatProfileToList);bind('catsDlg','click',e=>{if(e.target===$('catsDlg'))closeCatsToPlaza()});bind('catProfileDlg','click',e=>{if(e.target===$('catProfileDlg'))closeCatProfileToList()})}
+function installDebugEvents(){const bind=(id,handler)=>window.CLPEvents.bind(id,'click',handler,'debug');
+/* V219_DEBUG_SPECIAL_CHALLENGE */
+let specialButton=$('dbgSpecialChallenge');
+if(!specialButton){
+  const unlockButton=$('dbgUnlock');
+  if(unlockButton){
+    specialButton=document.createElement('button');
+    specialButton.id='dbgSpecialChallenge';
+    specialButton.type='button';
+    specialButton.textContent='特別挑戦 12×12 を開く';
+    unlockButton.insertAdjacentElement('afterend',specialButton);
+  }
+}
+if(specialButton) bind('dbgSpecialChallenge',()=>{
+  const target=STAGES.findIndex(stage=>Number(stage&&stage.stage)===302);
+  if(target<0){goodToast('特別挑戦データが見つかりません');return;}
+  window.CLPScreens.closeDialog('debug');
+  if(typeof clearBoardSave==='function') clearBoardSave();
+  state.i=target;
+  resetBoard();
+  saveBoard();
+  render();
+  goodToast('特別挑戦 12×12 を開始');
+});bind('debugOpen',()=>window.CLPScreens.openDialog('debug'));bind('debugClose',()=>window.CLPScreens.closeDialog('debug'));bind('dbgHeart',()=>{state.hearts=5;state.locked=false;save();render();goodToast('HEART FULL!')});bind('dbgKibble',()=>{state.kibble+=10;save();render()});bind('dbgClear',complete);bind('dbgUnlock',()=>{window.CLPDevUnlockAllStages();window.CLPScreens.closeDialog('debug')});bind('dbgAnswer',()=>{state.debugAnswer=!state.debugAnswer;build()});bind('dbgLog',()=>$('debugLog').textContent=state.log.join('\n'));bind('dbgStory',()=>{storyIndex=0;window.CLPScreens.closeDialog('debug');showStory()});bind('dbgReset',()=>{window.CLPStorage.clear();location.reload()})}
+installPrimaryEvents();installDebugEvents();installPlazaEvents();installFieldMapEvents();installPlazaReturnEvents();updatePlazaAccess();
 function runDifficultyReport(){
   const report=window.CLPLogic.analyzeAll(STAGES);
   window.CLPDifficultyReport=report;
@@ -615,7 +938,21 @@ window.CLPRefreshHintColors=()=>clpRefreshSemanticHints(board);
 
 
 window.CLPApplyVersion();window.CLPStorage.ensureSchema();syncHeartRecovery();save();resetBoard();installLeafSwipe();installLeafTilt();startNatureBreeze();showTitle();setInterval(()=>{const before=state.hearts;if(syncHeartRecovery()>0||state.hearts!==before){save();renderLife()}},60000);
-const settingsButton=$('settingsBtn');if(settingsButton)settingsButton.disabled=false;window.CLPEvents.bind('settingsBtn','click',openSettings,'primary');document.querySelectorAll('[data-hint]').forEach(b=>window.CLPEvents.bind(b,'click',()=>directHint(b.dataset.hint),'hints'));
+
+const settingsButton=$('settingsBtn');if(settingsButton)settingsButton.disabled=false;window.CLPEvents.bind('settingsBtn','click',openSettings,'primary');function installHintEvents(){
+  window.CLPEvents.unbindNamespace('hints');
+  const dock=$('hintDock');
+  if(!dock)return;
+  window.CLPEvents.bind('hintDock','click',e=>{
+    const button=e.target.closest('[data-hint]');
+    if(!button||!dock.contains(button))return;
+    if(e.target.closest('[data-info]'))return;
+    e.preventDefault();
+    e.stopPropagation();
+    directHint(button.dataset.hint);
+  },'hints');
+}
+installHintEvents();
 
 const hintDescriptions={toy:['タイジュの道しるべ','猫じゃらしを使うと、猫がいないと確定できるマスを1か所、青く光らせます。青いマスには×印を付けます。消費はカリカリ1個です。'],matatabi:['またたび','盤面を論理的に前進させる有効な一手を、理由付きで教えます。猫を開く手や安全な×など、状況に合う一手を案内します。'],can:['ネコ缶','正解の猫を1匹、その場で自動的に開く強力なヒントです。'],paw:['肉球チェック','間違って付けた×を1つ見つけて直します。間違いがなければ消費しません。']};
 document.addEventListener('click',e=>{const info=e.target.closest('[data-info]');if(!info)return;e.preventDefault();e.stopPropagation();const d=hintDescriptions[info.dataset.info];if(d)show(d[0],`<p>${d[1]}</p>`,[['閉じる','close']])});

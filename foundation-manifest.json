@@ -1,13 +1,9 @@
 {
-  "foundationVersion": "0.8.33",
+  "foundationVersion": "0.8.90",
   "saveSchemaVersion": 1,
   "boardSaveVersion": 1,
-  "stageCount": 50,
-  "knownLogicOnlyGapStages": [
-    37,
-    38,
-    39
-  ],
+  "stageCount": 200,
+  "knownLogicOnlyGapStages": [],
   "bossPhaseSizes": [
     7,
     8,
@@ -35,8 +31,700 @@
     "logic-engine.js",
     "quality-engine.js"
   ],
-  "nextSafeWork": "Archive ignored development artifacts separately; no game or CSS changes in the archive step",
+  "nextSafeWork": "Keep the frozen Stage 200 milestone unchanged. Audit the next separate Forest Plaza growth step or confirmed story milestone before implementation.",
   "cssBaseline": "css-visual-baseline.json",
   "repositoryHousekeepingPlan": "repository-housekeeping-plan.json",
-  "gitCheckpoint": "Ver.0.8.33 clean working-tree checkpoint"
+  "gitCheckpoint": "Ver.0.8.33 clean working-tree checkpoint",
+  "stageQualityStatus": {
+    "stages1To200Unique": true,
+    "stages1To200ProductionLogicSolved": true,
+    "knownSolverGaps": [],
+    "regeneratedStages": [
+      37,
+      38,
+      39,
+      52,
+      53,
+      55,
+      59,
+      101,
+      105,
+      108,
+      111,
+      113,
+      116,
+      122,
+      131,
+      133,
+      134,
+      135,
+      136,
+      142,
+      146,
+      151,
+      155,
+      159,
+      162,
+      165,
+      171,
+      172,
+      174,
+      175,
+      176,
+      181,
+      183,
+      187,
+      199
+    ],
+    "maximumRequiredRuleLevel": 2,
+    "stage101To200Audit": "NEKOMICHI_STAGE_101_200_FINAL_AUDIT_V157.json"
+  },
+  "markerVisibilityStatus": {
+    "boardMarks": [
+      "x",
+      "question",
+      "triangle"
+    ],
+    "approvedStyleSha256": "844ed00f0b132f85a5b9b83d5abadfc4467dea5e7d6537efa891bdcfe0bf920e",
+    "layoutChanged": false,
+    "referenceMark": "x",
+    "triangleEnlarged": true,
+    "questionThickened": true,
+    "questionDotRadius": 4.8,
+    "questionGapPreserved": true,
+    "runtimeReviewRequired": true,
+    "questionDotOutlined": true,
+    "questionDotCoreScale": 0.58,
+    "questionDotOutlineRadius": 7.8,
+    "questionDotCoreRadius": 4.8,
+    "questionDotRadiusMethod": "css-r",
+    "questionDotRimMethod": "actual-child-g-layers",
+    "questionDotStrokeWidth": 3.2,
+    "questionDotRimWidth": 1.85,
+    "questionOpticalAlignmentReference": "x",
+    "questionWidthPercent": 94,
+    "questionHeightPercent": 96,
+    "strokeReference": "x",
+    "sharedOutlineStrokeWidth": 18,
+    "sharedCoreStrokeWidth": 13,
+    "triangleSizePercent": 96,
+    "questionDotUnchanged": true
+  },
+  "markerDragStatus": {
+    "modes": [
+      "x",
+      "q",
+      "t"
+    ],
+    "sharedPointerFlow": true,
+    "replaceDifferentMarkOnAdd": true,
+    "removeOnlySameSelectedMark": true,
+    "revealedCellsProtected": true,
+    "singleTapPreserved": true
+  },
+  "markButtonIconStatus": {
+    "isolatedFromBoard": true,
+    "supportedMarks": [
+      "x",
+      "q",
+      "t"
+    ],
+    "iconPercent": 62,
+    "centered": true,
+    "clippedToButton": true,
+    "boardMarkersFrozenAt": "0.8.51",
+    "runtimeReviewRequired": true,
+    "xRenderMethod": "svg",
+    "xLegacyPseudoElementsDisabled": true,
+    "triangleAndQuestionUnchanged": true
+  },
+  "hintButtonActionV0857": {
+    "status": "runtime-review-required",
+    "rootCause": "binding occurred only to data-hint nodes present at startup; later visible controls were not guaranteed to own the handler",
+    "binding": "delegated click on persistent hintDock",
+    "infoButtonExcluded": true,
+    "toyConfirmationPreserved": true,
+    "kibbleSpendTimingPreserved": true
+  },
+  "hintSafetyV0858": {
+    "status": "foundation-verified",
+    "logicalSafeXOnly": true,
+    "solutionScanFallbackRemoved": true,
+    "revealedTargetRejected": true,
+    "anyExistingMarkRejected": true,
+    "answerCellRejected": true,
+    "invalidTargetNoCharge": true,
+    "kibbleSpentAfterValidatedStep": true
+  },
+  "stageExpansionV0859": {
+    "status": "foundation-verified",
+    "range": [
+      51,
+      100
+    ],
+    "boardSizes": {
+      "8x8": 17,
+      "9x9": 18,
+      "10x10": 15
+    },
+    "assumptionForbidden": true,
+    "stage100Size": 10
+  },
+  "stageExpansionV0860": {
+    "status": "foundation-verified",
+    "range": [
+      101,
+      200
+    ],
+    "boardSize": "10x10",
+    "assumptionForbidden": true,
+    "stage150Boss": true,
+    "stage200Boss": true
+  },
+  "forestPlazaV0861": {
+    "status": "minimum-foundation",
+    "unlock": "taijuJoined",
+    "dialog": "plazaDlg",
+    "features": [
+      "large-tree-cat-record-link",
+      "teko-placeholder",
+      "nyanjii-placeholder",
+      "taiju-placeholder",
+      "map-placeholder",
+      "grass-placeholder"
+    ],
+    "saveSchemaChanged": false,
+    "boardSaveChanged": false,
+    "runtimeReviewRequired": true
+  },
+  "fieldMapV0862": {
+    "status": "visual-prototype",
+    "range": "Stage 1-50",
+    "entry": "plazaMap",
+    "saveSchemaChanged": false,
+    "boardSaveChanged": false,
+    "runtimeReviewRequired": true
+  },
+  "fieldMapProgressV0863": {
+    "status": "connected",
+    "sources": [
+      "state.i",
+      "p().stage",
+      "state.history",
+      "isStageUnlocked"
+    ],
+    "lockedNodes": true,
+    "currentPosition": true,
+    "stageListConnected": true,
+    "saveSchemaChanged": false,
+    "boardSaveChanged": false,
+    "runtimeReviewRequired": true
+  },
+  "fieldMapMovementV0864": {
+    "routeSegmentColoring": true,
+    "tekoShortMovement": true,
+    "movementMemory": "sessionStorage only",
+    "persistentSaveChanged": false,
+    "saveSchemaChanged": false,
+    "boardSaveChanged": false,
+    "runtimeReviewRequired": true
+  },
+  "fieldMapPositionFixV0865": {
+    "renderAfterDialogOpen": true,
+    "fixesTopLeftTeko": true,
+    "mapDisplayRange": "Stage 1-50",
+    "developmentUnlockMessageCapped": true,
+    "saveSchemaChanged": false,
+    "boardSaveChanged": false,
+    "runtimeReviewRequired": true
+  },
+  "fieldMapRangeSelectionV0866": {
+    "mapNodeOpensExistingHistoryDialog": true,
+    "ranges": [
+      "1-10",
+      "11-20",
+      "21-30",
+      "31-40",
+      "41-50"
+    ],
+    "lockedNodeGuard": true,
+    "stageSelectionLogicReused": true,
+    "saveSchemaChanged": false,
+    "boardSaveChanged": false,
+    "runtimeReviewRequired": true
+  },
+  "fieldMapRangeNavigationV0867": {
+    "rangeHeading": true,
+    "returnToMapButton": true,
+    "toolbarCreatedAtRuntime": true,
+    "existingHistoryDialogReused": true,
+    "saveSchemaChanged": false,
+    "boardSaveChanged": false,
+    "runtimeReviewRequired": true
+  },
+  "puzzleToPlazaConfirmationV0868": {
+    "sourceButton": "plazaBtn",
+    "dialog": "plazaReturnDlg",
+    "cancelKeepsPuzzle": true,
+    "confirmOpensForestPlaza": true,
+    "saveSchemaChanged": false,
+    "boardSaveChanged": false,
+    "runtimeReviewRequired": true
+  },
+  "plazaCloseDestinationV0869": {
+    "confirmedPuzzleReturn": "fieldMap",
+    "fieldMapToPlazaReturn": "fieldMap",
+    "cancelKeepsPuzzle": true,
+    "boardSnapshotBeforeLeavingPuzzle": true,
+    "persistentSchemaChanged": false,
+    "saveSchemaChanged": false,
+    "boardSaveChanged": false,
+    "runtimeReviewRequired": true
+  },
+  "catProfileStructureV0870": {
+    "wireframeRole": "structure-reference-only",
+    "entry": "Forest Plaza large tree",
+    "directPuzzleEntry": false,
+    "listAndDetailSeparated": true,
+    "initialProfiles": [
+      "teko",
+      "nyanjii",
+      "taiju"
+    ],
+    "taijuVisibleAfterJoinOnly": true,
+    "unknownCatsVisible": false,
+    "unknownFactsVisible": false,
+    "persistentSchemaChanged": false,
+    "saveSchemaChanged": false,
+    "boardSaveChanged": false,
+    "runtimeReviewRequired": true
+  },
+  "catProfileRecordIdsV0871": {
+    "recordIdsStable": true,
+    "profileReadKey": "clpCatProfileReadV1",
+    "bodyTextPersisted": false,
+    "unreadPerCat": true,
+    "treeNotice": true,
+    "readWhenDetailOpened": true,
+    "unknownCatsVisible": false,
+    "unknownFactsVisible": false,
+    "persistentSchemaChanged": false,
+    "saveSchemaChanged": false,
+    "boardSaveChanged": false,
+    "runtimeReviewRequired": true
+  },
+  "catProfileTreeNoticeV0872": {
+    "reason": "Ver.0.8.71 notice state worked, but the large-tree badge rendered outside the visible tree label area.",
+    "placement": "inside plazaTree strong label",
+    "profileReadBehaviorChanged": false,
+    "persistentSchemaChanged": false,
+    "saveSchemaChanged": false,
+    "boardSaveChanged": false,
+    "runtimeReviewRequired": true
+  },
+  "catProfileProgressiveUnlockV0873": {
+    "ruleRegistry": true,
+    "supportedConditions": [
+      "always",
+      "taijuJoined",
+      "stageCleared:<number>"
+    ],
+    "rendersUnlockedSectionsOnly": true,
+    "recordIdsUseStableGroupIds": true,
+    "confirmedInformationOnly": true,
+    "newStoryFactsAdded": false,
+    "unknownFactsVisible": false,
+    "profileBodyPersisted": false,
+    "persistentSchemaChanged": false,
+    "saveSchemaChanged": false,
+    "boardSaveChanged": false,
+    "runtimeReviewRequired": true
+  },
+  "catProfileReadIdMigrationV0874": {
+    "from": "cat.section<number>.line<number>",
+    "to": "cat.<stable-group-id>.line<number>",
+    "preservesExistingReadState": true,
+    "runsLazilyOnRead": true,
+    "removesLegacyIds": false,
+    "profileTextChanged": false,
+    "persistentSchemaChanged": false,
+    "saveSchemaChanged": false,
+    "boardSaveChanged": false,
+    "runtimeReviewRequired": true
+  },
+  "catProfileStageClearedConditionV0875": {
+    "auditSource": "NEKOMICHI_PROFILE_STAGE_TRIGGERS_BEFORE_V183.txt",
+    "authoritativeCompletionSignal": "state.history[stageNo] > 0",
+    "unlockSignalRejected": "highestUnlockedStage()",
+    "developerUnlockIgnored": true,
+    "conditionName": "stageCleared:<number>",
+    "existingProfileRulesChanged": false,
+    "newStoryFactsAdded": false,
+    "profileTextChanged": false,
+    "persistentSchemaChanged": false,
+    "saveSchemaChanged": false,
+    "boardSaveChanged": false,
+    "runtimeReviewRequired": true
+  },
+  "catProfileStage50RecordV0876": {
+    "character": "teko",
+    "recordGroupId": "taiju-companion",
+    "condition": "stageCleared:50",
+    "title": "新しい仲間",
+    "sourceFacts": [
+      "Stage 50 boss result",
+      "Taiju join flag",
+      "existing Taiju profile"
+    ],
+    "developerUnlockIgnored": true,
+    "unknownFactsAdded": false,
+    "otherCharactersChanged": false,
+    "persistentSchemaChanged": false,
+    "saveSchemaChanged": false,
+    "boardSaveChanged": false,
+    "runtimeReviewRequired": true
+  },
+  "catProfileProgressionFoundationV0877": {
+    "status": "frozen",
+    "auditSource": "NEKOMICHI_PROFILE_PROGRESS_RUNTIME_BEFORE_V186.txt",
+    "auditFailures": [],
+    "verifiedChecks": [
+      "version consistency",
+      "Stage 50 real-clear condition",
+      "developer unlock isolation",
+      "stable record-group IDs",
+      "legacy read-ID migration",
+      "unlocked-only rendering",
+      "large-tree unread refresh",
+      "save schema unchanged",
+      "board save unchanged"
+    ],
+    "authoritativeCompletionSignal": "state.history[stageNo] > 0",
+    "supportedConditions": [
+      "always",
+      "taijuJoined",
+      "stageCleared:<number>"
+    ],
+    "stage50Contract": {
+      "character": "teko",
+      "recordGroupId": "taiju-companion",
+      "condition": "stageCleared:50"
+    },
+    "changePolicy": [
+      "Do not change record-group IDs after release.",
+      "Do not use highestUnlockedStage or developer unlocks for profile records.",
+      "Add only confirmed story facts.",
+      "Each new record requires an explicit unlock rule and unread regression check."
+    ],
+    "runtimeBehaviorChanged": false,
+    "profileTextChanged": false,
+    "persistentSchemaChanged": false,
+    "saveSchemaChanged": false,
+    "boardSaveChanged": false
+  },
+  "hubMapConnectionV0878": {
+    "status": "connected",
+    "auditSource": "NEKOMICHI_NEXT_HUB_MAP_STEP_BEFORE_V187.txt",
+    "scope": "Forest Plaza map gate wording and accessibility only",
+    "stageRange": [
+      1,
+      50
+    ],
+    "unlockCondition": "taijuJoined",
+    "existingMapRuntimeReused": true,
+    "profileFoundationChanged": false,
+    "saveSchemaChanged": false
+  },
+  "forestPlazaMapRouteFoundationV0879": {
+    "status": "frozen",
+    "auditSource": "NEKOMICHI_FOREST_PLAZA_MAP_RUNTIME_BEFORE_V188.txt",
+    "auditFailures": [],
+    "verifiedChecks": [
+      "version consistency",
+      "Journey Map label and accessibility",
+      "Forest Plaza map gate binding",
+      "field map open and render functions",
+      "Stage 1-50 range selection route",
+      "Forest Plaza return route",
+      "Taiju join unlock condition",
+      "profile progression foundation unchanged",
+      "save schema unchanged",
+      "board save unchanged"
+    ],
+    "stageRange": [
+      1,
+      50
+    ],
+    "unlockCondition": "taijuJoined",
+    "entryPoint": "Forest Plaza > Journey Map",
+    "returnPoint": "Journey Map > Forest Plaza",
+    "changePolicy": [
+      "Do not replace this route while adding later map regions.",
+      "Do not use developer unlocks as the production plaza unlock condition.",
+      "Do not mix map expansion with visual redesign or story additions.",
+      "Preserve Stage 1-50 node ranges and return behavior during future expansion."
+    ],
+    "runtimeBehaviorChanged": false,
+    "profileFoundationChanged": false,
+    "saveSchemaChanged": false,
+    "boardSaveChanged": false
+  },
+  "stage51To100MapRangeV0880": {
+    "status": "frozen",
+    "auditSource": "NEKOMICHI_STAGE_51_100_MAP_EXPANSION_BEFORE_V189.txt",
+    "auditFailures": [],
+    "stageRange": [
+      51,
+      100
+    ],
+    "existingStageDataReused": true,
+    "existingRendererReused": true,
+    "existingRangeSelectorReused": true,
+    "productionUnlockCondition": "Stage 50 clear history exists",
+    "developerUnlockAloneIsInsufficient": true,
+    "frozenStage1To50RouteChanged": false,
+    "storyChanged": false,
+    "profileChanged": false,
+    "saveSchemaChanged": false,
+    "boardSaveChanged": false,
+    "runtimeAuditSource": "NEKOMICHI_STAGE_51_100_MAP_RUNTIME_BEFORE_V192.txt",
+    "runtimeAuditFailures": [],
+    "runtimeVerifiedChecks": 28,
+    "returnBinding": "$('mapRangeBack').addEventListener('click') -> close history -> openFieldMap()",
+    "freezePolicy": [
+      "Require actual Stage 50 clear history for Stage 51-100 map access.",
+      "Do not allow developer all-stage unlock alone to bypass the production gate.",
+      "Preserve the existing Stage 1-50 nodes and Forest Plaza return route.",
+      "Reuse the existing range selector and runtime-created mapRangeBack route.",
+      "Do not combine this frozen route with story, profile, visual redesign or save-schema changes."
+    ],
+    "runtimeBehaviorChangedByFreeze": false
+  },
+  "stage51To100MapRouteFoundationV0881": {
+    "status": "frozen",
+    "sourceConnection": "stage51To100MapRangeV0880",
+    "runtimeAuditSource": "NEKOMICHI_STAGE_51_100_MAP_RUNTIME_BEFORE_V192.txt",
+    "runtimeAuditFailures": [],
+    "verifiedProductionBehavior": [
+      "locked before actual Stage 50 clear",
+      "developer unlock alone insufficient",
+      "selectable after Stage 50 clear history exists",
+      "Stage 51-100 range filtered by existing selector",
+      "mapRangeBack returns from history to Journey Map",
+      "Journey Map returns to Forest Plaza",
+      "Stage 1-50 nodes remain unchanged"
+    ],
+    "storyChanged": false,
+    "profileChanged": false,
+    "saveSchemaChanged": false,
+    "boardSaveChanged": false,
+    "runtimeBehaviorChanged": false
+  },
+  "forestPlazaStage100RestSpotV0882": {
+    "status": "frozen",
+    "sourceAudit": "NEKOMICHI_NEXT_HUB_GROWTH_STEP_BEFORE_V192.txt",
+    "element": "plazaGrass",
+    "unlock": "actual Stage 100 clear history",
+    "progressSignal": "state.history[100]",
+    "scope": "one isolated visual hub-growth step",
+    "newCharacterIdentityAdded": false,
+    "storyFactsChanged": false,
+    "mapRoutesChanged": false,
+    "profileProgressionChanged": false,
+    "saveSchemaChanged": false,
+    "boardSaveChanged": false,
+    "runtimeAuditSource": "NEKOMICHI_STAGE_100_REST_SPOT_RUNTIME_BEFORE_V192.txt",
+    "runtimeAuditFailures": [],
+    "runtimeVerifiedChecks": 28,
+    "freezePolicy": [
+      "Use only actual Stage 100 clear history from state.history[100].",
+      "Keep the pre-clear grass presentation and post-clear rest-spot presentation.",
+      "Derive the presentation again whenever Forest Plaza opens or the app reloads.",
+      "Do not add a dedicated rest-spot save field.",
+      "Do not combine this frozen growth step with another hub-growth element."
+    ],
+    "runtimeBehaviorChangedByFreeze": false
+  },
+  "forestPlazaStage100RestSpotFoundationV0883": {
+    "status": "frozen",
+    "sourceImplementation": "forestPlazaStage100RestSpotV0882",
+    "runtimeAuditSource": "NEKOMICHI_STAGE_100_REST_SPOT_RUNTIME_BEFORE_V192.txt",
+    "runtimeAuditFailures": [],
+    "runtimeVerifiedChecks": 28,
+    "verifiedBehavior": [
+      "before Stage 100 clear: grass icon and 草むら label",
+      "before clear: pending-progress click message",
+      "after Stage 100 clear: rest-spot icon and 休憩場所 label",
+      "after clear: rest click message",
+      "reopen and reload derive state from existing Stage 100 history",
+      "no dedicated rest-spot save field"
+    ],
+    "storyChanged": false,
+    "mapRoutesChanged": false,
+    "profileProgressionChanged": false,
+    "saveSchemaChanged": false,
+    "boardSaveChanged": false,
+    "runtimeBehaviorChanged": false
+  },
+  "stage101To200MapRangeV0884": {
+    "status": "frozen",
+    "sourceAudit": "NEKOMICHI_STAGE_101_200_MAP_EXPANSION_BEFORE_V193.txt",
+    "auditNote": "The source final audit covers 100 stages numbered 101-200; stageCount=100 is correct.",
+    "stageRange": [
+      101,
+      200
+    ],
+    "productionGate": "state.history[100]",
+    "developerUnlockAloneInsufficient": true,
+    "reusedRuntime": [
+      "generic map-node event handler",
+      "openMapStageRange(from,to)",
+      "existing productionAfter history gate"
+    ],
+    "preservedFoundations": [
+      "Stage 1-100 map routes",
+      "Stage 100 Forest Plaza rest spot",
+      "cat-profile progression foundation"
+    ],
+    "storyChanged": false,
+    "profileChanged": false,
+    "stageDataChanged": false,
+    "saveSchemaChanged": false,
+    "boardSaveChanged": false,
+    "runtimeAuditSource": "NEKOMICHI_STAGE_101_200_MAP_RUNTIME_BEFORE_V194.txt",
+    "runtimeAuditFailures": [],
+    "runtimeVerifiedChecks": 26,
+    "verifiedProductionBehavior": [
+      "locked without actual Stage 100 clear history",
+      "developer unlock alone is insufficient",
+      "selectable after actual Stage 100 clear history exists",
+      "Stage 101-200 range uses the existing stage-list selector",
+      "mapRangeBack returns from the stage list to Journey Map",
+      "Journey Map returns to Forest Plaza",
+      "Stage 1-100 routes remain unchanged",
+      "Stage 100 rest spot remains unchanged"
+    ],
+    "runtimeBehaviorChangedByFreeze": false
+  },
+  "stage101To200MapRouteFoundationV0885": {
+    "status": "frozen",
+    "sourceImplementation": "stage101To200MapRangeV0884",
+    "runtimeAuditSource": "NEKOMICHI_STAGE_101_200_MAP_RUNTIME_BEFORE_V194.txt",
+    "runtimeAuditFailures": [],
+    "runtimeVerifiedChecks": 26,
+    "stageRange": [
+      101,
+      200
+    ],
+    "authoritativeUnlockCondition": "state.history[100]",
+    "developerUnlockAloneInsufficient": true,
+    "returnRoutes": [
+      "Stage list > Journey Map",
+      "Journey Map > Forest Plaza"
+    ],
+    "changePolicy": [
+      "Do not replace or move the frozen Stage 1-100 nodes while extending later regions.",
+      "Do not use developer unlocks as the production unlock condition.",
+      "Do not combine later map expansion with story, profile or visual redesign changes.",
+      "Preserve the Stage 100 rest spot and current return routes."
+    ],
+    "storyChanged": false,
+    "profileChanged": false,
+    "stageDataChanged": false,
+    "saveSchemaChanged": false,
+    "boardSaveChanged": false,
+    "runtimeBehaviorChanged": false
+  },
+  "forestPlazaStage200MilestoneV0886": {
+    "status": "frozen",
+    "sourceAudit": "NEKOMICHI_STAGE_200_MILESTONE_BEFORE_V196.txt",
+    "actualClearGate": "isStageCleared(200)",
+    "visualChange": "small journey-footprint milestone badge in Forest Plaza",
+    "message": "Stage 200までの長い道のりを歩き、森の広場に旅の足あとが残りました。",
+    "newCompanionAdded": false,
+    "companionIdentityInvented": false,
+    "profileChanged": false,
+    "storyChanged": false,
+    "hintUnlockChanged": false,
+    "stageDataChanged": false,
+    "stage100RestSpotChanged": false,
+    "mapRouteChanged": false,
+    "newSaveFieldAdded": false,
+    "saveSchemaChanged": false,
+    "boardSaveChanged": false,
+    "runtimeAuditSource": "NEKOMICHI_STAGE_200_MILESTONE_RUNTIME_BEFORE_V197.txt",
+    "runtimeAuditFailures": [],
+    "runtimeVerifiedChecks": 32,
+    "verifiedBehavior": [
+      "hidden before actual Stage 200 clear",
+      "developer unlock alone is insufficient",
+      "badge and Stage 200 plaza message appear after actual clear",
+      "existing state.history[200] restores the milestone after reload",
+      "no dedicated milestone save field"
+    ],
+    "runtimeBehaviorChangedByFreeze": false
+  },
+  "forestPlazaStage200MilestoneFoundationV0887": {
+    "status": "frozen",
+    "sourceImplementation": "forestPlazaStage200MilestoneV0886",
+    "runtimeAuditSource": "NEKOMICHI_STAGE_200_MILESTONE_RUNTIME_BEFORE_V197.txt",
+    "runtimeAuditFailures": [],
+    "runtimeVerifiedChecks": 32,
+    "authoritativeUnlockCondition": "isStageCleared(200)",
+    "developerUnlockAloneInsufficient": true,
+    "display": [
+      "Stage 200 到達",
+      "遠い道の先まで歩いた証"
+    ],
+    "persistentSource": "existing state.history[200]",
+    "changePolicy": [
+      "Do not replace actual clear history with developer unlock or highest unlocked stage.",
+      "Do not add a dedicated Stage 200 milestone save field.",
+      "Do not attach a new companion, profile fact, story event or hint unlock without confirmed design data.",
+      "Preserve the frozen Stage 100 rest spot and Stage 1-200 map routes."
+    ],
+    "newCompanionAdded": false,
+    "profileChanged": false,
+    "storyChanged": false,
+    "hintUnlockChanged": false,
+    "mapRouteChanged": false,
+    "stage100RestSpotChanged": false,
+    "saveSchemaChanged": false,
+    "boardSaveChanged": false,
+    "runtimeBehaviorChanged": false
+  },
+  "displaySettingsV0889": {
+    "status": "runtime-review-required",
+    "themes": [
+      "pattern-pastel",
+      "pattern-vivid",
+      "plain-pastel",
+      "plain-vivid"
+    ],
+    "defaultTheme": "pattern-pastel",
+    "smallPreviews": true,
+    "motionModes": [
+      "full",
+      "reduced",
+      "off"
+    ],
+    "motionIntervalsSeconds": {
+      "full": 10,
+      "reduced": 30,
+      "off": 0
+    },
+    "settingsPersistedInLocalStorage": true,
+    "saveSchemaChanged": false,
+    "boardSaveChanged": false
+  },
+  "displaySettingsV0890": {
+    "status": "tdz-startup-repaired-runtime-review-required",
+    "sourceFailure": "ReferenceError: Cannot access 'TILE_MOTION_KEY' before initialization",
+    "rootCause": "startNatureBreeze ran before V222 const declarations were initialized",
+    "repair": "relocated display-settings declarations and functions before startNatureBreeze and startup execution",
+    "settingsButtonBindingChanged": false,
+    "displayOptionsChanged": false,
+    "saveSchemaChanged": false,
+    "boardSaveChanged": false
+  }
 }
