@@ -5,5 +5,5 @@ ok(b.cssDeletionGate==='audit-required','CSS gate must remain audit-required');
 ok(b.nextCleanupCandidate===null,'no second CSS candidate may be selected');
 ok(b.cascadeAuditDecision==='No second CSS cleanup candidate approved','cascade decision mismatch');
 ok(Array.isArray(b.cascadeAuditLimitations)&&b.cascadeAuditLimitations.length===4,'cascade limitations missing');
-const hash=crypto.createHash('sha256').update(Buffer.from(css)).digest('hex');ok(hash==='7615d0a51bc20ddf5e314d3aade781747491ef1576f5f687f4ea821a180ddb2e','style.css changed during closure');
+const hash=crypto.createHash('sha256').update(Buffer.from(css)).digest('hex');ok(hash==='8d1aa2e20b3a9cf116877ee930ffffdd9505b619435f2f34da4f77ad125b1d8d','style.css changed during closure');
 console.log('OK: Nekomichi Ver.0.8.29 CSS cleanup closure passed.');

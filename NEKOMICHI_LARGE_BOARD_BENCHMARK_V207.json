@@ -1,0 +1,218 @@
+{
+  "benchmarkVersion": "V207",
+  "purpose": "Large-board-only 11x11 and 12x12 feasibility benchmark.",
+  "timeLimits": {
+    "perSizeSeconds": 30.0,
+    "globalSeconds": 65.0
+  },
+  "totalElapsedSeconds": 37.802,
+  "foundCount": 1,
+  "requiredCount": 2,
+  "allLargeSizesFound": false,
+  "results": [
+    {
+      "size": 11,
+      "status": "FOUND",
+      "elapsedSeconds": 7.797,
+      "attempts": 976,
+      "connectedCandidates": 971,
+      "uniqueChecks": 120,
+      "bestObservedMaximumArea": 23,
+      "candidate": {
+        "size": 11,
+        "solution": [
+          4,
+          9,
+          7,
+          0,
+          8,
+          6,
+          1,
+          10,
+          2,
+          5,
+          3
+        ],
+        "regions": [
+          [
+            3,
+            3,
+            3,
+            3,
+            0,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          [
+            3,
+            3,
+            3,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            1,
+            7
+          ],
+          [
+            3,
+            3,
+            3,
+            3,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            7
+          ],
+          [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            2,
+            2,
+            7,
+            7
+          ],
+          [
+            3,
+            3,
+            3,
+            8,
+            3,
+            2,
+            2,
+            2,
+            4,
+            7,
+            7
+          ],
+          [
+            3,
+            3,
+            8,
+            8,
+            8,
+            8,
+            5,
+            7,
+            7,
+            7,
+            7
+          ],
+          [
+            3,
+            6,
+            8,
+            8,
+            10,
+            10,
+            5,
+            7,
+            7,
+            7,
+            7
+          ],
+          [
+            3,
+            6,
+            8,
+            8,
+            10,
+            10,
+            10,
+            10,
+            7,
+            7,
+            7
+          ],
+          [
+            3,
+            8,
+            8,
+            8,
+            8,
+            10,
+            10,
+            10,
+            7,
+            7,
+            10
+          ],
+          [
+            8,
+            8,
+            8,
+            8,
+            9,
+            9,
+            10,
+            10,
+            7,
+            10,
+            10
+          ],
+          [
+            8,
+            8,
+            8,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10
+          ]
+        ],
+        "areaStats": {
+          "sizes": [
+            1,
+            1,
+            24,
+            26,
+            1,
+            2,
+            2,
+            20,
+            20,
+            2,
+            22
+          ],
+          "minimum": 1,
+          "maximum": 26,
+          "singletons": 3,
+          "twoCells": 3
+        },
+        "canonicalKey": "384091d8f3b73109cea89427054f57db4a83e21a2c2ad9a3f2dd8f8a1a259e5e",
+        "attempt": 976,
+        "profile": 3
+      }
+    },
+    {
+      "size": 12,
+      "status": "TIMEOUT",
+      "elapsedSeconds": 30.005,
+      "attempts": 2736,
+      "connectedCandidates": 2722,
+      "uniqueChecks": 256,
+      "bestObservedMaximumArea": 23,
+      "candidate": null
+    }
+  ],
+  "decision": "LARGE_BOARD_CONSTRUCTION_NEEDS_REPAIR",
+  "gameFilesModified": false
+}

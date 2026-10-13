@@ -1,0 +1,117 @@
+NEKOMICHI STAGE QUALITY AUDIT V114
+Collected: 2026-10-12T18:15:20
+
+=== SUMMARY ===
+stages=50
+unique=50
+logic_solved=50
+difficulty_counts={1: 3, 2: 1, 3: 5, 4: 11, 5: 30}
+flag_counts={'TOO_HARD_FOR_11_30': 20, 'TOO_HARD_FOR_1_10': 7, 'TOO_HARD_FOR_31_50': 20}
+problem_stages=[4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50]
+
+=== STAGE TABLE ===
+stage	size	solutions	logic	steps	rule	pattern	difficulty	score	storedDifficulty	storedLogic	flags
+1	4	1	True	16	1	0	1	28	None	None	-
+2	4	1	True	16	1	0	1	28	None	None	-
+3	4	1	True	16	1	0	1	28	None	None	-
+4	5	1	True	25	2	2	3	53	None	None	TOO_HARD_FOR_1_10
+5	5	1	True	25	1	0	2	39	None	None	TOO_HARD_FOR_1_10
+6	5	1	True	25	2	2	3	53	None	None	TOO_HARD_FOR_1_10
+7	5	1	True	25	2	3	3	58	None	None	TOO_HARD_FOR_1_10
+8	5	1	True	25	2	3	3	58	None	None	TOO_HARD_FOR_1_10
+9	5	1	True	25	2	2	3	53	None	None	TOO_HARD_FOR_1_10
+10	6	1	True	36	2	1	4	61	None	None	TOO_HARD_FOR_1_10
+11	6	1	True	36	2	3	4	71	None	None	TOO_HARD_FOR_11_30
+12	6	1	True	36	2	2	4	66	None	None	TOO_HARD_FOR_11_30
+13	6	1	True	36	2	1	4	61	None	None	TOO_HARD_FOR_11_30
+14	6	1	True	36	2	2	4	66	None	None	TOO_HARD_FOR_11_30
+15	6	1	True	36	2	2	4	66	None	None	TOO_HARD_FOR_11_30
+16	6	1	True	36	2	3	4	71	None	None	TOO_HARD_FOR_11_30
+17	6	1	True	36	2	2	4	66	None	None	TOO_HARD_FOR_11_30
+18	6	1	True	36	2	2	4	66	None	None	TOO_HARD_FOR_11_30
+19	6	1	True	36	2	1	4	61	None	None	TOO_HARD_FOR_11_30
+20	7	1	True	49	2	4	5	91	None	None	TOO_HARD_FOR_11_30
+21	7	1	True	49	2	1	5	76	3	True	TOO_HARD_FOR_11_30
+22	7	1	True	49	2	2	5	81	3	True	TOO_HARD_FOR_11_30
+23	7	1	True	49	2	2	5	81	3	True	TOO_HARD_FOR_11_30
+24	7	1	True	49	2	5	5	96	3	True	TOO_HARD_FOR_11_30
+25	7	1	True	49	2	4	5	91	3	True	TOO_HARD_FOR_11_30
+26	7	1	True	49	2	4	5	91	3	True	TOO_HARD_FOR_11_30
+27	7	1	True	49	1	0	4	67	2	True	TOO_HARD_FOR_11_30
+28	7	1	True	49	2	5	5	96	3	True	TOO_HARD_FOR_11_30
+29	7	1	True	49	2	3	5	86	3	True	TOO_HARD_FOR_11_30
+30	7	1	True	49	2	2	5	81	3	True	TOO_HARD_FOR_11_30
+31	7	1	True	49	2	2	5	81	3	True	TOO_HARD_FOR_31_50
+32	7	1	True	49	2	1	5	76	3	True	TOO_HARD_FOR_31_50
+33	8	1	True	64	2	2	5	98	None	None	TOO_HARD_FOR_31_50
+34	7	1	True	49	2	2	5	81	3	True	TOO_HARD_FOR_31_50
+35	8	1	True	64	1	0	5	84	None	None	TOO_HARD_FOR_31_50
+36	7	1	True	49	2	2	5	81	3	True	TOO_HARD_FOR_31_50
+37	8	1	True	64	2	3	5	103	None	None	TOO_HARD_FOR_31_50
+38	8	1	True	64	2	3	5	103	None	None	TOO_HARD_FOR_31_50
+39	8	1	True	64	2	3	5	103	None	None	TOO_HARD_FOR_31_50
+40	8	1	True	64	2	3	5	103	3	True	TOO_HARD_FOR_31_50
+41	8	1	True	64	2	3	5	103	3	True	TOO_HARD_FOR_31_50
+42	8	1	True	64	2	3	5	103	3	True	TOO_HARD_FOR_31_50
+43	8	1	True	64	2	3	5	103	3	True	TOO_HARD_FOR_31_50
+44	8	1	True	64	2	1	5	93	3	True	TOO_HARD_FOR_31_50
+45	8	1	True	64	2	2	5	98	3	True	TOO_HARD_FOR_31_50
+46	8	1	True	64	2	1	5	93	3	True	TOO_HARD_FOR_31_50
+47	8	1	True	64	2	1	5	93	3	True	TOO_HARD_FOR_31_50
+48	8	1	True	64	2	1	5	93	3	True	TOO_HARD_FOR_31_50
+49	8	1	True	64	2	1	5	93	3	True	TOO_HARD_FOR_31_50
+50	8	1	True	64	2	1	5	93	3	True	TOO_HARD_FOR_31_50
+
+=== PROBLEM DETAILS ===
+{"stage": 4, "size": 5, "solutions": 1, "unique": true, "logicSolved": true, "steps": 25, "ruleLevel": 2, "patternSteps": 2, "auditDifficulty": 3, "auditScore": 53, "storedDifficulty": null, "storedLogicOnly": null, "hintStates": 9, "flags": ["TOO_HARD_FOR_1_10"], "errors": [], "hintFailures": []}
+{"stage": 5, "size": 5, "solutions": 1, "unique": true, "logicSolved": true, "steps": 25, "ruleLevel": 1, "patternSteps": 0, "auditDifficulty": 2, "auditScore": 39, "storedDifficulty": null, "storedLogicOnly": null, "hintStates": 9, "flags": ["TOO_HARD_FOR_1_10"], "errors": [], "hintFailures": []}
+{"stage": 6, "size": 5, "solutions": 1, "unique": true, "logicSolved": true, "steps": 25, "ruleLevel": 2, "patternSteps": 2, "auditDifficulty": 3, "auditScore": 53, "storedDifficulty": null, "storedLogicOnly": null, "hintStates": 9, "flags": ["TOO_HARD_FOR_1_10"], "errors": [], "hintFailures": []}
+{"stage": 7, "size": 5, "solutions": 1, "unique": true, "logicSolved": true, "steps": 25, "ruleLevel": 2, "patternSteps": 3, "auditDifficulty": 3, "auditScore": 58, "storedDifficulty": null, "storedLogicOnly": null, "hintStates": 9, "flags": ["TOO_HARD_FOR_1_10"], "errors": [], "hintFailures": []}
+{"stage": 8, "size": 5, "solutions": 1, "unique": true, "logicSolved": true, "steps": 25, "ruleLevel": 2, "patternSteps": 3, "auditDifficulty": 3, "auditScore": 58, "storedDifficulty": null, "storedLogicOnly": null, "hintStates": 9, "flags": ["TOO_HARD_FOR_1_10"], "errors": [], "hintFailures": []}
+{"stage": 9, "size": 5, "solutions": 1, "unique": true, "logicSolved": true, "steps": 25, "ruleLevel": 2, "patternSteps": 2, "auditDifficulty": 3, "auditScore": 53, "storedDifficulty": null, "storedLogicOnly": null, "hintStates": 9, "flags": ["TOO_HARD_FOR_1_10"], "errors": [], "hintFailures": []}
+{"stage": 10, "size": 6, "solutions": 1, "unique": true, "logicSolved": true, "steps": 36, "ruleLevel": 2, "patternSteps": 1, "auditDifficulty": 4, "auditScore": 61, "storedDifficulty": null, "storedLogicOnly": null, "hintStates": 9, "flags": ["TOO_HARD_FOR_1_10"], "errors": [], "hintFailures": []}
+{"stage": 11, "size": 6, "solutions": 1, "unique": true, "logicSolved": true, "steps": 36, "ruleLevel": 2, "patternSteps": 3, "auditDifficulty": 4, "auditScore": 71, "storedDifficulty": null, "storedLogicOnly": null, "hintStates": 9, "flags": ["TOO_HARD_FOR_11_30"], "errors": [], "hintFailures": []}
+{"stage": 12, "size": 6, "solutions": 1, "unique": true, "logicSolved": true, "steps": 36, "ruleLevel": 2, "patternSteps": 2, "auditDifficulty": 4, "auditScore": 66, "storedDifficulty": null, "storedLogicOnly": null, "hintStates": 9, "flags": ["TOO_HARD_FOR_11_30"], "errors": [], "hintFailures": []}
+{"stage": 13, "size": 6, "solutions": 1, "unique": true, "logicSolved": true, "steps": 36, "ruleLevel": 2, "patternSteps": 1, "auditDifficulty": 4, "auditScore": 61, "storedDifficulty": null, "storedLogicOnly": null, "hintStates": 9, "flags": ["TOO_HARD_FOR_11_30"], "errors": [], "hintFailures": []}
+{"stage": 14, "size": 6, "solutions": 1, "unique": true, "logicSolved": true, "steps": 36, "ruleLevel": 2, "patternSteps": 2, "auditDifficulty": 4, "auditScore": 66, "storedDifficulty": null, "storedLogicOnly": null, "hintStates": 9, "flags": ["TOO_HARD_FOR_11_30"], "errors": [], "hintFailures": []}
+{"stage": 15, "size": 6, "solutions": 1, "unique": true, "logicSolved": true, "steps": 36, "ruleLevel": 2, "patternSteps": 2, "auditDifficulty": 4, "auditScore": 66, "storedDifficulty": null, "storedLogicOnly": null, "hintStates": 9, "flags": ["TOO_HARD_FOR_11_30"], "errors": [], "hintFailures": []}
+{"stage": 16, "size": 6, "solutions": 1, "unique": true, "logicSolved": true, "steps": 36, "ruleLevel": 2, "patternSteps": 3, "auditDifficulty": 4, "auditScore": 71, "storedDifficulty": null, "storedLogicOnly": null, "hintStates": 9, "flags": ["TOO_HARD_FOR_11_30"], "errors": [], "hintFailures": []}
+{"stage": 17, "size": 6, "solutions": 1, "unique": true, "logicSolved": true, "steps": 36, "ruleLevel": 2, "patternSteps": 2, "auditDifficulty": 4, "auditScore": 66, "storedDifficulty": null, "storedLogicOnly": null, "hintStates": 9, "flags": ["TOO_HARD_FOR_11_30"], "errors": [], "hintFailures": []}
+{"stage": 18, "size": 6, "solutions": 1, "unique": true, "logicSolved": true, "steps": 36, "ruleLevel": 2, "patternSteps": 2, "auditDifficulty": 4, "auditScore": 66, "storedDifficulty": null, "storedLogicOnly": null, "hintStates": 9, "flags": ["TOO_HARD_FOR_11_30"], "errors": [], "hintFailures": []}
+{"stage": 19, "size": 6, "solutions": 1, "unique": true, "logicSolved": true, "steps": 36, "ruleLevel": 2, "patternSteps": 1, "auditDifficulty": 4, "auditScore": 61, "storedDifficulty": null, "storedLogicOnly": null, "hintStates": 9, "flags": ["TOO_HARD_FOR_11_30"], "errors": [], "hintFailures": []}
+{"stage": 20, "size": 7, "solutions": 1, "unique": true, "logicSolved": true, "steps": 49, "ruleLevel": 2, "patternSteps": 4, "auditDifficulty": 5, "auditScore": 91, "storedDifficulty": null, "storedLogicOnly": null, "hintStates": 9, "flags": ["TOO_HARD_FOR_11_30"], "errors": [], "hintFailures": []}
+{"stage": 21, "size": 7, "solutions": 1, "unique": true, "logicSolved": true, "steps": 49, "ruleLevel": 2, "patternSteps": 1, "auditDifficulty": 5, "auditScore": 76, "storedDifficulty": 3, "storedLogicOnly": true, "hintStates": 9, "flags": ["TOO_HARD_FOR_11_30"], "errors": [], "hintFailures": []}
+{"stage": 22, "size": 7, "solutions": 1, "unique": true, "logicSolved": true, "steps": 49, "ruleLevel": 2, "patternSteps": 2, "auditDifficulty": 5, "auditScore": 81, "storedDifficulty": 3, "storedLogicOnly": true, "hintStates": 9, "flags": ["TOO_HARD_FOR_11_30"], "errors": [], "hintFailures": []}
+{"stage": 23, "size": 7, "solutions": 1, "unique": true, "logicSolved": true, "steps": 49, "ruleLevel": 2, "patternSteps": 2, "auditDifficulty": 5, "auditScore": 81, "storedDifficulty": 3, "storedLogicOnly": true, "hintStates": 9, "flags": ["TOO_HARD_FOR_11_30"], "errors": [], "hintFailures": []}
+{"stage": 24, "size": 7, "solutions": 1, "unique": true, "logicSolved": true, "steps": 49, "ruleLevel": 2, "patternSteps": 5, "auditDifficulty": 5, "auditScore": 96, "storedDifficulty": 3, "storedLogicOnly": true, "hintStates": 9, "flags": ["TOO_HARD_FOR_11_30"], "errors": [], "hintFailures": []}
+{"stage": 25, "size": 7, "solutions": 1, "unique": true, "logicSolved": true, "steps": 49, "ruleLevel": 2, "patternSteps": 4, "auditDifficulty": 5, "auditScore": 91, "storedDifficulty": 3, "storedLogicOnly": true, "hintStates": 9, "flags": ["TOO_HARD_FOR_11_30"], "errors": [], "hintFailures": []}
+{"stage": 26, "size": 7, "solutions": 1, "unique": true, "logicSolved": true, "steps": 49, "ruleLevel": 2, "patternSteps": 4, "auditDifficulty": 5, "auditScore": 91, "storedDifficulty": 3, "storedLogicOnly": true, "hintStates": 9, "flags": ["TOO_HARD_FOR_11_30"], "errors": [], "hintFailures": []}
+{"stage": 27, "size": 7, "solutions": 1, "unique": true, "logicSolved": true, "steps": 49, "ruleLevel": 1, "patternSteps": 0, "auditDifficulty": 4, "auditScore": 67, "storedDifficulty": 2, "storedLogicOnly": true, "hintStates": 9, "flags": ["TOO_HARD_FOR_11_30"], "errors": [], "hintFailures": []}
+{"stage": 28, "size": 7, "solutions": 1, "unique": true, "logicSolved": true, "steps": 49, "ruleLevel": 2, "patternSteps": 5, "auditDifficulty": 5, "auditScore": 96, "storedDifficulty": 3, "storedLogicOnly": true, "hintStates": 9, "flags": ["TOO_HARD_FOR_11_30"], "errors": [], "hintFailures": []}
+{"stage": 29, "size": 7, "solutions": 1, "unique": true, "logicSolved": true, "steps": 49, "ruleLevel": 2, "patternSteps": 3, "auditDifficulty": 5, "auditScore": 86, "storedDifficulty": 3, "storedLogicOnly": true, "hintStates": 9, "flags": ["TOO_HARD_FOR_11_30"], "errors": [], "hintFailures": []}
+{"stage": 30, "size": 7, "solutions": 1, "unique": true, "logicSolved": true, "steps": 49, "ruleLevel": 2, "patternSteps": 2, "auditDifficulty": 5, "auditScore": 81, "storedDifficulty": 3, "storedLogicOnly": true, "hintStates": 9, "flags": ["TOO_HARD_FOR_11_30"], "errors": [], "hintFailures": []}
+{"stage": 31, "size": 7, "solutions": 1, "unique": true, "logicSolved": true, "steps": 49, "ruleLevel": 2, "patternSteps": 2, "auditDifficulty": 5, "auditScore": 81, "storedDifficulty": 3, "storedLogicOnly": true, "hintStates": 9, "flags": ["TOO_HARD_FOR_31_50"], "errors": [], "hintFailures": []}
+{"stage": 32, "size": 7, "solutions": 1, "unique": true, "logicSolved": true, "steps": 49, "ruleLevel": 2, "patternSteps": 1, "auditDifficulty": 5, "auditScore": 76, "storedDifficulty": 3, "storedLogicOnly": true, "hintStates": 9, "flags": ["TOO_HARD_FOR_31_50"], "errors": [], "hintFailures": []}
+{"stage": 33, "size": 8, "solutions": 1, "unique": true, "logicSolved": true, "steps": 64, "ruleLevel": 2, "patternSteps": 2, "auditDifficulty": 5, "auditScore": 98, "storedDifficulty": null, "storedLogicOnly": null, "hintStates": 9, "flags": ["TOO_HARD_FOR_31_50"], "errors": [], "hintFailures": []}
+{"stage": 34, "size": 7, "solutions": 1, "unique": true, "logicSolved": true, "steps": 49, "ruleLevel": 2, "patternSteps": 2, "auditDifficulty": 5, "auditScore": 81, "storedDifficulty": 3, "storedLogicOnly": true, "hintStates": 9, "flags": ["TOO_HARD_FOR_31_50"], "errors": [], "hintFailures": []}
+{"stage": 35, "size": 8, "solutions": 1, "unique": true, "logicSolved": true, "steps": 64, "ruleLevel": 1, "patternSteps": 0, "auditDifficulty": 5, "auditScore": 84, "storedDifficulty": null, "storedLogicOnly": null, "hintStates": 9, "flags": ["TOO_HARD_FOR_31_50"], "errors": [], "hintFailures": []}
+{"stage": 36, "size": 7, "solutions": 1, "unique": true, "logicSolved": true, "steps": 49, "ruleLevel": 2, "patternSteps": 2, "auditDifficulty": 5, "auditScore": 81, "storedDifficulty": 3, "storedLogicOnly": true, "hintStates": 9, "flags": ["TOO_HARD_FOR_31_50"], "errors": [], "hintFailures": []}
+{"stage": 37, "size": 8, "solutions": 1, "unique": true, "logicSolved": true, "steps": 64, "ruleLevel": 2, "patternSteps": 3, "auditDifficulty": 5, "auditScore": 103, "storedDifficulty": null, "storedLogicOnly": null, "hintStates": 9, "flags": ["TOO_HARD_FOR_31_50"], "errors": [], "hintFailures": []}
+{"stage": 38, "size": 8, "solutions": 1, "unique": true, "logicSolved": true, "steps": 64, "ruleLevel": 2, "patternSteps": 3, "auditDifficulty": 5, "auditScore": 103, "storedDifficulty": null, "storedLogicOnly": null, "hintStates": 9, "flags": ["TOO_HARD_FOR_31_50"], "errors": [], "hintFailures": []}
+{"stage": 39, "size": 8, "solutions": 1, "unique": true, "logicSolved": true, "steps": 64, "ruleLevel": 2, "patternSteps": 3, "auditDifficulty": 5, "auditScore": 103, "storedDifficulty": null, "storedLogicOnly": null, "hintStates": 9, "flags": ["TOO_HARD_FOR_31_50"], "errors": [], "hintFailures": []}
+{"stage": 40, "size": 8, "solutions": 1, "unique": true, "logicSolved": true, "steps": 64, "ruleLevel": 2, "patternSteps": 3, "auditDifficulty": 5, "auditScore": 103, "storedDifficulty": 3, "storedLogicOnly": true, "hintStates": 9, "flags": ["TOO_HARD_FOR_31_50"], "errors": [], "hintFailures": []}
+{"stage": 41, "size": 8, "solutions": 1, "unique": true, "logicSolved": true, "steps": 64, "ruleLevel": 2, "patternSteps": 3, "auditDifficulty": 5, "auditScore": 103, "storedDifficulty": 3, "storedLogicOnly": true, "hintStates": 9, "flags": ["TOO_HARD_FOR_31_50"], "errors": [], "hintFailures": []}
+{"stage": 42, "size": 8, "solutions": 1, "unique": true, "logicSolved": true, "steps": 64, "ruleLevel": 2, "patternSteps": 3, "auditDifficulty": 5, "auditScore": 103, "storedDifficulty": 3, "storedLogicOnly": true, "hintStates": 9, "flags": ["TOO_HARD_FOR_31_50"], "errors": [], "hintFailures": []}
+{"stage": 43, "size": 8, "solutions": 1, "unique": true, "logicSolved": true, "steps": 64, "ruleLevel": 2, "patternSteps": 3, "auditDifficulty": 5, "auditScore": 103, "storedDifficulty": 3, "storedLogicOnly": true, "hintStates": 9, "flags": ["TOO_HARD_FOR_31_50"], "errors": [], "hintFailures": []}
+{"stage": 44, "size": 8, "solutions": 1, "unique": true, "logicSolved": true, "steps": 64, "ruleLevel": 2, "patternSteps": 1, "auditDifficulty": 5, "auditScore": 93, "storedDifficulty": 3, "storedLogicOnly": true, "hintStates": 9, "flags": ["TOO_HARD_FOR_31_50"], "errors": [], "hintFailures": []}
+{"stage": 45, "size": 8, "solutions": 1, "unique": true, "logicSolved": true, "steps": 64, "ruleLevel": 2, "patternSteps": 2, "auditDifficulty": 5, "auditScore": 98, "storedDifficulty": 3, "storedLogicOnly": true, "hintStates": 9, "flags": ["TOO_HARD_FOR_31_50"], "errors": [], "hintFailures": []}
+{"stage": 46, "size": 8, "solutions": 1, "unique": true, "logicSolved": true, "steps": 64, "ruleLevel": 2, "patternSteps": 1, "auditDifficulty": 5, "auditScore": 93, "storedDifficulty": 3, "storedLogicOnly": true, "hintStates": 9, "flags": ["TOO_HARD_FOR_31_50"], "errors": [], "hintFailures": []}
+{"stage": 47, "size": 8, "solutions": 1, "unique": true, "logicSolved": true, "steps": 64, "ruleLevel": 2, "patternSteps": 1, "auditDifficulty": 5, "auditScore": 93, "storedDifficulty": 3, "storedLogicOnly": true, "hintStates": 9, "flags": ["TOO_HARD_FOR_31_50"], "errors": [], "hintFailures": []}
+{"stage": 48, "size": 8, "solutions": 1, "unique": true, "logicSolved": true, "steps": 64, "ruleLevel": 2, "patternSteps": 1, "auditDifficulty": 5, "auditScore": 93, "storedDifficulty": 3, "storedLogicOnly": true, "hintStates": 9, "flags": ["TOO_HARD_FOR_31_50"], "errors": [], "hintFailures": []}
+{"stage": 49, "size": 8, "solutions": 1, "unique": true, "logicSolved": true, "steps": 64, "ruleLevel": 2, "patternSteps": 1, "auditDifficulty": 5, "auditScore": 93, "storedDifficulty": 3, "storedLogicOnly": true, "hintStates": 9, "flags": ["TOO_HARD_FOR_31_50"], "errors": [], "hintFailures": []}
+{"stage": 50, "size": 8, "solutions": 1, "unique": true, "logicSolved": true, "steps": 64, "ruleLevel": 2, "patternSteps": 1, "auditDifficulty": 5, "auditScore": 93, "storedDifficulty": 3, "storedLogicOnly": true, "hintStates": 9, "flags": ["TOO_HARD_FOR_31_50"], "errors": [], "hintFailures": []}
+
+=== BOSS PHASES ===
+{"phase": 1, "size": 7, "unique": true, "logicSolved": true, "steps": 49, "difficulty": 5, "score": 81, "hintFailures": [], "errors": []}
+{"phase": 2, "size": 8, "unique": true, "logicSolved": true, "steps": 64, "difficulty": 5, "score": 98, "hintFailures": [], "errors": []}
+{"phase": 3, "size": 8, "unique": true, "logicSolved": true, "steps": 64, "difficulty": 5, "score": 93, "hintFailures": [], "errors": []}

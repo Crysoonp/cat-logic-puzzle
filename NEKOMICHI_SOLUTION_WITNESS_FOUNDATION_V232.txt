@@ -1,0 +1,14 @@
+NEKOMICHI SOLUTION WITNESS FOUNDATION V232
+
+Implemented:
+- Added CLPQuality.findSolutions(stage, limit).
+- The solver now returns concrete solution placements, not only a count.
+- Multiple-solution boards can expose two distinct witnesses.
+- Existing countSolutions(stage, limit) remains compatible.
+- inspectAll behavior remains unchanged.
+- No stage data or game screen was modified.
+
+Next use:
+- Compare the intended solution with an alternative witness.
+- Modify region boundaries to invalidate that specific alternative.
+- Repeat until only the intended solution remains.

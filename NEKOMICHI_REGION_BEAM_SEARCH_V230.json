@@ -1,0 +1,32 @@
+{
+  "version": "V230",
+  "elapsedSeconds": 45.006,
+  "status": "NOT_FOUND",
+  "sourceStage": 302,
+  "rounds": 8,
+  "statesSeen": 6771,
+  "uniquenessChecks": 6770,
+  "acceptedStates": 2931,
+  "best": {
+    "metric": {
+      "one": 2,
+      "two": 0,
+      "score": 235,
+      "sizes": [
+        26,
+        3,
+        3,
+        3,
+        3,
+        3,
+        34,
+        3,
+        36,
+        1,
+        28,
+        1
+      ]
+    }
+  },
+  "candidate": null
+}

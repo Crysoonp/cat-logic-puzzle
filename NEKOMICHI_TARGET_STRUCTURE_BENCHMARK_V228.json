@@ -1,0 +1,111 @@
+{
+  "benchmarkVersion": "V228",
+  "purpose": "Measure 11x11/12x12 construction under V225 target structure.",
+  "profiles": [
+    [
+      0,
+      2
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      1,
+      1
+    ]
+  ],
+  "limits": {
+    "singletonsMax": 1,
+    "twoCellsMax": 2,
+    "perSizeSeconds": 20.0,
+    "globalSeconds": 45.0,
+    "solutionNodeLimit": 300000
+  },
+  "totalElapsedSeconds": 40.013,
+  "foundCount": 0,
+  "results": [
+    {
+      "size": 11,
+      "status": "TIMEOUT",
+      "elapsedSeconds": 20.011,
+      "attempts": 1476,
+      "connectedCandidates": 1473,
+      "structuralCandidates": 1472,
+      "uniqueChecks": 1472,
+      "solverAborts": 0,
+      "bestObserved": {
+        "rank": [
+          1,
+          13
+        ],
+        "areaStats": {
+          "sizes": [
+            13,
+            13,
+            2,
+            10,
+            12,
+            13,
+            11,
+            12,
+            11,
+            11,
+            13
+          ],
+          "minimum": 2,
+          "maximum": 13,
+          "singletons": 0,
+          "twoCells": 1
+        },
+        "profile": 2
+      },
+      "candidate": null
+    },
+    {
+      "size": 12,
+      "status": "TIMEOUT",
+      "elapsedSeconds": 20.002,
+      "attempts": 489,
+      "connectedCandidates": 487,
+      "structuralCandidates": 487,
+      "uniqueChecks": 487,
+      "solverAborts": 4,
+      "bestObserved": {
+        "rank": [
+          1,
+          14
+        ],
+        "areaStats": {
+          "sizes": [
+            14,
+            11,
+            14,
+            13,
+            13,
+            12,
+            14,
+            11,
+            2,
+            13,
+            14,
+            13
+          ],
+          "minimum": 2,
+          "maximum": 14,
+          "singletons": 0,
+          "twoCells": 1
+        },
+        "profile": 2
+      },
+      "candidate": null
+    }
+  ],
+  "decision": "TARGET_STRUCTURE_UNIQUENESS_NEEDS_NEW_CONSTRUCTION",
+  "gameFilesModified": false,
+  "notIntegrated": true
+}

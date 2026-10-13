@@ -6,7 +6,7 @@ function load(name){vm.runInThisContext(fs.readFileSync(name,'utf8'),{filename:n
 load('app-config.js');load('stages.js');load('logic-engine.js');load('quality-engine.js');
 function ok(value,message){if(!value)throw new Error(message);}
 ok(/^0\.8\.\d+$/.test(window.CLP_APP_VERSION),'foundation version must remain in the 0.8.x line');
-ok(Array.isArray(window.CLP_STAGES)&&window.CLP_STAGES.length===50,'stage count must be 50');
+ok(Array.isArray(window.CLP_STAGES)&&window.CLP_STAGES.length===200,'stage count must be 200');
 ok(window.CLP_STAGES.every((stage,index)=>stage.stage===index+1),'stage numbers must be continuous');
 const quality=window.CLPQuality.inspectAll(window.CLP_STAGES);
 ok(quality.every(item=>item.decision!=='rejected'),'all stages must pass quality checks');
@@ -18,6 +18,6 @@ const expected=[7,8,8];
 ok(stage50.bossPhasePlan.every((plan,index)=>plan.size===expected[index]),'boss sizes must be 7,8,8');
 const logic=window.CLPLogic.analyzeAll(window.CLP_STAGES);
 const knownUnresolved=logic.filter(item=>!item.logicOnly).map(item=>item.stage);
-ok(JSON.stringify(knownUnresolved)===JSON.stringify([37,38,39]),'known unresolved-stage baseline changed: '+JSON.stringify(knownUnresolved));
+ok(JSON.stringify(knownUnresolved)===JSON.stringify([]),'known unresolved-stage baseline changed: '+JSON.stringify(knownUnresolved));
 console.log('OK: Nekomichi Ver.0.8.0 foundation checks passed.');
 console.log('OK: Stage quality, boss metadata, central version, and known solver gap baseline are fixed.');

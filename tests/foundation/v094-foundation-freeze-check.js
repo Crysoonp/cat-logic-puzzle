@@ -1,8 +1,8 @@
 const fs=require('fs');function ok(v,m){if(!v)throw new Error(m)}
 const manifest=JSON.parse(fs.readFileSync('foundation-manifest.json','utf8'));
 ok(/^0\.8\.\d+$/.test(manifest.foundationVersion),'foundation version must remain in the 0.8.x line');
-ok(manifest.stageCount===50,'stage count contract mismatch');
-ok(JSON.stringify(manifest.knownLogicOnlyGapStages)===JSON.stringify([37,38,39]),'solver gap baseline mismatch');
+ok(manifest.stageCount===200,'stage count contract mismatch');
+ok(JSON.stringify(manifest.knownLogicOnlyGapStages)===JSON.stringify([]),'solver gap baseline mismatch');
 ok(JSON.stringify(manifest.bossPhaseSizes)===JSON.stringify([7,8,8]),'boss phase baseline mismatch');
 manifest.services.forEach(name=>ok(fs.existsSync(name),'missing foundation service: '+name));
 const game=fs.readFileSync('game.js','utf8');

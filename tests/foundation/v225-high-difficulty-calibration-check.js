@@ -1,0 +1,3 @@
+const fs=require('fs'),vm=require('vm');global.window=global;vm.runInThisContext(fs.readFileSync('logic-engine.js','utf8'));function ok(v,m){if(!v)throw new Error(m)}
+const weak={stage:302,size:12,solution:[0,2,4,6,8,10,1,3,5,7,9,11],regions:Array.from({length:12},(_,r)=>Array.from({length:12},(_,c)=>c<4&&r===0?c:4+((r+c)%8)))};
+const a=CLPLogic.analyze(weak);ok(a.solverVersion==='1.3','version');ok(a.highDifficultyProfile,'profile');ok(Array.isArray(a.highDifficultyProfile.reasons),'reasons');ok(a.advancedDifficulty<=3||a.highDifficultyProfile.highDifficultyCandidate,'star gate');console.log('V225 high-difficulty calibration check: PASS');

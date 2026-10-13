@@ -1,0 +1,2062 @@
+NEKOMICHI HIGH DIFFICULTY GATE BENCHMARK V227
+
+=== logic-engine syntax ===
+exit 0
+
+=== stage-generator syntax ===
+exit 0
+
+=== V226 gate regression ===
+V226 generator high-difficulty gate check: PASS
+
+================================================================================
+SCRIPT: BENCHMARK_NEKOMICHI_LARGE_BOARD_GENERATOR_V207.py
+from pathlib import Path
+from collections import Counter, deque
+import hashlib, json, random, sys, time
+
+ROOT = Path.cwd()
+REPORT = ROOT / 'NEKOMICHI_LARGE_BOARD_BENCHMARK_V207.json'
+CANDIDATES = ROOT / 'NEKOMICHI_LARGE_BOARD_CANDIDATES_V207.json'
+SIZES = [11, 12]
+SECONDS_PER_SIZE = 30.0
+GLOBAL_SECONDS = 65.0
+PROGRESS_SECONDS = 5.0
+SEED = 20720261013
+
+
+def neighbors4(r, c, n):
+    for rr, cc in ((r-1,c),(r+1,c),(r,c-1),(r,c+1)):
+        if 0 <= rr < n and 0 <= cc < n:
+            yield rr, cc
+
+
+def make_solution(n, rng):
+    for _ in range(10000):
+        cols = list(range(n)); rng.shuffle(cols)
+        if all(abs(cols[r]-cols[r-1]) > 1 for r in range(1,n)):
+            return cols
+    return None
+
+
+def choose_anchor_ids(solution, singleton_count, double_count, rng):
+    n = len(solution)
+    ids = list(range(n)); rng.shuffle(ids)
+    chosen = []
+    for region_id in ids:
+        r, c = region_id, solution[region_id]
+        if all(abs(r-pr) > 1 or abs(c-pc) > 1 for pr,pc,_ in chosen):
+            chosen.append((r,c,region_id))
+        if len(chosen) >= singleton_count + double_count:
+            break
+    if len(chosen) < singleton_count + double_count:
+        chosen = [(i, solution[i], i) for i in ids[:singleton_count+double_count]]
+    singles = {item[2] for item in chosen[:singleton_count]}
+    doubles = {item[2] for item in chosen[singleton_count:singleton_count+double_count]}
+    return singles, doubles
+
+
+def build_board(solution, profile, rng):
+    n = len(solution)
+    board = [[-1]*n for _ in range(n)]
+    cells = [set() for _ in range(n)]
+    singleton_count, double_count = [(4,3),(4,2),(3,4),(3,3)][profile]
+    singles, doubles = choose_anchor_ids(solution, singleton_count, double_count, rng)
+    protected = singles | doubles
+
+    for r,c in enumerate(solution):
+        board[r][c] = r
+        cells[r].add((r,c))
+
+    occupied = {(r,solution[r]) for r in range(n)}
+    for region_id in doubles:
+        seed = (region_id, solution[region_id])
+        options = [p for p in neighbors4(seed[0],seed[1],n) if p not in occupied]
+        rng.shuffle(options)
+        if not options:
+            return None
+        point = options[0]
+        board[point[0]][point[1]] = region_id
+        cells[region_id].add(point)
+        occupied.add(point)
+
+    active = [i for i in range(n) if i not in protected]
+    remaining = n*n-len(occupied)
+    soft_cap = (n*n - singleton_count - 2*double_count + len(active)-1)//len(active) + 5
+
+    while remaining:
+        choices=[]
+        for region_id in active:
+            frontier=set()
+            for r,c in cells[region_id]:
+                frontier.update(p for p in neighbors4(r,c,n) if board[p[0]][p[1]] == -1)
+            if frontier:
+                penalty = max(0, len(cells[region_id])-soft_cap)
+                choices.append((penalty, len(cells[region_id]), region_id, list(frontier)))
+        if not choices:
+            return None
+        choices.sort(key=lambda x:(x[0],x[1]))
+        _,_,region_id,frontier = rng.choice(choices[:min(4,len(choices))])
+        r,c = rng.choice(frontier)
+        board[r][c] = region_id
+        cells[region_id].add((r,c))
+        remaining -= 1
+    return board
+
+
+def connected(board):
+    n=len(board)
+    for region_id in range(n):
+        target={(r,c) for r in range(n) for c in range(n) if board[r][c]==region_id}
+        if not target: return False
+        start=next(iter(target)); seen={start}; q=deque([start])
+        while q:
+            r,c=q.popleft()
+            for p in neighbors4(r,c,n):
+                if p in target and p not in seen:
+                    seen.add(p); q.append(p)
+        if seen != target: return False
+    return True
+
+
+def count_solutions(board, limit=2):
+    n=len(board); rows=[None]*n; used_c=set(); used_g=set(); total=0; first=None
+    def dfs(r):
+        nonlocal total,first
+        if total>=limit: return
+        if r==n:
+            total+=1
+            if first is None: first=rows[:]
+            return
+        options=[]
+        for c in range(n):
+            g=board[r][c]
+            if c in used_c or g in used_g: continue
+            if r and rows[r-1] is not None and abs(rows[r-1]-c)<=1: continue
+            options.append(c)
+        options.sort(key=lambda c: sum(1 for rr in range(r+1,n) if board[rr][c]==board[r][c]))
+        for c in options:
+            g=board[r][c]; rows[r]=c; used_c.add(c); used_g.add(g)
+            dfs(r+1)
+            used_g.remove(g); used_c.remove(c); rows[r]=None
+            if total>=limit: return
+    dfs(0)
+    return total,first
+
+
+def stats(board):
+    n=len(board); counts=Counter(v for row in board for v in row); sizes=[counts[i] for i in range(n)]
+    return {'sizes':sizes,'minimum':min(sizes),'maximum':max(sizes),
+            'singletons':sum(v==1 for v in sizes),'twoCells':sum(v==2 for v in sizes)}
+
+
+def canonical_key(board):
+    n=len(board); variants=[]; cur=board
+    for _ in range(4):
+        variants += [cur,[list(reversed(row)) for row in cur]]
+        cur=[[cur[n-1-c][r] for c in range(n)] for r in range(n)]
+    signatures=[]
+    for grid in variants:
+        remap={}; nxt=0; norm=[]
+        for row in grid:
+            out=[]
+            for v in row:
+                if v not in remap: remap[v]=nxt; nxt+=1
+                out.append(remap[v])
+            norm.append(out)
+        signatures.append(json.dumps(norm,separators=(',',':')))
+    return hashlib.sha256(min(signatures).encode()).hexdigest()
+
+
+def run_size(n, global_deadline):
+    rng=random.Random(SEED+n*1009); started=time.perf_counter()
+    deadline=min(started+SECONDS_PER_SIZE,global_deadline); next_progress=started+PROGRESS_SECONDS
+    attempts=connected_count=unique_checks=0; candidate=None; best_max=None
+    print(f'START: {n}x{n}, large-board limit {deadline-started:.0f}s',flush=True)
+    while time.perf_counter()<deadline:
+        attempts+=1; solution=make_solution(n,rng)
+        if solution is None: continue
+        profile=(attempts-1)%4; board=build_board(solution,profile,rng)
+        if board is None or not connected(board): continue
+        connected_count+=1; area=stats(board)
+        best_max=area['maximum'] if best_max is None else min(best_max,area['maximum'])
+        if area['singletons']>4 or area['twoCells']<2 or area['maximum']>26: continue
+        unique_checks+=1; total,found=count_solutions(board,2)
+        if total==1:
+            candidate={'size':n,'solution':found,'regions':board,'areaStats':area,
+                       'canonicalKey':canonical_key(board),'attempt':attempts,'profile':profile}
+            break
+        now=time.perf_counter()
+        if now>=next_progress:
+            print(f'PROGRESS: {n}x{n} elapsed={now-started:.1f}s attempts={attempts} connected={connected_count} uniqueChecks={unique_checks} bestMaxArea={best_max}',flush=True)
+            next_progress=now+PROGRESS_SECONDS
+    elapsed=time.perf_counter()-started
+    status='FOUND' if candidate else 'TIMEOUT'
+    print(f'{status}: {n}x{n} elapsed={elapsed:.2f}s attempts={attempts} uniqueChecks={unique_checks}',flush=True)
+    return {'size':n,'status':status,'elapsedSeconds':round(elapsed,3),'attempts':attempts,
+            'connectedCandidates':connected_count,'uniqueChecks':unique_checks,
+            'bestObservedMaximumArea':best_max,'candidate':candidate}
+
+
+def main():
+    if not (ROOT/'.git').exists(): raise RuntimeError('Run from cat-logic-puzzle project root.')
+    started=time.perf_counter(); deadline=started+GLOBAL_SECONDS
+    results=[run_size(n,deadline) for n in SIZES]
+    candidates=[r['candidate'] for r in results if r['candidate']]
+    passed=len(candidates)==2 and len({c['canonicalKey'] for c in candidates})==2
+    report={'benchmarkVersion':'V207','purpose':'Large-board-only 11x11 and 12x12 feasibility benchmark.',
+            'timeLimits':{'perSizeSeconds':SECONDS_PER_SIZE,'globalSeconds':GLOBAL_SECONDS},
+            'totalElapsedSeconds':round(time.perf_counter()-started,3),'foundCount':len(candidates),
+            'requiredCount':2,'allLargeSizesFound':len(candidates)==2,'results':results,
+            'decision':'READY_FOR_DEEP_LOGIC_AUDIT' if passed else 'LARGE_BOARD_CONSTRUCTION_NEEDS_REPAIR',
+            'gameFilesModified':False}
+    payload={'title':'NEKOMICHI LARGE BOARD CANDIDATES V207','candidateOnly':True,
+             'notIntegrated':True,'candidates':candidates}
+    REPORT.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    CANDIDATES.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    print('OK: V207 large-board benchmark finished.',flush=True)
+    print('RESULT:',report['decision'],flush=True)
+    print(f'FOUND: {len(candidates)}/2 large sizes',flush=True)
+    print('REPORT:',REPORT,flush=True); print('CANDIDATES:',CANDIDATES,flush=True)
+    print('SEND: Upload both V207 JSON files to Copilot.',flush=True)
+
+if __name__=='__main__':
+    try: main()
+    except KeyboardInterrupt:
+        print('CANCELLED: User stopped V207.',flush=True); sys.exit(130)
+    except Exception as exc:
+        print('ERROR:',exc,flush=True); sys.exit(1)
+
+
+================================================================================
+SCRIPT: BENCHMARK_NEKOMICHI_12X12_GENERATOR_V208.py
+from pathlib import Path
+from collections import Counter, deque
+import hashlib, json, random, sys, time
+
+ROOT = Path.cwd()
+REPORT = ROOT / 'NEKOMICHI_12X12_BENCHMARK_V208.json'
+CANDIDATES = ROOT / 'NEKOMICHI_12X12_CANDIDATES_V208.json'
+SIZES = [12]
+SECONDS_PER_SIZE = 35.0
+GLOBAL_SECONDS = 40.0
+PROGRESS_SECONDS = 5.0
+SEED = 20820261013
+
+
+def neighbors4(r, c, n):
+    for rr, cc in ((r-1,c),(r+1,c),(r,c-1),(r,c+1)):
+        if 0 <= rr < n and 0 <= cc < n:
+            yield rr, cc
+
+
+def make_solution(n, rng):
+    for _ in range(10000):
+        cols = list(range(n)); rng.shuffle(cols)
+        if all(abs(cols[r]-cols[r-1]) > 1 for r in range(1,n)):
+            return cols
+    return None
+
+
+def choose_anchor_ids(solution, singleton_count, double_count, rng):
+    n = len(solution)
+    ids = list(range(n)); rng.shuffle(ids)
+    chosen = []
+    for region_id in ids:
+        r, c = region_id, solution[region_id]
+        if all(abs(r-pr) > 1 or abs(c-pc) > 1 for pr,pc,_ in chosen):
+            chosen.append((r,c,region_id))
+        if len(chosen) >= singleton_count + double_count:
+            break
+    if len(chosen) < singleton_count + double_count:
+        chosen = [(i, solution[i], i) for i in ids[:singleton_count+double_count]]
+    singles = {item[2] for item in chosen[:singleton_count]}
+    doubles = {item[2] for item in chosen[singleton_count:singleton_count+double_count]}
+    return singles, doubles
+
+
+def build_board(solution, profile, rng):
+    n = len(solution)
+    board = [[-1]*n for _ in range(n)]
+    cells = [set() for _ in range(n)]
+    singleton_count, double_count = [(3,3),(4,2),(2,4),(3,2)][profile]
+    singles, doubles = choose_anchor_ids(solution, singleton_count, double_count, rng)
+    protected = singles | doubles
+
+    for r,c in enumerate(solution):
+        board[r][c] = r
+        cells[r].add((r,c))
+
+    occupied = {(r,solution[r]) for r in range(n)}
+    for region_id in doubles:
+        seed = (region_id, solution[region_id])
+        options = [p for p in neighbors4(seed[0],seed[1],n) if p not in occupied]
+        rng.shuffle(options)
+        if not options:
+            return None
+        point = options[0]
+        board[point[0]][point[1]] = region_id
+        cells[region_id].add(point)
+        occupied.add(point)
+
+    active = [i for i in range(n) if i not in protected]
+    remaining = n*n-len(occupied)
+    soft_cap = (n*n - singleton_count - 2*double_count + len(active)-1)//len(active) + 5
+
+    while remaining:
+        choices=[]
+        for region_id in active:
+            frontier=set()
+            for r,c in cells[region_id]:
+                frontier.update(p for p in neighbors4(r,c,n) if board[p[0]][p[1]] == -1)
+            if frontier:
+                penalty = max(0, len(cells[region_id])-soft_cap)
+                choices.append((penalty, len(cells[region_id]), region_id, list(frontier)))
+        if not choices:
+            return None
+        choices.sort(key=lambda x:(x[0],x[1]))
+        _,_,region_id,frontier = rng.choice(choices[:min(4,len(choices))])
+        r,c = rng.choice(frontier)
+        board[r][c] = region_id
+        cells[region_id].add((r,c))
+        remaining -= 1
+    return board
+
+
+def connected(board):
+    n=len(board)
+    for region_id in range(n):
+        target={(r,c) for r in range(n) for c in range(n) if board[r][c]==region_id}
+        if not target: return False
+        start=next(iter(target)); seen={start}; q=deque([start])
+        while q:
+            r,c=q.popleft()
+            for p in neighbors4(r,c,n):
+                if p in target and p not in seen:
+                    seen.add(p); q.append(p)
+        if seen != target: return False
+    return True
+
+
+def count_solutions(board, limit=2):
+    n=len(board); rows=[None]*n; used_c=set(); used_g=set(); total=0; first=None
+    def dfs(r):
+        nonlocal total,first
+        if total>=limit: return
+        if r==n:
+            total+=1
+            if first is None: first=rows[:]
+            return
+        options=[]
+        for c in range(n):
+            g=board[r][c]
+            if c in used_c or g in used_g: continue
+            if r and rows[r-1] is not None and abs(rows[r-1]-c)<=1: continue
+            options.append(c)
+        options.sort(key=lambda c: sum(1 for rr in range(r+1,n) if board[rr][c]==board[r][c]))
+        for c in options:
+            g=board[r][c]; rows[r]=c; used_c.add(c); used_g.add(g)
+            dfs(r+1)
+            used_g.remove(g); used_c.remove(c); rows[r]=None
+            if total>=limit: return
+    dfs(0)
+    return total,first
+
+
+def stats(board):
+    n=len(board); counts=Counter(v for row in board for v in row); sizes=[counts[i] for i in range(n)]
+    return {'sizes':sizes,'minimum':min(sizes),'maximum':max(sizes),
+            'singletons':sum(v==1 for v in sizes),'twoCells':sum(v==2 for v in sizes)}
+
+
+def canonical_key(board):
+    n=len(board); variants=[]; cur=board
+    for _ in range(4):
+        variants += [cur,[list(reversed(row)) for row in cur]]
+        cur=[[cur[n-1-c][r] for c in range(n)] for r in range(n)]
+    signatures=[]
+    for grid in variants:
+        remap={}; nxt=0; norm=[]
+        for row in grid:
+            out=[]
+            for v in row:
+                if v not in remap: remap[v]=nxt; nxt+=1
+                out.append(remap[v])
+            norm.append(out)
+        signatures.append(json.dumps(norm,separators=(',',':')))
+    return hashlib.sha256(min(signatures).encode()).hexdigest()
+
+
+def run_size(n, global_deadline):
+    rng=random.Random(SEED+n*1009); started=time.perf_counter()
+    deadline=min(started+SECONDS_PER_SIZE,global_deadline); next_progress=started+PROGRESS_SECONDS
+    attempts=connected_count=unique_checks=0; candidate=None; best_max=None
+    print(f'START: {n}x{n}, large-board limit {deadline-started:.0f}s',flush=True)
+    while time.perf_counter()<deadline:
+        attempts+=1; solution=make_solution(n,rng)
+        if solution is None: continue
+        profile=(attempts-1)%4; board=build_board(solution,profile,rng)
+        if board is None or not connected(board): continue
+        connected_count+=1; area=stats(board)
+        best_max=area['maximum'] if best_max is None else min(best_max,area['maximum'])
+        if area['singletons']>4 or area['twoCells']<2 or area['maximum']>30: continue
+        unique_checks+=1; total,found=count_solutions(board,2)
+        if total==1:
+            candidate={'size':n,'solution':found,'regions':board,'areaStats':area,
+                       'canonicalKey':canonical_key(board),'attempt':attempts,'profile':profile}
+            break
+        now=time.perf_counter()
+        if now>=next_progress:
+            print(f'PROGRESS: {n}x{n} elapsed={now-started:.1f}s attempts={attempts} connected={connected_count} uniqueChecks={unique_checks} bestMaxArea={best_max}',flush=True)
+            next_progress=now+PROGRESS_SECONDS
+    elapsed=time.perf_counter()-started
+    status='FOUND' if candidate else 'TIMEOUT'
+    print(f'{status}: {n}x{n} elapsed={elapsed:.2f}s attempts={attempts} uniqueChecks={unique_checks}',flush=True)
+    return {'size':n,'status':status,'elapsedSeconds':round(elapsed,3),'attempts':attempts,
+            'connectedCandidates':connected_count,'uniqueChecks':unique_checks,
+            'bestObservedMaximumArea':best_max,'candidate':candidate}
+
+
+def main():
+    if not (ROOT/'.git').exists(): raise RuntimeError('Run from cat-logic-puzzle project root.')
+    started=time.perf_counter(); deadline=started+GLOBAL_SECONDS
+    results=[run_size(n,deadline) for n in SIZES]
+    candidates=[r['candidate'] for r in results if r['candidate']]
+    passed=len(candidates)==1
+    report={'benchmarkVersion':'V208','purpose':'12x12-only strengthened-anchor feasibility benchmark.',
+            'timeLimits':{'perSizeSeconds':SECONDS_PER_SIZE,'globalSeconds':GLOBAL_SECONDS},
+            'totalElapsedSeconds':round(time.perf_counter()-started,3),'foundCount':len(candidates),
+            'requiredCount':1,'allLargeSizesFound':len(candidates)==1,'results':results,
+            'decision':'READY_FOR_DEEP_LOGIC_AUDIT' if passed else 'LARGE_BOARD_CONSTRUCTION_NEEDS_REPAIR',
+            'gameFilesModified':False}
+    payload={'title':'NEKOMICHI 12X12 CANDIDATES V208','candidateOnly':True,
+             'notIntegrated':True,'candidates':candidates}
+    REPORT.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    CANDIDATES.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    print('OK: V208 12x12 benchmark finished.',flush=True)
+    print('RESULT:',report['decision'],flush=True)
+    print(f'FOUND: {len(candidates)}/1 target size',flush=True)
+    print('REPORT:',REPORT,flush=True); print('CANDIDATES:',CANDIDATES,flush=True)
+    print('SEND: Upload both V208 JSON files to Copilot.',flush=True)
+
+if __name__=='__main__':
+    try: main()
+    except KeyboardInterrupt:
+        print('CANCELLED: User stopped V208.',flush=True); sys.exit(130)
+    except Exception as exc:
+        print('ERROR:',exc,flush=True); sys.exit(1)
+
+
+================================================================================
+SCRIPT: BENCHMARK_NEKOMICHI_12X12_UNIQUENESS_V209.py
+from pathlib import Path
+from collections import Counter, deque
+import hashlib, json, random, sys, time
+
+ROOT = Path.cwd()
+REPORT = ROOT / 'NEKOMICHI_12X12_UNIQUENESS_V209.json'
+CANDIDATES = ROOT / 'NEKOMICHI_12X12_UNIQUENESS_CANDIDATES_V209.json'
+SIZES = [12]
+SECONDS_PER_SIZE = 30.0
+GLOBAL_SECONDS = 35.0
+PROGRESS_SECONDS = 5.0
+SEED = 20920261013
+
+
+def neighbors4(r, c, n):
+    for rr, cc in ((r-1,c),(r+1,c),(r,c-1),(r,c+1)):
+        if 0 <= rr < n and 0 <= cc < n:
+            yield rr, cc
+
+
+def make_solution(n, rng):
+    for _ in range(10000):
+        cols = list(range(n)); rng.shuffle(cols)
+        if all(abs(cols[r]-cols[r-1]) > 1 for r in range(1,n)):
+            return cols
+    return None
+
+
+def choose_anchor_ids(solution, singleton_count, double_count, rng):
+    n = len(solution)
+    ids = list(range(n)); rng.shuffle(ids)
+    chosen = []
+    for region_id in ids:
+        r, c = region_id, solution[region_id]
+        if all(abs(r-pr) > 1 or abs(c-pc) > 1 for pr,pc,_ in chosen):
+            chosen.append((r,c,region_id))
+        if len(chosen) >= singleton_count + double_count:
+            break
+    if len(chosen) < singleton_count + double_count:
+        chosen = [(i, solution[i], i) for i in ids[:singleton_count+double_count]]
+    singles = {item[2] for item in chosen[:singleton_count]}
+    doubles = {item[2] for item in chosen[singleton_count:singleton_count+double_count]}
+    return singles, doubles
+
+
+def build_board(solution, profile, rng):
+    n = len(solution)
+    board = [[-1]*n for _ in range(n)]
+    cells = [set() for _ in range(n)]
+    singleton_count, double_count = [(5,3),(6,2),(5,2),(7,1)][profile]
+    singles, doubles = choose_anchor_ids(solution, singleton_count, double_count, rng)
+    protected = singles | doubles
+
+    for r,c in enumerate(solution):
+        board[r][c] = r
+        cells[r].add((r,c))
+
+    occupied = {(r,solution[r]) for r in range(n)}
+    for region_id in doubles:
+        seed = (region_id, solution[region_id])
+        options = [p for p in neighbors4(seed[0],seed[1],n) if p not in occupied]
+        rng.shuffle(options)
+        if not options:
+            return None
+        point = options[0]
+        board[point[0]][point[1]] = region_id
+        cells[region_id].add(point)
+        occupied.add(point)
+
+    active = [i for i in range(n) if i not in protected]
+    remaining = n*n-len(occupied)
+    soft_cap = (n*n - singleton_count - 2*double_count + len(active)-1)//len(active) + 5
+
+    while remaining:
+        choices=[]
+        for region_id in active:
+            frontier=set()
+            for r,c in cells[region_id]:
+                frontier.update(p for p in neighbors4(r,c,n) if board[p[0]][p[1]] == -1)
+            if frontier:
+                penalty = max(0, len(cells[region_id])-soft_cap)
+                choices.append((penalty, len(cells[region_id]), region_id, list(frontier)))
+        if not choices:
+            return None
+        choices.sort(key=lambda x:(x[0],x[1]))
+        _,_,region_id,frontier = rng.choice(choices[:min(4,len(choices))])
+        r,c = rng.choice(frontier)
+        board[r][c] = region_id
+        cells[region_id].add((r,c))
+        remaining -= 1
+    return board
+
+
+def connected(board):
+    n=len(board)
+    for region_id in range(n):
+        target={(r,c) for r in range(n) for c in range(n) if board[r][c]==region_id}
+        if not target: return False
+        start=next(iter(target)); seen={start}; q=deque([start])
+        while q:
+            r,c=q.popleft()
+            for p in neighbors4(r,c,n):
+                if p in target and p not in seen:
+                    seen.add(p); q.append(p)
+        if seen != target: return False
+    return True
+
+
+def count_solutions(board, limit=2):
+    n=len(board); rows=[None]*n; used_c=set(); used_g=set(); total=0; first=None
+    def dfs(r):
+        nonlocal total,first
+        if total>=limit: return
+        if r==n:
+            total+=1
+            if first is None: first=rows[:]
+            return
+        options=[]
+        for c in range(n):
+            g=board[r][c]
+            if c in used_c or g in used_g: continue
+            if r and rows[r-1] is not None and abs(rows[r-1]-c)<=1: continue
+            options.append(c)
+        options.sort(key=lambda c: sum(1 for rr in range(r+1,n) if board[rr][c]==board[r][c]))
+        for c in options:
+            g=board[r][c]; rows[r]=c; used_c.add(c); used_g.add(g)
+            dfs(r+1)
+            used_g.remove(g); used_c.remove(c); rows[r]=None
+            if total>=limit: return
+    dfs(0)
+    return total,first
+
+
+def stats(board):
+    n=len(board); counts=Counter(v for row in board for v in row); sizes=[counts[i] for i in range(n)]
+    return {'sizes':sizes,'minimum':min(sizes),'maximum':max(sizes),
+            'singletons':sum(v==1 for v in sizes),'twoCells':sum(v==2 for v in sizes)}
+
+
+def canonical_key(board):
+    n=len(board); variants=[]; cur=board
+    for _ in range(4):
+        variants += [cur,[list(reversed(row)) for row in cur]]
+        cur=[[cur[n-1-c][r] for c in range(n)] for r in range(n)]
+    signatures=[]
+    for grid in variants:
+        remap={}; nxt=0; norm=[]
+        for row in grid:
+            out=[]
+            for v in row:
+                if v not in remap: remap[v]=nxt; nxt+=1
+                out.append(remap[v])
+            norm.append(out)
+        signatures.append(json.dumps(norm,separators=(',',':')))
+    return hashlib.sha256(min(signatures).encode()).hexdigest()
+
+
+def run_size(n, global_deadline):
+    rng=random.Random(SEED+n*1009); started=time.perf_counter()
+    deadline=min(started+SECONDS_PER_SIZE,global_deadline); next_progress=started+PROGRESS_SECONDS
+    attempts=connected_count=unique_checks=0; candidate=None; best_max=None
+    print(f'START: {n}x{n}, large-board limit {deadline-started:.0f}s',flush=True)
+    while time.perf_counter()<deadline:
+        attempts+=1; solution=make_solution(n,rng)
+        if solution is None: continue
+        profile=(attempts-1)%4; board=build_board(solution,profile,rng)
+        if board is None or not connected(board): continue
+        connected_count+=1; area=stats(board)
+        best_max=area['maximum'] if best_max is None else min(best_max,area['maximum'])
+        if area['singletons']>7 or area['twoCells']<1 or area['maximum']>55: continue
+        unique_checks+=1; total,found=count_solutions(board,2)
+        if total==1:
+            candidate={'size':n,'solution':found,'regions':board,'areaStats':area,
+                       'canonicalKey':canonical_key(board),'attempt':attempts,'profile':profile,
+                       'experimentalQualityTier':'UNIQUENESS_FIRST_NOT_FOR_INTEGRATION'}
+            break
+        now=time.perf_counter()
+        if now>=next_progress:
+            print(f'PROGRESS: {n}x{n} elapsed={now-started:.1f}s attempts={attempts} connected={connected_count} uniqueChecks={unique_checks} bestMaxArea={best_max}',flush=True)
+            next_progress=now+PROGRESS_SECONDS
+    elapsed=time.perf_counter()-started
+    status='FOUND' if candidate else 'TIMEOUT'
+    print(f'{status}: {n}x{n} elapsed={elapsed:.2f}s attempts={attempts} uniqueChecks={unique_checks}',flush=True)
+    return {'size':n,'status':status,'elapsedSeconds':round(elapsed,3),'attempts':attempts,
+            'connectedCandidates':connected_count,'uniqueChecks':unique_checks,
+            'bestObservedMaximumArea':best_max,'candidate':candidate}
+
+
+def main():
+    if not (ROOT/'.git').exists(): raise RuntimeError('Run from cat-logic-puzzle project root.')
+    started=time.perf_counter(); deadline=started+GLOBAL_SECONDS
+    results=[run_size(n,deadline) for n in SIZES]
+    candidates=[r['candidate'] for r in results if r['candidate']]
+    passed=len(candidates)==1
+    report={'benchmarkVersion':'V209','purpose':'12x12 uniqueness breakthrough benchmark with staged anchor strength.',
+            'timeLimits':{'perSizeSeconds':SECONDS_PER_SIZE,'globalSeconds':GLOBAL_SECONDS},
+            'totalElapsedSeconds':round(time.perf_counter()-started,3),'foundCount':len(candidates),
+            'requiredCount':1,'allLargeSizesFound':len(candidates)==1,'results':results,
+            'decision':'READY_FOR_DEEP_LOGIC_AUDIT' if passed else 'LARGE_BOARD_CONSTRUCTION_NEEDS_REPAIR',
+            'gameFilesModified':False}
+    payload={'title':'NEKOMICHI 12X12 UNIQUENESS CANDIDATES V209','candidateOnly':True,
+             'notIntegrated':True,'candidates':candidates}
+    REPORT.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    CANDIDATES.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    print('OK: V209 12x12 uniqueness benchmark finished.',flush=True)
+    print('RESULT:',report['decision'],flush=True)
+    print(f'FOUND: {len(candidates)}/1 target size',flush=True)
+    print('REPORT:',REPORT,flush=True); print('CANDIDATES:',CANDIDATES,flush=True)
+    print('SEND: Upload both V209 JSON files to Copilot.',flush=True)
+
+if __name__=='__main__':
+    try: main()
+    except KeyboardInterrupt:
+        print('CANCELLED: User stopped V209.',flush=True); sys.exit(130)
+    except Exception as exc:
+        print('ERROR:',exc,flush=True); sys.exit(1)
+
+
+================================================================================
+SCRIPT: AUDIT_NEKOMICHI_12X12_LOGIC_V212.py
+from pathlib import Path
+from collections import Counter, deque
+import json, sys, time
+
+ROOT=Path.cwd()
+SOURCE=ROOT/'NEKOMICHI_12X12_REPAIRED_CANDIDATES_V211.json'
+OUTPUT=ROOT/'NEKOMICHI_12X12_LOGIC_AUDIT_V212.json'
+
+def count_solutions(board,limit=2):
+    n=len(board); rows=[None]*n; uc=set(); ug=set(); total=0; first=None
+    def dfs(r):
+        nonlocal total,first
+        if total>=limit:return
+        if r==n:
+            total+=1
+            if first is None:first=rows[:]
+            return
+        for c in range(n):
+            g=board[r][c]
+            if c in uc or g in ug:continue
+            if r and rows[r-1] is not None and abs(rows[r-1]-c)<=1:continue
+            rows[r]=c; uc.add(c); ug.add(g); dfs(r+1); ug.remove(g); uc.remove(c); rows[r]=None
+            if total>=limit:return
+    dfs(0); return total,first
+
+def basic_logic(board):
+    n=len(board); possible={(r,c) for r in range(n) for c in range(n)}; cats=set(); trace=[]
+    changed=True
+    while changed:
+        changed=False
+        # Remove conflicts caused by confirmed cats.
+        for r,c in list(cats):
+            for rr,cc in list(possible):
+                if (rr,cc)==(r,c):continue
+                if rr==r or cc==c or board[rr][cc]==board[r][c] or (abs(rr-r)<=1 and abs(cc-c)<=1):
+                    possible.discard((rr,cc)); changed=True
+        units=[]
+        for r in range(n): units.append(('row',r,[(r,c) for c in range(n)]))
+        for c in range(n): units.append(('column',c,[(r,c) for r in range(n)]))
+        for g in range(n): units.append(('region',g,[(r,c) for r in range(n) for c in range(n) if board[r][c]==g]))
+        for kind,idx,cells in units:
+            if any(p in cats for p in cells):continue
+            opts=[p for p in cells if p in possible]
+            if not opts:return {'status':'CONTRADICTION','cats':len(cats),'trace':trace}
+            if len(opts)==1:
+                p=opts[0]
+                if p not in cats:
+                    cats.add(p); trace.append({'rule':f'{kind}_single','unit':idx,'cell':list(p)}); changed=True
+    solved=len(cats)==n
+    remaining=len(possible-cats)
+    return {'status':'SOLVED_BASIC' if solved else 'STALLED_BASIC','cats':len(cats),
+            'remainingCandidates':remaining,'trace':trace}
+
+def main():
+    if not SOURCE.exists():raise RuntimeError(f'Missing source: {SOURCE.name}')
+    data=json.loads(SOURCE.read_text(encoding='utf-8')); cs=data.get('candidates',[])
+    if len(cs)!=1:raise RuntimeError('Expected exactly one V211 candidate.')
+    c=cs[0]; board=c['regions']; started=time.perf_counter()
+    total,solution=count_solutions(board,2); logic=basic_logic(board)
+    area=c['areaStats']; structural=(area['singletons']<=4 and area['twoCells']>=2 and area['maximum']<=40)
+    decision='READY_FOR_STAGE_POOL_DESIGN' if total==1 and structural else 'CANDIDATE_REPAIR_REQUIRED'
+    if logic['status']=='STALLED_BASIC' and decision.startswith('READY'):
+        decision='UNIQUE_BUT_ADVANCED_LOGIC_REQUIRED'
+    report={'version':'V212','source':SOURCE.name,'elapsedSeconds':round(time.perf_counter()-started,4),
+            'solutionCountCappedAt2':total,'solutionMatchesStored':solution==c.get('solution'),
+            'structuralGatePassed':structural,'areaStats':area,'basicLogic':logic,
+            'decision':decision,'gameFilesModified':False,'notIntegrated':True}
+    OUTPUT.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    print('OK: V212 12x12 deep logic audit finished.')
+    print('RESULT:',decision); print('OUTPUT:',OUTPUT)
+    print('SEND: Upload NEKOMICHI_12X12_LOGIC_AUDIT_V212.json to Copilot.')
+if __name__=='__main__':
+    try:main()
+    except Exception as e:print('ERROR:',e);sys.exit(1)
+
+
+================================================================================
+EXISTING LARGE-BOARD RESULTS
+FILE: NEKOMICHI_12X12_BENCHMARK_V208.json
+{
+  "benchmarkVersion": "V208",
+  "purpose": "12x12-only strengthened-anchor feasibility benchmark.",
+  "timeLimits": {
+    "perSizeSeconds": 35.0,
+    "globalSeconds": 40.0
+  },
+  "totalElapsedSeconds": 35.01,
+  "foundCount": 0,
+  "requiredCount": 1,
+  "allLargeSizesFound": false,
+  "results": [
+    {
+      "size": 12,
+      "status": "TIMEOUT",
+      "elapsedSeconds": 35.01,
+      "attempts": 2161,
+      "connectedCandidates": 2151,
+      "uniqueChecks": 1556,
+      "bestObservedMaximumArea": 21,
+      "candidate": null
+    }
+  ],
+  "decision": "LARGE_BOARD_CONSTRUCTION_NEEDS_REPAIR",
+  "gameFilesModified": false
+}
+
+
+FILE: NEKOMICHI_12X12_CANDIDATES_V208.json
+{
+  "title": "NEKOMICHI 12X12 CANDIDATES V208",
+  "candidateOnly": true,
+  "notIntegrated": true,
+  "candidates": []
+}
+
+
+FILE: NEKOMICHI_12X12_LOGIC_AUDIT_V212.json
+{
+  "version": "V212",
+  "source": "NEKOMICHI_12X12_REPAIRED_CANDIDATES_V211.json",
+  "elapsedSeconds": 0.0167,
+  "solutionCountCappedAt2": 1,
+  "solutionMatchesStored": true,
+  "structuralGatePassed": true,
+  "areaStats": {
+    "sizes": [
+      29,
+      2,
+      1,
+      2,
+      2,
+      2,
+      35,
+      1,
+      40,
+      1,
+      28,
+      1
+    ],
+    "minimum": 1,
+    "maximum": 40,
+    "singletons": 4,
+    "twoCells": 4
+  },
+  "basicLogic": {
+    "status": "STALLED_BASIC",
+    "cats": 8,
+    "remainingCandidates": 13,
+    "trace": [
+      {
+        "rule": "region_single",
+        "unit": 2,
+        "cell": [
+          2,
+          8
+        ]
+      },
+      {
+        "rule": "region_single",
+        "unit": 7,
+        "cell": [
+          7,
+          2
+        ]
+      },
+      {
+        "rule": "region_single",
+        "unit": 9,
+        "cell": [
+          9,
+          11
+        ]
+      },
+      {
+        "rule": "region_single",
+        "unit": 11,
+        "cell": [
+          11,
+          5
+        ]
+      },
+      {
+        "rule": "region_single",
+        "unit": 5,
+        "cell": [
+          5,
+          6
+        ]
+      },
+      {
+        "rule": "region_single",
+        "unit": 4,
+        "cell": [
+          4,
+          9
+        ]
+      },
+      {
+        "rule": "region_single",
+        "unit": 3,
+        "cell": [
+          3,
+          1
+        ]
+      },
+      {
+        "rule": "region_single",
+        "unit": 6,
+        "cell": [
+          6,
+          10
+        ]
+      }
+    ]
+  },
+  "decision": "UNIQUE_BUT_ADVANCED_LOGIC_REQUIRED",
+  "gameFilesModified": false,
+  "notIntegrated": true
+}
+
+
+FILE: NEKOMICHI_12X12_REPAIR_V210.json
+{
+  "version": "V210",
+  "source": "NEKOMICHI_12X12_UNIQUENESS_CANDIDATES_V209.json",
+  "elapsedSeconds": 45.002,
+  "generatedVariants": 17270,
+  "uniqueSolutionChecks": 0,
+  "decision": "REPAIR_PATH_NOT_FOUND",
+  "bestObserved": {
+    "sizes": [
+      28,
+      2,
+      2,
+      2,
+      2,
+      2,
+      34,
+      2,
+      39,
+      2,
+      27,
+      2
+    ],
+    "minimum": 2,
+    "maximum": 39,
+    "singletons": 0,
+    "twoCells": 8
+  },
+  "gameFilesModified": false
+}
+
+
+FILE: NEKOMICHI_12X12_REPAIR_V211.json
+{
+  "version": "V211",
+  "source": "NEKOMICHI_12X12_UNIQUENESS_CANDIDATES_V209.json",
+  "elapsedSeconds": 0.049,
+  "generatedVariants": 57,
+  "uniqueSolutionChecks": 1,
+  "decision": "READY_FOR_DEEP_LOGIC_AUDIT",
+  "bestObserved": {
+    "sizes": [
+      29,
+      2,
+      1,
+      2,
+      2,
+      2,
+      35,
+      1,
+      40,
+      1,
+      28,
+      1
+    ],
+    "minimum": 1,
+    "maximum": 40,
+    "singletons": 4,
+    "twoCells": 4
+  },
+  "gameFilesModified": false
+}
+
+
+FILE: NEKOMICHI_12X12_REPAIRED_CANDIDATES_V210.json
+{
+  "title": "NEKOMICHI 12X12 REPAIRED CANDIDATES V210",
+  "candidateOnly": true,
+  "notIntegrated": true,
+  "candidates": []
+}
+
+
+FILE: NEKOMICHI_12X12_REPAIRED_CANDIDATES_V211.json
+{
+  "title": "NEKOMICHI 12X12 REPAIRED CANDIDATES V211",
+  "candidateOnly": true,
+  "notIntegrated": true,
+  "candidates": [
+    {
+      "size": 12,
+      "solution": [
+        7,
+        4,
+        8,
+        1,
+        9,
+        6,
+        10,
+        2,
+        0,
+        11,
+        3,
+        5
+      ],
+      "regions": [
+        [
+          8,
+          8,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          8,
+          8,
+          8,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          0,
+          0,
+          0,
+          2,
+          6,
+          6,
+          6
+        ],
+        [
+          8,
+          3,
+          8,
+          8,
+          0,
+          0,
+          0,
+          0,
+          0,
+          6,
+          6,
+          6
+        ],
+        [
+          8,
+          3,
+          8,
+          8,
+          8,
+          0,
+          0,
+          0,
+          0,
+          4,
+          6,
+          6
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          5,
+          5,
+          6,
+          6,
+          4,
+          6,
+          6
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          10,
+          10,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ],
+        [
+          8,
+          8,
+          7,
+          10,
+          10,
+          10,
+          10,
+          10,
+          6,
+          6,
+          6,
+          6
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          10,
+          10,
+          10,
+          6,
+          6,
+          6
+        ],
+        [
+          8,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          6,
+          6,
+          6,
+          6,
+          9
+        ],
+        [
+          8,
+          8,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          6,
+          6,
+          6
+        ],
+        [
+          8,
+          8,
+          8,
+          10,
+          10,
+          11,
+          10,
+          10,
+          10,
+          6,
+          6,
+          6
+        ]
+      ],
+      "areaStats": {
+        "sizes": [
+          29,
+          2,
+          1,
+          2,
+          2,
+          2,
+          35,
+          1,
+          40,
+          1,
+          28,
+          1
+        ],
+        "minimum": 1,
+        "maximum": 40,
+        "singletons": 4,
+        "twoCells": 4
+      },
+      "canonicalKey": "ec077edcd0f055da5dd978257c09e48426cc8a83bba4bf698df2841b0ce8b579",
+      "repairSource": "V209 attempt 64",
+      "qualityTier": "PRACTICAL_RANGE_CANDIDATE_NOT_INTEGRATED"
+    }
+  ]
+}
+
+
+FILE: NEKOMICHI_12X12_UNIQUENESS_CANDIDATES_V209.json
+{
+  "title": "NEKOMICHI 12X12 UNIQUENESS CANDIDATES V209",
+  "candidateOnly": true,
+  "notIntegrated": true,
+  "candidates": [
+    {
+      "size": 12,
+      "solution": [
+        7,
+        4,
+        8,
+        1,
+        9,
+        6,
+        10,
+        2,
+        0,
+        11,
+        3,
+        5
+      ],
+      "regions": [
+        [
+          8,
+          8,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          0,
+          0,
+          0,
+          2,
+          6,
+          6,
+          6
+        ],
+        [
+          8,
+          3,
+          8,
+          8,
+          0,
+          0,
+          0,
+          0,
+          0,
+          6,
+          6,
+          6
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          0,
+          0,
+          0,
+          0,
+          4,
+          6,
+          6
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          5,
+          6,
+          6,
+          4,
+          6,
+          6
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          10,
+          10,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ],
+        [
+          8,
+          8,
+          7,
+          10,
+          10,
+          10,
+          10,
+          10,
+          6,
+          6,
+          6,
+          6
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          10,
+          10,
+          10,
+          6,
+          6,
+          6
+        ],
+        [
+          8,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          6,
+          6,
+          6,
+          6,
+          9
+        ],
+        [
+          8,
+          8,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          6,
+          6,
+          6
+        ],
+        [
+          8,
+          8,
+          8,
+          10,
+          10,
+          11,
+          10,
+          10,
+          10,
+          6,
+          6,
+          6
+        ]
+      ],
+      "areaStats": {
+        "sizes": [
+          29,
+          1,
+          1,
+          1,
+          2,
+          1,
+          35,
+          1,
+          43,
+          1,
+          28,
+          1
+        ],
+        "minimum": 1,
+        "maximum": 43,
+        "singletons": 7,
+        "twoCells": 1
+      },
+      "canonicalKey": "cf4201efaf0546b5670ba2079c63f30109a662217ac0c42d4eda8185dc55cb1e",
+      "attempt": 64,
+      "profile": 3,
+      "experimentalQualityTier": "UNIQUENESS_FIRST_NOT_FOR_INTEGRATION"
+    }
+  ]
+}
+
+
+FILE: NEKOMICHI_12X12_UNIQUENESS_V209.json
+{
+  "benchmarkVersion": "V209",
+  "purpose": "12x12 uniqueness breakthrough benchmark with staged anchor strength.",
+  "timeLimits": {
+    "perSizeSeconds": 30.0,
+    "globalSeconds": 35.0
+  },
+  "totalElapsedSeconds": 1.036,
+  "foundCount": 1,
+  "requiredCount": 1,
+  "allLargeSizesFound": true,
+  "results": [
+    {
+      "size": 12,
+      "status": "FOUND",
+      "elapsedSeconds": 1.035,
+      "attempts": 64,
+      "connectedCandidates": 63,
+      "uniqueChecks": 62,
+      "bestObservedMaximumArea": 29,
+      "candidate": {
+        "size": 12,
+        "solution": [
+          7,
+          4,
+          8,
+          1,
+          9,
+          6,
+          10,
+          2,
+          0,
+          11,
+          3,
+          5
+        ],
+        "regions": [
+          [
+            8,
+            8,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            8,
+            8,
+            8,
+            8,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            8,
+            8,
+            8,
+            8,
+            8,
+            0,
+            0,
+            0,
+            2,
+            6,
+            6,
+            6
+          ],
+          [
+            8,
+            3,
+            8,
+            8,
+            0,
+            0,
+            0,
+            0,
+            0,
+            6,
+            6,
+            6
+          ],
+          [
+            8,
+            8,
+            8,
+            8,
+            8,
+            0,
+            0,
+            0,
+            0,
+            4,
+            6,
+            6
+          ],
+          [
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            5,
+            6,
+            6,
+            4,
+            6,
+            6
+          ],
+          [
+            8,
+            8,
+            8,
+            8,
+            10,
+            10,
+            6,
+            6,
+            6,
+            6,
+            6,
+            6
+          ],
+          [
+            8,
+            8,
+            7,
+            10,
+            10,
+            10,
+            10,
+            10,
+            6,
+            6,
+            6,
+            6
+          ],
+          [
+            8,
+            8,
+            8,
+            8,
+            8,
+            8,
+            10,
+            10,
+            10,
+            6,
+            6,
+            6
+          ],
+          [
+            8,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            6,
+            6,
+            6,
+            6,
+            9
+          ],
+          [
+            8,
+            8,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            6,
+            6,
+            6
+          ],
+          [
+            8,
+            8,
+            8,
+            10,
+            10,
+            11,
+            10,
+            10,
+            10,
+            6,
+            6,
+            6
+          ]
+        ],
+        "areaStats": {
+          "sizes": [
+            29,
+            1,
+            1,
+            1,
+            2,
+            1,
+            35,
+            1,
+            43,
+            1,
+            28,
+            1
+          ],
+          "minimum": 1,
+          "maximum": 43,
+          "singletons": 7,
+          "twoCells": 1
+        },
+        "canonicalKey": "cf4201efaf0546b5670ba2079c63f30109a662217ac0c42d4eda8185dc55cb1e",
+        "attempt": 64,
+        "profile": 3,
+        "experimentalQualityTier": "UNIQUENESS_FIRST_NOT_FOR_INTEGRATION"
+      }
+    }
+  ],
+  "decision": "READY_FOR_DEEP_LOGIC_AUDIT",
+  "gameFilesModified": false
+}
+
+
+FILE: NEKOMICHI_LARGE_BOARD_BENCHMARK_V207.json
+{
+  "benchmarkVersion": "V207",
+  "purpose": "Large-board-only 11x11 and 12x12 feasibility benchmark.",
+  "timeLimits": {
+    "perSizeSeconds": 30.0,
+    "globalSeconds": 65.0
+  },
+  "totalElapsedSeconds": 37.802,
+  "foundCount": 1,
+  "requiredCount": 2,
+  "allLargeSizesFound": false,
+  "results": [
+    {
+      "size": 11,
+      "status": "FOUND",
+      "elapsedSeconds": 7.797,
+      "attempts": 976,
+      "connectedCandidates": 971,
+      "uniqueChecks": 120,
+      "bestObservedMaximumArea": 23,
+      "candidate": {
+        "size": 11,
+        "solution": [
+          4,
+          9,
+          7,
+          0,
+          8,
+          6,
+          1,
+          10,
+          2,
+          5,
+          3
+        ],
+        "regions": [
+          [
+            3,
+            3,
+            3,
+            3,
+            0,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          [
+            3,
+            3,
+            3,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            1,
+            7
+          ],
+          [
+            3,
+            3,
+            3,
+            3,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            7
+          ],
+          [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            2,
+            2,
+            7,
+            7
+          ],
+          [
+            3,
+            3,
+            3,
+            8,
+            3,
+            2,
+            2,
+            2,
+            4,
+            7,
+            7
+          ],
+          [
+            3,
+            3,
+            8,
+            8,
+            8,
+            8,
+            5,
+            7,
+            7,
+            7,
+            7
+          ],
+          [
+            3,
+            6,
+            8,
+            8,
+            10,
+            10,
+            5,
+            7,
+            7,
+            7,
+            7
+          ],
+          [
+            3,
+            6,
+            8,
+            8,
+            10,
+            10,
+            10,
+            10,
+            7,
+            7,
+            7
+          ],
+          [
+            3,
+            8,
+            8,
+            8,
+            8,
+            10,
+            10,
+            10,
+            7,
+            7,
+            10
+          ],
+          [
+            8,
+            8,
+            8,
+            8,
+            9,
+            9,
+            10,
+            10,
+            7,
+            10,
+            10
+          ],
+          [
+            8,
+            8,
+            8,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10
+          ]
+        ],
+        "areaStats": {
+          "sizes": [
+            1,
+            1,
+            24,
+            26,
+            1,
+            2,
+            2,
+            20,
+            20,
+            2,
+            22
+          ],
+          "minimum": 1,
+          "maximum": 26,
+          "singletons": 3,
+          "twoCells": 3
+        },
+        "canonicalKey": "384091d8f3b73109cea89427054f57db4a83e21a2c2ad9a3f2dd8f8a1a259e5e",
+        "attempt": 976,
+        "profile": 3
+      }
+    },
+    {
+      "size": 12,
+      "status": "TIMEOUT",
+      "elapsedSeconds": 30.005,
+      "attempts": 2736,
+      "connectedCandidates": 2722,
+      "uniqueChecks": 256,
+      "bestObservedMaximumArea": 23,
+      "candidate": null
+    }
+  ],
+  "decision": "LARGE_BOARD_CONSTRUCTION_NEEDS_REPAIR",
+  "gameFilesModified": false
+}
+
+
+FILE: NEKOMICHI_LARGE_BOARD_CANDIDATES_V207.json
+{
+  "title": "NEKOMICHI LARGE BOARD CANDIDATES V207",
+  "candidateOnly": true,
+  "notIntegrated": true,
+  "candidates": [
+    {
+      "size": 11,
+      "solution": [
+        4,
+        9,
+        7,
+        0,
+        8,
+        6,
+        1,
+        10,
+        2,
+        5,
+        3
+      ],
+      "regions": [
+        [
+          3,
+          3,
+          3,
+          3,
+          0,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        [
+          3,
+          3,
+          3,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          1,
+          7
+        ],
+        [
+          3,
+          3,
+          3,
+          3,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          7
+        ],
+        [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          2,
+          2,
+          2,
+          7,
+          7
+        ],
+        [
+          3,
+          3,
+          3,
+          8,
+          3,
+          2,
+          2,
+          2,
+          4,
+          7,
+          7
+        ],
+        [
+          3,
+          3,
+          8,
+          8,
+          8,
+          8,
+          5,
+          7,
+          7,
+          7,
+          7
+        ],
+        [
+          3,
+          6,
+          8,
+          8,
+          10,
+          10,
+          5,
+          7,
+          7,
+          7,
+          7
+        ],
+        [
+          3,
+          6,
+          8,
+          8,
+          10,
+          10,
+          10,
+          10,
+          7,
+          7,
+          7
+        ],
+        [
+          3,
+          8,
+          8,
+          8,
+          8,
+          10,
+          10,
+          10,
+          7,
+          7,
+          10
+        ],
+        [
+          8,
+          8,
+          8,
+          8,
+          9,
+          9,
+          10,
+          10,
+          7,
+          10,
+          10
+        ],
+        [
+          8,
+          8,
+          8,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10
+        ]
+      ],
+      "areaStats": {
+        "sizes": [
+          1,
+          1,
+          24,
+          26,
+          1,
+          2,
+          2,
+          20,
+          20,
+          2,
+          22
+        ],
+        "minimum": 1,
+        "maximum": 26,
+        "singletons": 3,
+        "twoCells": 3
+      },
+      "canonicalKey": "384091d8f3b73109cea89427054f57db4a83e21a2c2ad9a3f2dd8f8a1a259e5e",
+      "attempt": 976,
+      "profile": 3
+    }
+  ]
+}
+
+
+=== SUMMARY ===
+Benchmark scripts found: 4
+SUCCESS: V227 benchmark source collection completed

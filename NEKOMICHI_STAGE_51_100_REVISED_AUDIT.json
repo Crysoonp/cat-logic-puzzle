@@ -1,0 +1,465 @@
+{
+  "title": "NEKOMICHI STAGE 51-100 REVISED AUDIT",
+  "summary": {
+    "passed": true,
+    "failureStages": [],
+    "replacedStages": [
+      52,
+      53,
+      55,
+      59
+    ]
+  },
+  "stages": [
+    {
+      "stage": 51,
+      "size": 8,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 8,
+      "locked": 0,
+      "errors": []
+    },
+    {
+      "stage": 52,
+      "size": 8,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 8,
+      "locked": 0,
+      "errors": []
+    },
+    {
+      "stage": 53,
+      "size": 8,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 8,
+      "locked": 0,
+      "errors": []
+    },
+    {
+      "stage": 54,
+      "size": 8,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 8,
+      "locked": 3,
+      "errors": []
+    },
+    {
+      "stage": 55,
+      "size": 8,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 8,
+      "locked": 0,
+      "errors": []
+    },
+    {
+      "stage": 56,
+      "size": 8,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 8,
+      "locked": 4,
+      "errors": []
+    },
+    {
+      "stage": 57,
+      "size": 8,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 8,
+      "locked": 0,
+      "errors": []
+    },
+    {
+      "stage": 58,
+      "size": 8,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 8,
+      "locked": 4,
+      "errors": []
+    },
+    {
+      "stage": 59,
+      "size": 8,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 8,
+      "locked": 0,
+      "errors": []
+    },
+    {
+      "stage": 60,
+      "size": 8,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 8,
+      "locked": 1,
+      "errors": []
+    },
+    {
+      "stage": 61,
+      "size": 8,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 8,
+      "locked": 0,
+      "errors": []
+    },
+    {
+      "stage": 62,
+      "size": 8,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 8,
+      "locked": 0,
+      "errors": []
+    },
+    {
+      "stage": 63,
+      "size": 8,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 8,
+      "locked": 0,
+      "errors": []
+    },
+    {
+      "stage": 64,
+      "size": 8,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 8,
+      "locked": 0,
+      "errors": []
+    },
+    {
+      "stage": 65,
+      "size": 9,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 9,
+      "locked": 1,
+      "errors": []
+    },
+    {
+      "stage": 66,
+      "size": 8,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 8,
+      "locked": 0,
+      "errors": []
+    },
+    {
+      "stage": 67,
+      "size": 9,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 9,
+      "locked": 0,
+      "errors": []
+    },
+    {
+      "stage": 68,
+      "size": 9,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 9,
+      "locked": 0,
+      "errors": []
+    },
+    {
+      "stage": 69,
+      "size": 9,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 9,
+      "locked": 0,
+      "errors": []
+    },
+    {
+      "stage": 70,
+      "size": 9,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 9,
+      "locked": 0,
+      "errors": []
+    },
+    {
+      "stage": 71,
+      "size": 9,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 9,
+      "locked": 0,
+      "errors": []
+    },
+    {
+      "stage": 72,
+      "size": 9,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 9,
+      "locked": 0,
+      "errors": []
+    },
+    {
+      "stage": 73,
+      "size": 9,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 9,
+      "locked": 0,
+      "errors": []
+    },
+    {
+      "stage": 74,
+      "size": 8,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 8,
+      "locked": 0,
+      "errors": []
+    },
+    {
+      "stage": 75,
+      "size": 9,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 9,
+      "locked": 0,
+      "errors": []
+    },
+    {
+      "stage": 76,
+      "size": 9,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 9,
+      "locked": 0,
+      "errors": []
+    },
+    {
+      "stage": 77,
+      "size": 9,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 9,
+      "locked": 0,
+      "errors": []
+    },
+    {
+      "stage": 78,
+      "size": 8,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 8,
+      "locked": 0,
+      "errors": []
+    },
+    {
+      "stage": 79,
+      "size": 9,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 9,
+      "locked": 0,
+      "errors": []
+    },
+    {
+      "stage": 80,
+      "size": 9,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 9,
+      "locked": 0,
+      "errors": []
+    },
+    {
+      "stage": 81,
+      "size": 9,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 9,
+      "locked": 1,
+      "errors": []
+    },
+    {
+      "stage": 82,
+      "size": 9,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 9,
+      "locked": 2,
+      "errors": []
+    },
+    {
+      "stage": 83,
+      "size": 10,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 10,
+      "locked": 0,
+      "errors": []
+    },
+    {
+      "stage": 84,
+      "size": 9,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 9,
+      "locked": 0,
+      "errors": []
+    },
+    {
+      "stage": 85,
+      "size": 10,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 10,
+      "locked": 0,
+      "errors": []
+    },
+    {
+      "stage": 86,
+      "size": 9,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 9,
+      "locked": 0,
+      "errors": []
+    },
+    {
+      "stage": 87,
+      "size": 10,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 10,
+      "locked": 1,
+      "errors": []
+    },
+    {
+      "stage": 88,
+      "size": 10,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 10,
+      "locked": 1,
+      "errors": []
+    },
+    {
+      "stage": 89,
+      "size": 9,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 9,
+      "locked": 1,
+      "errors": []
+    },
+    {
+      "stage": 90,
+      "size": 10,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 10,
+      "locked": 0,
+      "errors": []
+    },
+    {
+      "stage": 91,
+      "size": 10,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 10,
+      "locked": 0,
+      "errors": []
+    },
+    {
+      "stage": 92,
+      "size": 10,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 10,
+      "locked": 1,
+      "errors": []
+    },
+    {
+      "stage": 93,
+      "size": 10,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 10,
+      "locked": 1,
+      "errors": []
+    },
+    {
+      "stage": 94,
+      "size": 10,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 10,
+      "locked": 2,
+      "errors": []
+    },
+    {
+      "stage": 95,
+      "size": 10,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 10,
+      "locked": 0,
+      "errors": []
+    },
+    {
+      "stage": 96,
+      "size": 10,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 10,
+      "locked": 1,
+      "errors": []
+    },
+    {
+      "stage": 97,
+      "size": 10,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 10,
+      "locked": 0,
+      "errors": []
+    },
+    {
+      "stage": 98,
+      "size": 10,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 10,
+      "locked": 0,
+      "errors": []
+    },
+    {
+      "stage": 99,
+      "size": 10,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 10,
+      "locked": 0,
+      "errors": []
+    },
+    {
+      "stage": 100,
+      "size": 10,
+      "solutionCount": 1,
+      "logicSolved": true,
+      "direct": 10,
+      "locked": 1,
+      "errors": []
+    }
+  ]
+}

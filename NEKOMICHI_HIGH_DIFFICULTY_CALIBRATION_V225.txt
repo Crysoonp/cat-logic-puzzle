@@ -1,0 +1,14 @@
+NEKOMICHI HIGH DIFFICULTY CALIBRATION V225
+
+Findings from V224 audit:
+- 201 stages were loaded and all were solved by direct logic.
+- No current stage reached star 4 or 5.
+- Stage 302 contains 4 single-cell and 4 two-cell regions, outside the intended large-board target.
+- Early stages 7 and 8 were the current highest-scoring boards.
+
+V225 changes:
+- Added explicit 11x11/12x12 structural eligibility checks.
+- Target: at most 1 single-cell region, at most 2 two-cell regions, at most 2 initial certain cats.
+- Added highDifficultyCandidate and diagnostic reasons.
+- Recalibrated score weights without falsely promoting current boards to star 4/5.
+- Kept legacy difficulty fields and stage data unchanged.

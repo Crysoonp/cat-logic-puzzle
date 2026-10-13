@@ -1,0 +1,7 @@
+NEKOMICHI TARGET STRUCTURE BENCHMARK V228
+Decision: TARGET_STRUCTURE_UNIQUENESS_NEEDS_NEW_CONSTRUCTION
+Found: 0/2
+Elapsed: 40.013s
+
+11x11 | TIMEOUT | 20.011s | attempts 1476 | structural 1472 | unique checks 1472 | solver aborts 0
+12x12 | TIMEOUT | 20.002s | attempts 489 | structural 487 | unique checks 487 | solver aborts 4

@@ -1,7 +1,7 @@
 {
-  "baselineVersion": "0.8.29",
+  "baselineVersion": "0.8.56",
   "styleSha256": "6e3c7a01660043b85c881114789c6f5217c82c007fd46d37473158b413160a69",
-  "styleBytes": 98564,
+  "styleBytes": 108423,
   "styleLines": 1475,
   "selectorEntries": 916,
   "uniqueSelectors": 494,
@@ -173,7 +173,7 @@
   ],
   "visualBaselineComplete": true,
   "cssDeletionGate": "audit-required",
-  "currentStyleSha256": "7615d0a51bc20ddf5e314d3aade781747491ef1576f5f687f4ea821a180ddb2e",
+  "currentStyleSha256": "8d1aa2e20b3a9cf116877ee930ffffdd9505b619435f2f34da4f77ad125b1d8d",
   "nextCleanupCandidate": null,
   "nextCandidateDecision": "No safe second family selected from the current audit",
   "dynamicSelectorProtections": [
@@ -200,5 +200,118 @@
     "It also split rgba() and function values into false selector fragments such as 255 and inset 0 1px 1px rgba(255",
     "The remaining real selector chains are intentional overrides, responsive rules, dynamic visual families, or protected effects",
     "Git working tree contains many modified and untracked foundation, audit, backup, and update artifacts, so broad cleanup is unsafe"
-  ]
+  ],
+  "markerVisibilityV0839": {
+    "status": "runtime-review-required",
+    "scope": [
+      "board-x",
+      "board-question",
+      "board-triangle",
+      "mark-switch"
+    ],
+    "previousStyleSha256": "7615d0a51bc20ddf5e314d3aade781747491ef1576f5f687f4ea821a180ddb2e",
+    "approvedStyleSha256": "1e33bd3ee2e99abd3a09b813b7b269a3c2602fce96ec2af059becc23072e53ac",
+    "layoutChanged": false,
+    "outlineStrokeWidth": 16,
+    "coreStrokeWidth": 11.5,
+    "xOutlineStrokeWidth": 18,
+    "xCoreStrokeWidth": 13
+  },
+  "questionDotSeparationV0841": {
+    "status": "runtime-review-required",
+    "previousStyleSha256": "1e33bd3ee2e99abd3a09b813b7b269a3c2602fce96ec2af059becc23072e53ac",
+    "approvedStyleSha256": "23c2e4db76db7f85ad61f96a3b251d382c14cbb2077b11842bd787c3f0c7e9db",
+    "questionOutlineStrokeWidth": 11,
+    "questionCoreStrokeWidth": 7.5,
+    "xAndTriangleUnchanged": true,
+    "reason": "Prevent the question-mark stem from visually merging with its dot on small cells."
+  },
+  "markerAlignmentV0843": {
+    "status": "runtime-review-required",
+    "referenceMark": "x",
+    "triangleSizePercent": 92,
+    "triangleOutlineStrokeWidth": 18,
+    "triangleCoreStrokeWidth": 13,
+    "questionSizePercent": 88,
+    "questionOutlineStrokeWidth": 16,
+    "questionCoreStrokeWidth": 11.5,
+    "questionDotRadius": 4.2,
+    "questionGapPreserved": true
+  },
+  "questionDotOutlineV0845": {
+    "status": "runtime-review-required",
+    "dotRadius": 4.8,
+    "outlineScale": 1.0,
+    "coreScale": 0.58,
+    "curveAndGapUnchanged": true,
+    "xAndTriangleUnchanged": true
+  },
+  "questionDotExplicitRadiusV0846": {
+    "status": "runtime-review-required",
+    "outlineRadius": 4.8,
+    "coreRadius": 2.8,
+    "method": "CSS SVG r property",
+    "replacesUnreliableTransformScaling": true,
+    "otherMarkerGeometryUnchanged": true
+  },
+  "questionDotVisibleRimV0847": {
+    "status": "runtime-review-required",
+    "method": "top-layer SVG stroke",
+    "coreRadius": 4.1,
+    "strokeWidth": 3.2,
+    "strokeColor": "rgba(91,100,112,.72)",
+    "xTriangleQuestionStemUnchanged": true
+  },
+  "questionDotRenderFixV0848": {
+    "status": "runtime-review-required",
+    "rootCause": "selectors treated mark-core and mark-outline as classes on the outer span instead of child g elements",
+    "outlineRadius": 5.2,
+    "coreRadius": 3.35,
+    "rimWidth": 1.85,
+    "deadBlocksRemoved": [
+      "0.8.45",
+      "0.8.46",
+      "0.8.47"
+    ],
+    "xTriangleQuestionStemUnchanged": true
+  },
+  "questionOpticalAlignmentV0849": {
+    "status": "runtime-review-required",
+    "referenceMark": "x",
+    "questionWidthPercent": 94,
+    "questionHeightPercent": 96,
+    "translateYPercent": 1.5,
+    "dotOutlineRadius": 7.8,
+    "dotCoreRadius": 4.8,
+    "dotScaleFromV0848": 1.5,
+    "triangleAndXUnchanged": true
+  },
+  "markerStrokeUnificationV0850": {
+    "status": "runtime-review-required",
+    "referenceMark": "x",
+    "outlineStrokeWidth": 18,
+    "coreStrokeWidth": 13,
+    "questionStemUnified": true,
+    "triangleStrokeUnified": true,
+    "triangleSizePercent": 96,
+    "questionDotUnchanged": true
+  },
+  "markButtonIconIsolationV0853": {
+    "status": "runtime-review-required",
+    "scope": "#modeCycle only",
+    "iconWidthPercent": 62,
+    "iconHeightPercent": 62,
+    "centered": true,
+    "buttonOverflowHidden": true,
+    "boardMarkerGeometryChanged": false
+  },
+  "markButtonSvgXV0856": {
+    "status": "runtime-review-required",
+    "rootCause": "legacy global mark-x pseudo-elements overlaid the MARK button SVG",
+    "pseudoElementsDisabledInModeCycle": true,
+    "svgXEnabled": true,
+    "iconPercent": 62,
+    "triangleAndQuestionUnchanged": true,
+    "boardXUnchanged": true
+  }
 }

@@ -63,14 +63,55 @@ function level3NakedPairs(stage,revealed,marks,cand,us){
 function logicalStep(stage,revealed,marks,maxLevel=3){const cand=candidates(stage,revealed,marks),us=unresolvedUnits(stage,revealed,cand);return level1(stage,revealed,marks,cand,us)||(maxLevel>=2&&level2Locked(stage,revealed,marks,cand,us))||(maxLevel>=2&&level2CommonAdjacency(stage,revealed,marks,cand,us))||(maxLevel>=3&&level3NakedPairs(stage,revealed,marks,cand,us))||null}
 function nextStep(stage,revealed,marks){return logicalStep(stage,revealed,marks,3)}
 function scoreToDifficulty(score,highest,depth){let d=score<=14?1:score<=29?2:score<=49?3:score<=69?4:5;d=Math.max(d,highest);if(depth>=2)d=5;return Math.min(5,d)}
+function regionProfile(stage){
+ const counts=new Map();for(const row of stage.regions)for(const g of row)counts.set(g,(counts.get(g)||0)+1);const sizes=[...counts.values()].sort((a,b)=>a-b);
+ return {regionSizes:sizes,singleCellRegions:sizes.filter(x=>x===1).length,twoCellRegions:sizes.filter(x=>x===2).length,threeCellRegions:sizes.filter(x=>x===3).length,smallRegionCount:sizes.filter(x=>x<=2).length,minRegionSize:sizes[0]||0,maxRegionSize:sizes.at(-1)||0};
+}
+function openingProfile(stage){
+ const cand=candidates(stage,new Set(),new Map()),us=unresolvedUnits(stage,new Set(),cand),singles=us.filter(u=>u.candidates.length===1),pairs=us.filter(u=>u.candidates.length===2);
+ return {initialCandidateCount:cand.size,initialCertainUnitCount:singles.length,initialCertainCatCount:new Set(singles.map(u=>u.candidates[0])).size,initialTwoCandidateUnitCount:pairs.length,initialRegionCandidates:us.filter(u=>u.type==='region').map(u=>u.candidates.length)};
+}
+function highDifficultyProfile(stage,solved,highest,region,opening,trace){
+ const isLarge=stage.size>=11,smallAreaWithinTarget=region.singleCellRegions<=1&&region.twoCellRegions<=2,openingWithinTarget=opening.initialCertainCatCount<=2;
+ const advancedRuleSteps=trace.filter(x=>x.ruleLevel>=3).length,level2Steps=trace.filter(x=>x.ruleLevel===2).length;
+ const structurallyEligible=isLarge&&smallAreaWithinTarget&&openingWithinTarget;
+ const highDifficultyCandidate=solved&&structurallyEligible&&(highest>=3||level2Steps>=Math.max(8,stage.size));
+ const reasons=[];
+ if(!isLarge)reasons.push('board-below-11');
+ if(region.singleCellRegions>1)reasons.push('too-many-single-cell-regions');
+ if(region.twoCellRegions>2)reasons.push('too-many-two-cell-regions');
+ if(opening.initialCertainCatCount>2)reasons.push('too-many-initial-certain-cats');
+ if(highest<3&&level2Steps<Math.max(8,stage.size))reasons.push('insufficient-inference-depth');
+ return {isLargeBoard:isLarge,smallAreaWithinTarget,openingWithinTarget,structurallyEligible,highDifficultyCandidate,advancedRuleSteps,level2Steps,reasons};
+}
+function advancedScore(stage,solved,highest,steps,updates,trace,region,opening){
+ const cats=trace.filter(x=>x.kind==='only').map(x=>x.step);let longest=0,last=0;for(const at of cats){longest=Math.max(longest,at-last);last=at}longest=Math.max(longest,steps-last);
+ const profile=highDifficultyProfile(stage,solved,highest,region,opening,trace),normalizedSteps=steps/Math.max(1,stage.size),normalizedUpdates=updates/Math.max(1,stage.size*stage.size);
+ let score={1:6,2:18,3:42,4:64,5:82}[highest]||6;
+ score+=Math.min(10,Math.round(normalizedSteps*3));
+ score+=Math.min(6,Math.round(normalizedUpdates*3));
+ score+=Math.min(12,longest);
+ score+=opening.initialCertainCatCount===0?7:opening.initialCertainCatCount===1?3:0;
+ score+=opening.initialTwoCandidateUnitCount===0?3:opening.initialTwoCandidateUnitCount<=2?1:0;
+ score-=Math.min(18,region.singleCellRegions*4+region.twoCellRegions*2);
+ if(profile.structurallyEligible)score+=4;
+ if(profile.highDifficultyCandidate)score+=8;
+ if(!solved)score+=20;
+ score=Math.max(0,Math.min(100,score));
+ let difficulty=score<=24?1:score<=44?2:score<=64?3:score<=82?4:5;
+ if(highest<=2&&!profile.highDifficultyCandidate)difficulty=Math.min(difficulty,3);
+ if(!profile.structurallyEligible&&stage.size>=11)difficulty=Math.min(difficulty,3);
+ return {score,difficulty,firstCatStep:cats[0]||null,longestInferenceRun:longest,normalizedSteps:Number(normalizedSteps.toFixed(2)),normalizedUpdates:Number(normalizedUpdates.toFixed(2)),profile};
+}
 function analyze(stage){
- const revealed=new Set(),marks=new Map(),answers=catIds(stage),ruleUsage={level1:0,level2:0,level3:0,level4:0,level5:0};let logicStepCount=0,cellUpdateCount=0,maxChainLength=0,highestRuleLevel=1,guard=stage.size*stage.size*12;
- while(revealed.size<stage.size&&guard-->0){const step=logicalStep(stage,revealed,marks,3);if(!step)break;logicStepCount++;maxChainLength=Math.max(maxChainLength,logicStepCount);highestRuleLevel=Math.max(highestRuleLevel,step.ruleLevel);ruleUsage[`level${step.ruleLevel}`]++;
-  if(step.kind==='only'){if(!answers.has(step.target))break;revealed.add(step.target);cellUpdateCount++;}
-  else{let changed=0;for(const id of step.targets||[step.target]){if(answers.has(id))continue;if(!marks.has(id)){marks.set(id,'x');changed++;cellUpdateCount++;}}if(!changed)break;}
+ const revealed=new Set(),marks=new Map(),answers=catIds(stage),ruleUsage={level1:0,level2:0,level3:0,level4:0,level5:0};let logicStepCount=0,cellUpdateCount=0,maxChainLength=0,highestRuleLevel=1,guard=stage.size*stage.size*12;const trace=[];
+ while(revealed.size<stage.size&&guard-->0){const step=logicalStep(stage,revealed,marks,3);if(!step)break;logicStepCount++;highestRuleLevel=Math.max(highestRuleLevel,step.ruleLevel);ruleUsage[`level${step.ruleLevel}`]++;let changed=0;
+  if(step.kind==='only'){if(!answers.has(step.target))break;revealed.add(step.target);changed=1;cellUpdateCount++;}else{for(const id of step.targets||[step.target])if(!answers.has(id)&&!marks.has(id)){marks.set(id,'x');changed++;cellUpdateCount++;}if(!changed)break;}
+  trace.push({step:logicStepCount,kind:step.kind,ruleLevel:step.ruleLevel,ruleId:step.ruleId,changed,revealedCount:revealed.size,markedCount:marks.size});
  }
- const solved=revealed.size===stage.size,stepRate=logicStepCount/(stage.size*stage.size),stepPoints=stepRate<.75?0:stepRate<1.25?3:stepRate<1.75?6:stepRate<2.5?10:15,chainPoints=maxChainLength<=2?0:maxChainLength<=4?3:maxChainLength<=7?6:maxChainLength<=11?10:15,stallPoints=solved?0:15,candidatePoints=stage.size<=4?0:stage.size<=6?3:stage.size<=8?6:10,rulePoints={1:0,2:10,3:25,4:40,5:55}[highestRuleLevel],difficultyScore=Math.min(100,rulePoints+stepPoints+chainPoints+stallPoints+candidatePoints);
- return {stage:stage.stage,boardSize:stage.size,solved,logicOnly:solved,solveType:solved?'direct-logic':'unresolved-by-current-rules',difficulty:scoreToDifficulty(difficultyScore,highestRuleLevel,0),difficultyScore,logicStepCount,cellUpdateCount,maxChainLength,highestRuleLevel,assumptionDepth:0,ruleUsage,manualLogicLevel:stage.logicLevel||null,manualDifficulty:stage.difficulty||null,solverVersion:'1.1'};
+ const solved=revealed.size===stage.size,stepRate=logicStepCount/(stage.size*stage.size),stepPoints=stepRate<.75?0:stepRate<1.25?3:stepRate<1.75?6:stepRate<2.5?10:15,cats=trace.filter(x=>x.kind==='only').map(x=>x.step);let previous=0;for(const at of cats){maxChainLength=Math.max(maxChainLength,at-previous);previous=at}maxChainLength=Math.max(maxChainLength,logicStepCount-previous);
+ const chainPoints=maxChainLength<=2?0:maxChainLength<=4?3:maxChainLength<=7?6:maxChainLength<=11?10:15,stallPoints=solved?0:15,candidatePoints=stage.size<=4?0:stage.size<=6?3:stage.size<=8?6:10,rulePoints={1:0,2:10,3:25,4:40,5:55}[highestRuleLevel],difficultyScore=Math.min(100,rulePoints+stepPoints+chainPoints+stallPoints+candidatePoints),region=regionProfile(stage),opening=openingProfile(stage),advanced=advancedScore(stage,solved,highestRuleLevel,logicStepCount,cellUpdateCount,trace,region,opening);
+ return {stage:stage.stage,boardSize:stage.size,solved,logicOnly:solved,solveType:solved?'direct-logic':'unresolved-by-current-rules',difficulty:scoreToDifficulty(difficultyScore,highestRuleLevel,0),difficultyScore,advancedDifficulty:advanced.difficulty,advancedDifficultyScore:advanced.score,logicStepCount,cellUpdateCount,maxChainLength,highestRuleLevel,assumptionDepth:0,ruleUsage,regionProfile:region,openingProfile:opening,firstCatStep:advanced.firstCatStep,longestInferenceRun:advanced.longestInferenceRun,normalizedLogicSteps:advanced.normalizedSteps,normalizedCellUpdates:advanced.normalizedUpdates,highDifficultyProfile:advanced.profile,trace,manualLogicLevel:stage.logicLevel||null,manualDifficulty:stage.difficulty||null,solverVersion:'1.3'};
 }
 const analyzeAll=stages=>stages.map(analyze);
 return {candidates,safeXStep,nextStep,logicalStep,analyze,analyzeAll,DIFFICULTY_LIMITS};})();

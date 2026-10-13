@@ -1,0 +1,8 @@
+NEKOMICHI REGION REPAIR BENCHMARK V229
+Status: NOT_FOUND
+Elapsed: 4.788s
+Sources: 302
+Uniqueness checks: 585
+Accepted moves: 8
+Best: {"source":302,"objective":235,"areaSizes":[26,3,3,3,3,3,34,3,36,1,28,1]}
+Candidate: null

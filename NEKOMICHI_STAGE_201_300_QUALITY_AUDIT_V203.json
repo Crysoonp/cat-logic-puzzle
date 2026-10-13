@@ -1,0 +1,35 @@
+{
+  "auditVersion": "V203",
+  "range": [
+    201,
+    300
+  ],
+  "acceptedForIntegration": false,
+  "candidateCount": 100,
+  "sizes": {
+    "10": 100
+  },
+  "difficulty": {
+    "3": 98,
+    "4": 2
+  },
+  "uniqueSolutionFailures": [],
+  "malformedStages": [],
+  "stagesWithSingletonRegions": 100,
+  "stagesWithFiveOrMoreSingletons": 99,
+  "stagesWithTwoCellRegions": 0,
+  "rotationReflectionEquivalentGroups": [],
+  "generationAuditClaimedSizes": {
+    "10": 100
+  },
+  "blockingIssues": [
+    "Board-size variation failed: {10: 100}; required sizes are 8x8 through 12x12.",
+    "No star-2 stages were included.",
+    "Star-4 stages are limited to the two forced milestones; normal difficulty variation is insufficient.",
+    "No stage contains a two-cell region.",
+    "Singleton forcing is overused across the set, making the puzzle family visually and logically repetitive.",
+    "All candidates are transformed copies of Stage 101-200 boards rather than newly generated Stage 201-300 designs."
+  ],
+  "decision": "REJECT_AND_REGENERATE",
+  "requiredNextGenerator": "Create genuinely new 8x8-12x12 boards, mixed across the range, with star 2-4 distribution and broader region-size patterns."
+}

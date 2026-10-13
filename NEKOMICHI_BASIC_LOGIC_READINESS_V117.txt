@@ -1,0 +1,294 @@
+NEKOMICHI BASIC HUMAN LOGIC READINESS AUDIT V117
+Collected: 2026-10-12T18:21:21
+
+=== CONFIRMED FROM V114-V116 ===
+Stage 1-50: unique solution 50/50.
+Stage 1-50: independent full-solution audit can resolve 50/50.
+Current modeled hint safety failures: 0/212.
+Current modeled hint instructional matches: 0/212.
+
+=== BASIC BEGINNER START RULE ===
+This audit intentionally does not use the stored solution and does not enumerate complete solutions.
+It checks only immediately visible row-single, column-single, and region-single moves on an empty board.
+stages_with_basic_empty_move=23/50
+stages_without_basic_empty_move=27/50
+
+=== KEY INTERPRETATION ===
+A unique global solution is not the same as a beginner-visible logical first move.
+If no basic empty-board move exists, the stage may require a more advanced pattern rule, contradiction reasoning, or answer-key assistance.
+Stage difficulty must not be finalized from board size or global uniqueness alone.
+
+=== STAGE TABLE ===
+stage	size	basicStart	moves	storedDifficulty	storedLogicOnly
+1	4	True	[('region-single', '1-0')]	None	None
+2	4	True	[('region-single', '1-3')]	None	None
+3	4	True	[('region-single', '2-0')]	None	None
+4	5	True	[('region-single', '4-2')]	None	None
+5	5	True	[('region-single', '2-1'), ('region-single', '4-0')]	None	None
+6	5	False	[]	None	None
+7	5	False	[]	None	None
+8	5	False	[]	None	None
+9	5	False	[]	None	None
+10	6	True	[('region-single', '5-5')]	None	None
+11	6	False	[]	None	None
+12	6	False	[]	None	None
+13	6	False	[]	None	None
+14	6	False	[]	None	None
+15	6	False	[]	None	None
+16	6	False	[]	None	None
+17	6	False	[]	None	None
+18	6	False	[]	None	None
+19	6	False	[]	None	None
+20	7	False	[]	None	None
+21	7	False	[]	3	True
+22	7	False	[]	3	True
+23	7	False	[]	3	True
+24	7	False	[]	3	True
+25	7	False	[]	3	True
+26	7	False	[]	3	True
+27	7	True	[('region-single', '6-6')]	2	True
+28	7	False	[]	3	True
+29	7	False	[]	3	True
+30	7	False	[]	3	True
+31	7	False	[]	3	True
+32	7	True	[('region-single', '2-0')]	3	True
+33	8	True	[('region-single', '0-4'), ('region-single', '1-7')]	None	None
+34	7	True	[('region-single', '1-6'), ('region-single', '5-0')]	3	True
+35	8	True	[('region-single', '0-7'), ('region-single', '6-0')]	None	None
+36	7	True	[('region-single', '4-3')]	3	True
+37	8	True	[('region-single', '7-6')]	None	None
+38	8	True	[('region-single', '2-3')]	None	None
+39	8	False	[]	None	None
+40	8	True	[('region-single', '3-6'), ('region-single', '7-0')]	3	True
+41	8	False	[]	3	True
+42	8	False	[]	3	True
+43	8	True	[('region-single', '0-4')]	3	True
+44	8	True	[('region-single', '7-0')]	3	True
+45	8	True	[('region-single', '0-0'), ('region-single', '5-6')]	3	True
+46	8	True	[('region-single', '6-7')]	3	True
+47	8	True	[('region-single', '3-5')]	3	True
+48	8	True	[('region-single', '0-7'), ('region-single', '4-0')]	3	True
+49	8	True	[('region-single', '2-7')]	3	True
+50	8	True	[('region-single', '1-2'), ('region-single', '5-0')]	3	True
+
+=== EXACT DUPLICATE STAGE GROUPS ===
+[]
+
+=== HINT/SOLUTION STATIC EVIDENCE ===
+85: function scoreTarget(){return isBossStage()&&Array.isArray(window.CLP_BOSS_PHASES)?window.CLP_BOSS_PHASES.reduce((sum,phase)=>sum+Number(phase.size||0),0):Number(p().size||0)}
+86: function updateRunScore(){const target=Math.max(1,scoreTarget());state.score=Math.min(80,Math.floor(80*state.totalFound/target));const label=$('scoreLabel');if(label)label.textContent=`評価 ${state.score} / 100`}
+87: function finalScore(){return 80+(state.mistakes===0?10:0)+(state.hintsUsed===0?10:0)}
+88: function scoreBreakdown(){const noMiss=state.mistakes===0,hintFree=state.hintsUsed===0,total=finalScore();return `<div class="score-breakdown"><div><span>盤面クリア</span><b>80点</b></div><div><span>ノーミス</span><b>${noMiss?'10点':'今回は未獲得'}</b></div><div><span>ヒントなし</span><b>${hintFree?'10点':'今回は未獲得'}</b></div><hr><div class="score-total"><span>合計</span><strong>${total}点</strong></div>${total===100?'<p class="gold-earned">金枠を獲得しました！</p>':''}</div>`}
+89: /* Ver.0.7.4: heart recovery and interrupted-board resume */
+90: const HEART_MAX=5,HEART_RECOVERY_MS=30*60*1000,HEART_KIBBLE_COST=1,BOARD_SAVE_KEY=window.CLPStorage.KEYS.currentBoard;
+121: function hasTaiju(){return window.CLPStorage.getItem(window.CLPStorage.KEYS.taijuJoined)==='1'}
+122: function updateProgressiveUI(){
+123:   const dock=$('hintDock');
+124:   if(dock)dock.classList.toggle('hidden',!hasTaiju());
+125:   updateModeCycle();
+141: function resetBoard(preserveRun=false){const preserveBoss=isBossStage();window.CLPGameState.resetBoardState(state,{preserveRun,preserveBoss});if(!preserveBoss)window.CLPStorage.setItem(window.CLPStorage.KEYS.bossPhase,'1');record('START');render();startIdle();showBossIntro()}
+142: function say(face,name,text,side='left',enemy=false){$('talkFace').textContent=face;$('talkName').textContent=name;$('talkText').textContent=text;$('talk').className=`talk ${side}${enemy?' enemy':''}`}
+143: function render(){let s=p();renderBossBanner();const guide=$('operationGuide');if(guide){guide.classList.toggle('hidden',!s.tutorial);guide.classList.toggle('compact',s.tutorial&&s.stage>=4)}$('scoreLabel').textContent=`評価 ${state.score} / 100`;$('stageLabel').innerHTML=isBossStage()?`STAGE 50<br><small>BOSS ${state.bossPhase}/3</small>`:isHagureStage()?`STAGE ${s.stage}<br><small>${hagureConfig().label}</small>`:s.bonus?`STAGE ${s.stage}<br><small>BONUS</small>`:s.hard?`STAGE ${s.stage}<br><small>HARD</small>`:`STAGE ${s.stage}`;$('panel').className='panel'+(s.hard?' hard':'')+(s.bonus?' bonus':'');updateProgressiveUI();$('historyBtn').classList.add('hidden');if(isHagureStage()){const hs=hagureStory();say(hs?hs.introFace:'🐱',hs?hs.introSpeaker:hagureConfig().label,hagureTalk(),hs&&hs.introSpeaker==='テコちゃん'?'right':'left',false);}else if(s.hard&&s.stage!==10)say('😼','はぐれにゃんこ','何か用かニャン？','right',true);else if(s.tutorial)say('🐱','ニャンじい',tutorialText(),'left');else say('🐱','テコちゃん',s.stage===11?'ここからが本当の旅の始まりニャン。ハートを大切にして、仲間とお母さんの手掛かりを探すニャン！':travelComment(),'right');renderLife();build();updateSpecialStageFx();updateHint()}
+144: function stage1FoundId(){return Array.from(state.revealed)[0]||''}
+145: function idsAround(id){if(!id)return[];const [r,c]=id.split('-').map(Number),out=[];for(let rr=Math.max(0,r-1);rr<=Math.min(p().size-1,r+1);rr++)for(let cc=Math.max(0,c-1);cc<=Math.min(p().size-1,c+1);cc++)if(rr!==r||cc!==c)out.push(`${rr}-${cc}`);return out}
+166:   return '見事じゃ。前の修行を自分の力で繰り返せたのう。';
+167: }if(s.stage===3){if(!state.marks.has('0-3')&&state.revealed.size===0)return 'A1・A2・A3は同じ青エリアじゃ。青の猫はA行のどこかにいるから、A4には猫はいない。まずA4へ×を付けるんじゃ。';if(!state.revealed.has('1-3'))return 'A4へ×を付けたから、黄色エリアで残ったB4に猫がいるぞい。B4を素早く2回タップじゃ。';if(!state.revealed.has('3-2'))return 'B4の猫から行・列・周囲を消すと、3列目で残るD3に猫がいると分かるぞい。D3を開くんじゃ。';if(!state.revealed.has('2-0'))return '次はC1じゃ。ここまでの×と色エリアを見比べて開いてみるんじゃ。';return '残りは頑張るんじゃ。ここまで覚えた基本で解けるぞい。'}if(s.stage===4)return 'ここからは5×5じゃ。まずは1マスだけの色エリアを探すんじゃ。盤面が広くなっても基本は同じじゃよ。';if(s.stage===7)return 'いよいよ6×6じゃ。最初から確定できる場所が二つあるぞい。落ち着いて探すんじゃ。';if(s.stage===9)return 'すぐ決められないときは、△で「ここにいる」と仮に考える方法もあるんじゃ。これを仮置き推理というぞい。';return s.guide}
+168: /* Ver.0.7.5: heart popover and Taiju hint flow */
+169: /* Ver.0.7.8: interactive heart recovery panel */
+170: let heartHelpTimer=0;
+201:   state.locked=false;save();saveBoard();renderLife();openHeartHelp();haptic(25);
+202: }
+203: function renderLife(){syncHeartRecovery();let b=$('lifeBox');b.innerHTML='';if(p().tutorial||p().bonus)b.innerHTML='<span class="training">ニャンじいのチュートリアル中は、ハートは減りません</span>';else{b.classList.add('life-help-host');b.setAttribute('tabindex','0');b.setAttribute('aria-label','ハート回復の説明を表示');b.innerHTML='<label>LIFE</label>';for(let i=0;i<HEART_MAX;i++){let h=document.createElement('span');h.className='life'+(i<state.hearts?'':' empty');h.textContent=i<state.hearts?'♥':'♡';b.appendChild(h)}b.insertAdjacentHTML('beforeend',`<span class="kibble">カリカリ ${state.kibble}</span><span class="heart-help-pop" role="dialog">${heartHelpText()}</span>`);b.onclick=toggleHeartHelp;b.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){toggleHeartHelp(e)}}}}
+204: function markIcon(type,small=false){
+205:   const cls=`mark-symbol mark-${type}${small?' mark-small':''}`;
+211:   return `<span class="${cls}"><svg viewBox="0 0 64 64" aria-hidden="true"><g class="mark-outline">${paths[type]||paths.x}</g><g class="mark-core">${paths[type]||paths.x}</g></svg></span>`;
+212: }
+213: function build(){let s=p(),n=s.size,preservedFx=board.querySelector('.special-fx');if(preservedFx)preservedFx.remove();board.innerHTML='';board.style.gridTemplateColumns=`repeat(${n},minmax(0,1fr))`;board.style.gridTemplateRows=`repeat(${n},minmax(0,1fr))`;board.style.setProperty('--gap',n<=4?'5px':n<=6?'3px':'2px');board.style.setProperty('--pad',n<=4?'6px':'3px');board.style.setProperty('--radius',n<=4?'11px':n<=6?'6px':'4px');$('coordTop').style.gridTemplateColumns=`repeat(${n},1fr)`;$('coordTop').innerHTML=Array.from({length:n},(_,i)=>`<span>${i+1}</span>`).join('');$('coordSide').style.gridTemplateRows=`repeat(${n},1fr)`;$('coordSide').innerHTML=Array.from({length:n},(_,i)=>`<span>${String.fromCharCode(65+i)}</span>`).join('');let target=firstLogicalTarget();for(let r=0;r<n;r++)for(let c=0;c<n;c++){let id=key(r,c),b=document.createElement('button'),m=state.marks.get(id);b.className=`tile r${s.regions[r][c]}`+(state.revealed.has(id)?' revealed':'')+(state.debugAnswer&&answer(id)?' hinting':'')+(((s.stage===1&&state.revealed.size===0&&id===target)||(s.stage===3&&id===stage3Target()))?' tutorial-target':'')+(stage1HighlightIds().includes(id)?' tutorial-focus':'');b.dataset.id=id;if(state.revealed.has(id))b.innerHTML='<span>🐱</span>';else if(m)b.innerHTML=markIcon(m);b.onpointerdown=e=>pointerStart(e,id);board.appendChild(b)}if(preservedFx)board.appendChild(preservedFx)}
+214: function stage3Target(){if(p().stage!==3)return '';if(!state.marks.has('0-3')&&state.revealed.size===0)return '0-3';if(!state.revealed.has('1-3'))return '1-3';if(!state.revealed.has('3-2'))return '3-2';if(!state.revealed.has('2-0'))return '2-0';return ''}
+215: function firstLogicalTarget(){let s=p(),counts={};for(let r=0;r<s.size;r++)for(let c=0;c<s.size;c++)counts[s.regions[r][c]]=(counts[s.regions[r][c]]||0)+1;for(let r=0;r<s.size;r++){let c=s.solution[r];if(counts[s.regions[r][c]]===1)return key(r,c)}return key(0,s.solution[0])}
+216: function markForDrag(id, action){
+217:   if(!id||state.revealed.has(id)||state.drag.visited.has(id))return;
+273: board.addEventListener('pointerup',pointerEnd);
+274: board.addEventListener('pointercancel',pointerEnd);
+275: function tap(id){clearTimeout(state.idle);const hinted=board.querySelector(`[data-id="${id}"].hint-safe-x`);if(hinted&&state.mode==='x')setTimeout(clearHintGlow,0);if(!p().tutorial&&!p().bonus&&state.hearts<=0){heartZero();return}if(state.locked||state.revealed.has(id))return;if(state.timers.has(id)){clearTimeout(state.timers.get(id));state.timers.delete(id);openTile(id)}else state.timers.set(id,setTimeout(()=>{state.timers.delete(id);state.marks.get(id)===state.mode?state.marks.delete(id):state.marks.set(id,state.mode);record('MARK',id,state.mode);saveBoard();haptic(18);build();updateSpecialStageFx();if(p().tutorial)say('🐱','ニャンじい',tutorialText(),'left');startIdle()},270))}
+276: function answer(id){let [r,c]=id.split('-').map(Number);return p().solution[r]===c}
+277: function openTile(id){state.marks.delete(id);if(answer(id)){state.revealed.add(id);state.totalFound++;updateRunScore();saveBoard();state.streak++;record('OPEN',id,'OK');haptic([45,35,70]);goodToast(['いいね！','すごい！','やったニャン！','かんぺき！'][Math.min(3,state.streak-1)]);build();updateSpecialStageFx();if(p().tutorial)say('🐱','ニャンじい',tutorialText(),'left');if(state.revealed.size===p().size)complete()}else{state.streak=0;state.mistakes++;record('OPEN',id,'MISS');haptic([90,45,90,45,120]);if(!(p().tutorial||p().bonus)){state.hearts=Math.max(0,state.hearts-1);startHeartTimerAfterLoss();save();saveBoard();renderLife()}failToast();if(state.hearts===0&&!p().tutorial&&!p().bonus)heartZero()}startIdle()}
+278: function goodToast(t){let x=$('toast');x.className='toast';x.replaceChildren();void x.offsetWidth;x.className='toast good';x.textContent=t;setTimeout(()=>{x.className='toast';x.textContent='';x.replaceChildren()},850)}
+279: function failToast(){
+294:   },1450);
+295: }
+296: function updateHint(){
+297:   const dock=$('hintDock');if(!dock)return;
+298:   const joined=hasTaiju();dock.classList.toggle('hidden',!joined);
+299:   document.querySelectorAll('[data-hint]').forEach(button=>{
+300:     const type=button.dataset.hint;
+301:     const unlocked=joined&&type==='toy';
+302:     button.classList.toggle('hidden',!unlocked);
+303:     button.disabled=!unlocked;
+304:     if(unlocked){button.innerHTML='<span class="hint-info" data-info="toy" role="button" aria-label="タイジュの道しるべの説明">?</span><span class="hint-icon">🪶</span><b>猫じゃらし</b><small>タイジュの道しるべ・1個</small>';button.setAttribute('aria-label','猫じゃらし。タップ後、中央の羽をタップして使う');}
+305:   });
+306: }
+307: 
+308: function hintMenu(){if(p().tutorial||p().bonus){useHint(3);return}show('ヒントを選ぶ',`<p>所持カリカリ：<b>${state.kibble}</b></p><p>猫じゃらし：注目エリア（1個）<br>またたび：正解位置を光らせる（2個）<br>ネコ缶：猫を1匹開く（3個）</p>`,[['猫じゃらし 1','h1'],['またたび 2','h2'],['ネコ缶 3','h3'],['閉じる','close']])}
+309: function useHint(level){let cost=p().tutorial||p().bonus?0:level;let id=Array.from({length:p().size},(_,r)=>key(r,p().solution[r])).find(x=>!state.revealed.has(x));if(!id)return;if(state.kibble<cost){show('カリカリが足りません','<p>ボーナスステージなどでカリカリを集められます。</p>',[['閉じる','close']]);return}state.kibble-=cost;if(!(p().tutorial||p().bonus))state.hintsUsed++;save();if(level===3&&!p().tutorial&&!p().bonus){openTile(id)}else{let t=board.querySelector(`[data-id="${id}"]`);t.classList.add('hinting');setTimeout(()=>t.classList.remove('hinting'),3500)}record('HINT',id,level);updateHint()}
+310: function bossScene(title,body,buttons,kind='dialogue'){
+311:   show(title,`<div class="boss-story ${kind}">${body}</div>`,buttons);
+352: function celebrateBoard(done){
+353:   board.classList.add('board-complete');
+354:   board.querySelectorAll('.tile.revealed span').forEach((cat,i)=>{cat.style.animationDelay=`${i*70}ms`;cat.classList.add('cat-celebrate')});
+355:   setTimeout(()=>{board.classList.remove('board-complete');board.querySelectorAll('.cat-celebrate').forEach(x=>x.classList.remove('cat-celebrate'));done()},1850)
+356: }
+364:   router.register('close',close);
+365:   router.register('hagureStoryNext',()=>{close();if(window.clpHagureNext)window.clpHagureNext()});
+366:   router.register('useToy',()=>{close();castToyHint()});
+367:   router.registerPattern(/^h[123]$/,(_context,action)=>{close();useHint(Number(action[1]))});
+368:   router.register('next',()=>{close();state.i++;resetBoard()});
+369:   router.register('bossNext',()=>{close();state.bossPhase=Math.min(3,state.bossPhase+1);save();resetBoard(true)});
+410: let storyIndex=0;function showStory(reset=false){if(reset)storyIndex=0;let s=STORY[storyIndex];$('storyArt').textContent=s[1];$('storyPage').textContent=`${storyIndex+1} / ${STORY.length}`;$('storyTitle').textContent=s[0];$('storyText').textContent=s[2];$('storyNext').textContent=storyIndex===STORY.length-1?'修行を始める':'次へ';window.CLPScreens.openDialog('story')}$('storyNext').onclick=()=>{if(storyIndex<STORY.length-1){storyIndex++;window.CLPScreens.closeDialog('story');showStory()}else{window.CLPScreens.closeDialog('story');window.CLPStorage.setItem(window.CLPStorage.KEYS.storySeen,'1')}};
+411: function spendKibble(cost){if(p().tutorial||p().bonus)return true;if(state.kibble<cost){show('カリカリが足りません','<p>ボーナスステージでカリカリを集めるニャン。</p>',[['閉じる','close']]);return false}state.kibble-=cost;save();renderLife();return true}
+412: function registerHintUse(){if(!(p().tutorial||p().bonus)){state.hintsUsed++;record('HINT_USED','',state.hintsUsed)}}
+413: function clearHintGlow(){board.querySelectorAll('.hinting,.hint-focus,.hint-safe-x,.clp-hint-x,.clp-hint-cat').forEach(x=>x.classList.remove('hinting','hint-focus','hint-safe-x','clp-hint-x','clp-hint-cat'));document.body.classList.remove('hint-casting');if(window.CLPRefreshHintColors)window.CLPRefreshHintColors()}
+414: /* Ver.0.7.6: tactile toy confirmation */
+415: function closeToyReady(){const layer=document.getElementById('toyReadyLayer');if(layer)layer.remove()}
+420:   layer.onclick=e=>{if(e.target===layer)closeToyReady()};
+421:   const feather=layer.querySelector('.toy-ready-feather');
+422:   feather.onclick=e=>{e.preventDefault();e.stopPropagation();closeToyReady();castToyHint()};
+423:   document.body.appendChild(layer);requestAnimationFrame(()=>layer.classList.add('show'));
+424: }
+426: function validToyStep(){
+427:   let step=window.CLPLogic.safeXStep(p(),state.revealed,state.marks);
+428:   const isEmpty=id=>{if(!id||state.revealed.has(id))return false;const [r,c]=id.split('-').map(Number);return Number.isInteger(r)&&Number.isInteger(c)&&p().solution[r]!==c&&state.marks.get(id)!=='x'};
+429:   if(step&&isEmpty(step.target))return step;
+430:   for(let r=0;r<p().size;r++)for(let c=0;c<p().size;c++){const id=`${r}-${c}`;if(isEmpty(id))return {target:id,message:'青く光るマスには猫がいないニャン。×印をつけておこう。'}}
+431:   return null;
+432: }
+433: function castToyHint(){
+434:   clearHintGlow();
+435:   const step=validToyStep();
+436:   if(!step){show('猫じゃらし','<p>案内できる未確定の空きマスがないニャン。カリカリは消費しないニャン。</p>',[['閉じる','close']]);return}
+437:   if(!spendKibble(window.CLPHints.COST.toy))return;
+438:   registerHintUse();saveBoard();document.body.classList.add('hint-casting');
+439:   setTimeout(()=>{document.body.classList.remove('hint-casting');const target=board.querySelector(`[data-id="${step.target}"]`);if(target){target.classList.add('hint-safe-x','clp-hint-x')}say('🐈‍⬛','タイジュ','青く光るマスには猫がいないニャン。×印をつけておこう。','left');record('HINT_SAFE_X',step.target,'toy');if(window.CLPRefreshHintColors)window.CLPRefreshHintColors();setTimeout(clearHintGlow,10000)},420);
+440: }
+441: function directHint(type){  
+442:   const button=document.querySelector(`[data-hint="${type}"]`);
+443:   if(!button||button.disabled)return;
+444:   clearHintGlow();
+445:   const cost=window.CLPHints.COST[type];
+446: 
+447:   if(type==='toy'){showToyReady();return;}
+454:     }
+455:     if(!spendKibble(cost))return;
+456:     registerHintUse();
+457:     if(step.kind==='only'){
+458:       const target=board.querySelector(`[data-id="${step.target}"]`);
+459:       if(target)target.classList.add('hinting');
+460:     }else{
+461:       const target=board.querySelector(`[data-id="${step.target}"]`);
+462:       if(target)target.classList.add('hint-safe-x');
+463:     }
+464:     (step.focus||[]).forEach(id=>{const tile=board.querySelector(`[data-id="${id}"]`);if(tile)tile.classList.add('hint-focus')});
+465:     say(p().tutorial?'🐱':'🐱',p().tutorial?'ニャンじい':'テコちゃん',step.message,p().tutorial?'left':'right');
+466:     record('HINT_VALID_MOVE',step.target,'matatabi');
+467:     saveBoard();setTimeout(clearHintGlow,5500);
+468:     return;
+469:   }
+470: 
+471:   if(type==='can'){
+472:     const answer=Array.from({length:p().size},(_,r)=>`${r}-${p().solution[r]}`).find(id=>!state.revealed.has(id));
+473:     if(!answer)return;
+474:     if(!spendKibble(cost))return;
+475:     registerHintUse();
+476:     record('HINT_OPEN_CAT',answer,'can');
+477:     openTile(answer);
+478:     return;
+480: 
+481:   if(type==='paw'){
+482:     const wrong=window.CLPHints.wrongMarks(p(),state.marks);
+483:     if(!wrong.length){
+484:       show('肉球チェック','<p>間違った×は見つからなかったニャン。カリカリは消費しないニャン。</p>',[['閉じる','close']]);
+486:     }
+487:     if(!spendKibble(cost))return;
+488:     registerHintUse();
+489:     state.marks.delete(wrong[0]);saveBoard();
+490:     record('HINT_FIX_X',wrong[0],'paw');
+491:     build();updateSpecialStageFx();
+492:     show('肉球チェック','<p>間違った×を1つ直したニャン。</p>',[['閉じる','close']]);
+536:   window.CLPQualityReport=report;
+537:   console.group('猫ロジック Ver.0.4.4 問題品質検査');
+538:   console.table(report.map(x=>({stage:x.stage,size:x.size,valid:x.valid,solutions:x.solutionCount,unique:x.uniqueSolution,duplicate:x.duplicateType,duplicateOf:x.duplicateOf||'',fingerprint:x.fingerprint,decision:x.decision,reasons:x.reasons.join(' / ')})));
+539:   const rejected=report.filter(x=>x.decision==='rejected');
+540:   if(rejected.length)console.warn('不採用判定ステージ:',rejected.map(x=>({stage:x.stage,reasons:x.reasons})));
+567: window.CLPClearGeneratedStages=function(){return window.CLPGenerator.clearAll();};
+568: 
+569: /* Ver.0.4.10.2 semantic hint colors
+570:    blue + X = mark this cell with X
+571:    yellow + cat paw = open the cat cell */
+572: function clpHintMeaningForTile(tile){
+573:   if(!tile||!tile.dataset||!tile.dataset.id)return null;
+574:   const parts=tile.dataset.id.split('-').map(Number);
+575:   if(parts.length!==2||parts.some(Number.isNaN))return null;
+576:   const [r,c]=parts,stage=p();
+577:   return stage&&Array.isArray(stage.solution)&&stage.solution[r]===c?'cat':'x';
+578: }
+579: function clpTileHasVisualHint(tile){
+580:   if(!tile||!tile.classList)return false;
+581:   const semanticNames=/hint|glow|guide|target|tutorial|focus|highlight|pulse/i;
+582:   return [...tile.classList].some(name=>semanticNames.test(name)&&!/^clp-hint-/.test(name));
+583: }
+584: function clpApplySemanticHint(tile){
+585:   if(!tile||!tile.classList||!tile.classList.contains('tile'))return;
+586:   const hasHint=clpTileHasVisualHint(tile);
+587:   if(!hasHint){
+588:     tile.classList.remove('clp-hint-x','clp-hint-cat');
+589:     return;
+590:   }
+591:   const meaning=clpHintMeaningForTile(tile);
+592:   tile.classList.toggle('clp-hint-x',meaning==='x');
+593:   tile.classList.toggle('clp-hint-cat',meaning==='cat');
+594: }
+595: function clpRefreshSemanticHints(root=document){
+596:   if(root&&root.classList&&root.classList.contains('tile'))clpApplySemanticHint(root);
+597:   if(root&&root.querySelectorAll)root.querySelectorAll('.tile').forEach(clpApplySemanticHint);
+598: }
+599: // Ver.0.4.10.5: class変更を監視対象にすると、ヒント用classの更新を
+600: // MutationObserver自身が再検出し続けるため、childList監視だけに限定する。
+601: const clpHintObserver=new MutationObserver(records=>{
+602:   records.forEach(record=>{
+603:     record.addedNodes&&record.addedNodes.forEach(node=>clpRefreshSemanticHints(node));
+604:   });
+605: });
+606: if(board){
+607:   clpHintObserver.observe(board,{subtree:true,childList:true});
+608:   requestAnimationFrame(()=>clpRefreshSemanticHints(board));
+609:   setTimeout(()=>clpRefreshSemanticHints(board),80);
+610: }
+611: window.CLPRefreshHintColors=()=>clpRefreshSemanticHints(board);
+612: 
+613: /* Ver.0.4.10.5: 250ms周期の全タイル再走査を停止。
+614:    ヒント表示時は既存処理と CLPRefreshHintColors から必要時だけ更新する。 */
+615: 
+616: 
+617: window.CLPApplyVersion();window.CLPStorage.ensureSchema();syncHeartRecovery();save();resetBoard();installLeafSwipe();installLeafTilt();startNatureBreeze();showTitle();setInterval(()=>{const before=state.hearts;if(syncHeartRecovery()>0||state.hearts!==before){save();renderLife()}},60000);
+618: const settingsButton=$('settingsBtn');if(settingsButton)settingsButton.disabled=false;window.CLPEvents.bind('settingsBtn','click',openSettings,'primary');document.querySelectorAll('[data-hint]').forEach(b=>window.CLPEvents.bind(b,'click',()=>directHint(b.dataset.hint),'hints'));
+619: 
+620: const hintDescriptions={toy:['タイジュの道しるべ','猫じゃらしを使うと、猫がいないと確定できるマスを1か所、青く光らせます。青いマスには×印を付けます。消費はカリカリ1個です。'],matatabi:['またたび','盤面を論理的に前進させる有効な一手を、理由付きで教えます。猫を開く手や安全な×など、状況に合う一手を案内します。'],can:['ネコ缶','正解の猫を1匹、その場で自動的に開く強力なヒントです。'],paw:['肉球チェック','間違って付けた×を1つ見つけて直します。間違いがなければ消費しません。']};
+621: document.addEventListener('click',e=>{const info=e.target.closest('[data-info]');if(!info)return;e.preventDefault();e.stopPropagation();const d=hintDescriptions[info.dataset.info];if(d)show(d[0],`<p>${d[1]}</p>`,[['閉じる','close']])});
+622: 
+623: window.CLPEvents.bind('historyDlg','click',e=>{if(e.target===$('historyDlg'))window.CLPScreens.closeDialog('history')},'primary');document.addEventListener('click',e=>{const recover=e.target.closest('.heart-kibble-recover');if(recover){e.preventDefault();e.stopPropagation();recoverHeartFromPanel();return}const box=$('lifeBox');if(box&&!box.contains(e.target))closeHeartHelp()});
+
+=== SOLUTION-REFERENCING HINT LINES ===
+215: function firstLogicalTarget(){let s=p(),counts={};for(let r=0;r<s.size;r++)for(let c=0;c<s.size;c++)counts[s.regions[r][c]]=(counts[s.regions[r][c]]||0)+1;for(let r=0;r<s.size;r++){let c=s.solution[r];if(counts[s.regions[r][c]]===1)return key(r,c)}return key(0,s.solution[0])}
+276: function answer(id){let [r,c]=id.split('-').map(Number);return p().solution[r]===c}
+309: function useHint(level){let cost=p().tutorial||p().bonus?0:level;let id=Array.from({length:p().size},(_,r)=>key(r,p().solution[r])).find(x=>!state.revealed.has(x));if(!id)return;if(state.kibble<cost){show('カリカリが足りません','<p>ボーナスステージなどでカリカリを集められます。</p>',[['閉じる','close']]);return}state.kibble-=cost;if(!(p().tutorial||p().bonus))state.hintsUsed++;save();if(level===3&&!p().tutorial&&!p().bonus){openTile(id)}else{let t=board.querySelector(`[data-id="${id}"]`);t.classList.add('hinting');setTimeout(()=>t.classList.remove('hinting'),3500)}record('HINT',id,level);updateHint()}
+428:   const isEmpty=id=>{if(!id||state.revealed.has(id))return false;const [r,c]=id.split('-').map(Number);return Number.isInteger(r)&&Number.isInteger(c)&&p().solution[r]!==c&&state.marks.get(id)!=='x'};
+472:     const answer=Array.from({length:p().size},(_,r)=>`${r}-${p().solution[r]}`).find(id=>!state.revealed.has(id));
+538:   console.table(report.map(x=>({stage:x.stage,size:x.size,valid:x.valid,solutions:x.solutionCount,unique:x.uniqueSolution,duplicate:x.duplicateType,duplicateOf:x.duplicateOf||'',fingerprint:x.fingerprint,decision:x.decision,reasons:x.reasons.join(' / ')})));
+577:   return stage&&Array.isArray(stage.solution)&&stage.solution[r]===c?'cat':'x';
+
+=== NEXT REQUIRED AUDIT ===
+1. Extract the actual named human-rule solver functions and supported rule types.
+2. Run those exact rules from the empty board for Stage 1-50.
+3. Separate stages solvable by visible rules from stages solvable only by global search.
+4. Redesign the hint selection to return the next justified rule, not the first answer-key-safe X.
+5. Only after that, calibrate the five difficulty levels and generate Stage 51-100.

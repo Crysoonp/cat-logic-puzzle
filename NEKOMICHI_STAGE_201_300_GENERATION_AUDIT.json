@@ -1,0 +1,22 @@
+{
+  "generated": 100,
+  "range": [
+    201,
+    300
+  ],
+  "source": "NEKOMICHI_STAGE_101_200_CANDIDATES_REVISED_V156.json",
+  "sizes": {
+    "10": 100
+  },
+  "difficulty": {
+    "3": 98,
+    "4": 2
+  },
+  "uniqueSolutionAll": true,
+  "connectedRegionsAll": true,
+  "duplicateLayouts": 0,
+  "containsSingletonRegions": 100,
+  "containsTwoCellRegions": 0,
+  "candidateOnly": true,
+  "nextStep": "Run production-logic, similarity and difficulty audit before integration."
+}

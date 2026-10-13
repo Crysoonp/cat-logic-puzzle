@@ -1,0 +1,27 @@
+{
+  "version": "V234",
+  "status": "NOT_FOUND",
+  "elapsedSeconds": 45,
+  "attempts": 746,
+  "evaluations": 99583,
+  "acceptedMoves": 103,
+  "solutionLimit": 64,
+  "best": {
+    "value": 64,
+    "limited": true,
+    "areaSizes": [
+      13,
+      10,
+      15,
+      10,
+      12,
+      12,
+      11,
+      10,
+      10,
+      7,
+      11
+    ]
+  },
+  "candidate": null
+}

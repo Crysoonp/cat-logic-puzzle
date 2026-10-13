@@ -1,0 +1,39 @@
+{
+  "audit": "NEKOMICHI_PLAZA_ROUNDTRIP_V176",
+  "version": "0.8.69",
+  "passed": true,
+  "checks": {
+    "displayVersion0869": true,
+    "internalVersion0869": true,
+    "manifestVersion0869": true,
+    "plazaDestinationState": true,
+    "puzzleExitSavesBoard": true,
+    "confirmedExitTargetsMap": true,
+    "mapOpensPlazaWithMapReturn": true,
+    "plazaCloseReturnsToMap": true,
+    "cancelFunctionPresent": true,
+    "saveSchemaUnchanged": true,
+    "boardSaveVersionUnchanged": true,
+    "contractRecorded": true
+  },
+  "syntax": [
+    {
+      "file": "app-config.js",
+      "passed": true,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "game.js",
+      "passed": true,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "manualReview": [
+    "Puzzle > Forest Plaza > close Plaza > Journey Map",
+    "Journey Map > Forest Plaza > close Plaza > Journey Map",
+    "Resume the saved puzzle and confirm cats and marks remain",
+    "Cancel the return confirmation and confirm the same puzzle remains open"
+  ]
+}

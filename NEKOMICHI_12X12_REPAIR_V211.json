@@ -1,0 +1,29 @@
+{
+  "version": "V211",
+  "source": "NEKOMICHI_12X12_UNIQUENESS_CANDIDATES_V209.json",
+  "elapsedSeconds": 0.049,
+  "generatedVariants": 57,
+  "uniqueSolutionChecks": 1,
+  "decision": "READY_FOR_DEEP_LOGIC_AUDIT",
+  "bestObserved": {
+    "sizes": [
+      29,
+      2,
+      1,
+      2,
+      2,
+      2,
+      35,
+      1,
+      40,
+      1,
+      28,
+      1
+    ],
+    "minimum": 1,
+    "maximum": 40,
+    "singletons": 4,
+    "twoCells": 4
+  },
+  "gameFilesModified": false
+}

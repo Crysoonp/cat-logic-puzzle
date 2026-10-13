@@ -1,0 +1,102 @@
+{
+  "version": "V212",
+  "source": "NEKOMICHI_12X12_REPAIRED_CANDIDATES_V211.json",
+  "elapsedSeconds": 0.0167,
+  "solutionCountCappedAt2": 1,
+  "solutionMatchesStored": true,
+  "structuralGatePassed": true,
+  "areaStats": {
+    "sizes": [
+      29,
+      2,
+      1,
+      2,
+      2,
+      2,
+      35,
+      1,
+      40,
+      1,
+      28,
+      1
+    ],
+    "minimum": 1,
+    "maximum": 40,
+    "singletons": 4,
+    "twoCells": 4
+  },
+  "basicLogic": {
+    "status": "STALLED_BASIC",
+    "cats": 8,
+    "remainingCandidates": 13,
+    "trace": [
+      {
+        "rule": "region_single",
+        "unit": 2,
+        "cell": [
+          2,
+          8
+        ]
+      },
+      {
+        "rule": "region_single",
+        "unit": 7,
+        "cell": [
+          7,
+          2
+        ]
+      },
+      {
+        "rule": "region_single",
+        "unit": 9,
+        "cell": [
+          9,
+          11
+        ]
+      },
+      {
+        "rule": "region_single",
+        "unit": 11,
+        "cell": [
+          11,
+          5
+        ]
+      },
+      {
+        "rule": "region_single",
+        "unit": 5,
+        "cell": [
+          5,
+          6
+        ]
+      },
+      {
+        "rule": "region_single",
+        "unit": 4,
+        "cell": [
+          4,
+          9
+        ]
+      },
+      {
+        "rule": "region_single",
+        "unit": 3,
+        "cell": [
+          3,
+          1
+        ]
+      },
+      {
+        "rule": "region_single",
+        "unit": 6,
+        "cell": [
+          6,
+          10
+        ]
+      }
+    ]
+  },
+  "decision": "UNIQUE_BUT_ADVANCED_LOGIC_REQUIRED",
+  "gameFilesModified": false,
+  "notIntegrated": true
+}

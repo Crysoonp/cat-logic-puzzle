@@ -1,0 +1,42 @@
+{
+  "title": "NEKOMICHI STAGE 51-100 RUNTIME READINESS V152",
+  "passed": true,
+  "representativeStages": [
+    {
+      "stage": 51,
+      "size": 8,
+      "errors": []
+    },
+    {
+      "stage": 65,
+      "size": 9,
+      "errors": []
+    },
+    {
+      "stage": 83,
+      "size": 10,
+      "errors": []
+    },
+    {
+      "stage": 100,
+      "size": 10,
+      "errors": []
+    }
+  ],
+  "staticChecks": {
+    "chapter2RangePresent": true,
+    "displayVersionPresent": true,
+    "manifestStageCount": 100,
+    "manifestVersion": "0.8.59",
+    "boardUsesCssGrid": true,
+    "hardCodedEightColumnRules": 0
+  },
+  "failures": [],
+  "manualReview": [
+    "Stage 51: 8x8 board and controls",
+    "Stage 65: first 9x9 board",
+    "Stage 83: first 10x10 board",
+    "Stage 100: 10x10 final candidate",
+    "Desktop and narrow mobile viewport"
+  ]
+}

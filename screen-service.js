@@ -1,7 +1,7 @@
 (function(){
   'use strict';
   const SCREEN_IDS=Object.freeze({title:'titleScreen'});
-  const DIALOG_IDS=Object.freeze({main:'dlg',story:'storyDlg',history:'historyDlg',debug:'debugDlg',cats:'catsDlg'});
+  const DIALOG_IDS=Object.freeze({main:'dlg',story:'storyDlg',history:'historyDlg',debug:'debugDlg',cats:'catsDlg',catProfile:'catProfileDlg',plaza:'plazaDlg',fieldMap:'fieldMapDlg',plazaReturn:'plazaReturnDlg'});
   function element(id){return document.getElementById(id);}
   function showScreen(name){const id=SCREEN_IDS[name];const node=id&&element(id);if(!node)return false;node.classList.remove('hidden');return true;}
   function hideScreen(name){const id=SCREEN_IDS[name];const node=id&&element(id);if(!node)return false;node.classList.add('hidden');return true;}

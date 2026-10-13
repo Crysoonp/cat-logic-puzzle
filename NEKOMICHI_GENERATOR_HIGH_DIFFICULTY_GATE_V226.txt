@@ -1,0 +1,9 @@
+NEKOMICHI GENERATOR HIGH DIFFICULTY GATE V226
+
+Implemented:
+- Added a separate high-difficulty generation mode.
+- Normal Stage 16-50 generation remains on the legacy difficulty range.
+- High-difficulty mode requires 11x11 or 12x12, valid small-area structure, controlled opening, inference depth, and advanced star 4 or 5.
+- Rejection reasons are returned separately for size, small areas, opening, inference depth, and star level.
+- evaluate and generationGate are exposed for future large-board generators and tests.
+- Existing stage data was not modified.

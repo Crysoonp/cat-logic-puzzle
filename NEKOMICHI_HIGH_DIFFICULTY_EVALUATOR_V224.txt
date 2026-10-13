@@ -1,0 +1,5 @@
+NEKOMICHI HIGH DIFFICULTY EVALUATOR V224
+
+Added structural, opening, chain and normalized evaluation metrics.
+Legacy difficulty fields remain compatible.
+No stage data changed.

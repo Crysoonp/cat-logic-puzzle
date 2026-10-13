@@ -1,0 +1,169 @@
+{
+  "title": "NEKOMICHI STAGE 101-200 RUNTIME AUDIT V159",
+  "passed": true,
+  "version": "0.8.60",
+  "runtime": {
+    "stageCount": 200,
+    "stage101": 10,
+    "stage150Boss": true,
+    "stage200Boss": true
+  },
+  "foundationTestCount": 36,
+  "foundationTests": [
+    {
+      "file": "v080-foundation-check.js",
+      "output": "OK: Nekomichi Ver.0.8.0 foundation checks passed.\nOK: Stage quality, boss metadata, central version, and known solver gap baseline are fixed."
+    },
+    {
+      "file": "v082-storage-foundation-check.js",
+      "output": "OK: Nekomichi Ver.0.8.2 storage foundation checks passed."
+    },
+    {
+      "file": "v084-storage-schema-check.js",
+      "output": "OK: Nekomichi Ver.0.8.4 storage schema checks passed."
+    },
+    {
+      "file": "v085-storage-startup-check.js",
+      "output": "OK: Nekomichi Ver.0.8.5 storage startup checks passed."
+    },
+    {
+      "file": "v086-game-state-foundation-check.js",
+      "output": "OK: Nekomichi Ver.0.8.6 game state foundation checks passed."
+    },
+    {
+      "file": "v087-board-restore-check.js",
+      "output": "OK: Nekomichi Ver.0.8.7 board restore checks passed."
+    },
+    {
+      "file": "v088-board-reset-check.js",
+      "output": "OK: Nekomichi Ver.0.8.8 board reset checks passed."
+    },
+    {
+      "file": "v091-screen-foundation-check.js",
+      "output": "OK: Nekomichi Ver.0.8.11 screen foundation checks passed."
+    },
+    {
+      "file": "v092-dialog-action-router-check.js",
+      "output": "OK: Nekomichi Ver.0.8.12 dialog action router checks passed."
+    },
+    {
+      "file": "v093-fixed-dialog-events-check.js",
+      "output": "OK: Nekomichi Ver.0.8.13 fixed dialog event checks passed."
+    },
+    {
+      "file": "v094-foundation-freeze-check.js",
+      "output": "OK: Nekomichi Ver.0.8.14 foundation freeze checks passed."
+    },
+    {
+      "file": "v096-css-baseline-check.js",
+      "output": "OK: Nekomichi Ver.0.8.16 CSS visual baseline contract passed."
+    },
+    {
+      "file": "v097-visual-approval-check.js",
+      "output": "OK: Nekomichi Ver.0.8.17 visual approvals registered."
+    },
+    {
+      "file": "v098-fixed-dialog-visual-check.js",
+      "output": "OK: Nekomichi Ver.0.8.18 fixed dialog visual approvals registered."
+    },
+    {
+      "file": "v099-mobile-story-visual-check.js",
+      "output": "OK: Nekomichi Ver.0.8.19 mobile and story visual approvals registered."
+    },
+    {
+      "file": "v100-boss-visual-check.js",
+      "output": "OK: Nekomichi Ver.0.8.20 boss visual approvals registered."
+    },
+    {
+      "file": "v101-frozen-effects-baseline-check.js",
+      "output": "OK: Nekomichi Ver.0.8.21 frozen effect baseline closure passed."
+    },
+    {
+      "file": "v103-css-candidate-selection-check.js",
+      "output": "OK: Nekomichi Ver.0.8.23 low-risk CSS candidate selection passed."
+    },
+    {
+      "file": "v106-first-css-cleanup-check.js",
+      "output": "OK: Nekomichi Ver.0.8.26 first isolated CSS cleanup passed."
+    },
+    {
+      "file": "v108-css-safety-stop-check.js",
+      "output": "OK: Nekomichi Ver.0.8.28 CSS safety stop passed."
+    },
+    {
+      "file": "v109-css-cleanup-closure-check.js",
+      "output": "OK: Nekomichi Ver.0.8.29 CSS cleanup closure passed."
+    },
+    {
+      "file": "v110-repository-housekeeping-check.js",
+      "output": "OK: Nekomichi Ver.0.8.30 repository housekeeping plan passed."
+    },
+    {
+      "file": "v111-git-checkpoint-contract-check.js",
+      "output": "OK: Nekomichi Ver.0.8.31 Git checkpoint contract passed."
+    },
+    {
+      "file": "v113-clean-working-tree-check.js",
+      "output": "OK: Nekomichi Ver.0.8.33 clean working-tree contract passed."
+    },
+    {
+      "file": "v124-stage-37-39-beginner-replacement-check.js",
+      "output": "OK: Nekomichi Ver.0.8.35 Stage 37-39 beginner replacements passed."
+    },
+    {
+      "file": "v128-marker-visibility-check.js",
+      "output": "OK: Nekomichi Ver.0.8.39 marker visibility lifecycle passed."
+    },
+    {
+      "file": "v130-question-dot-separation-check.js",
+      "output": "OK: Nekomichi Ver.0.8.41 question dot separation contract passed."
+    },
+    {
+      "file": "v133-marker-balance-check.js",
+      "output": "OK: Nekomichi Ver.0.8.43 marker balance contract passed."
+    },
+    {
+      "file": "v138-question-dot-render-structure-check.js",
+      "output": "OK: Nekomichi Ver.0.8.48 actual question-dot render structure passed."
+    },
+    {
+      "file": "v139-question-optical-alignment-check.js",
+      "output": "OK: Nekomichi Ver.0.8.49 question optical alignment contract passed."
+    },
+    {
+      "file": "v141-marker-stroke-unification-check.js",
+      "output": "OK: Nekomichi Ver.0.8.51 marker stroke unification contract passed."
+    },
+    {
+      "file": "v142-all-marker-drag-check.js",
+      "output": "OK: Nekomichi Ver.0.8.52 X, question, and triangle drag contract passed."
+    },
+    {
+      "file": "v143-mark-button-icon-isolation-check.js",
+      "output": "OK: Nekomichi Ver.0.8.53 MARK button icon isolation contract passed."
+    },
+    {
+      "file": "v146-mark-button-svg-x-check.js",
+      "output": "OK: Nekomichi Ver.0.8.56 MARK button SVG X contract passed."
+    },
+    {
+      "file": "v147-hint-button-action-check.js",
+      "output": "OK: Nekomichi Ver.0.8.57 hint-button delegated action contract passed."
+    },
+    {
+      "file": "v148-hint-safety-check.js",
+      "output": "OK: Nekomichi Ver.0.8.60 cat-teaser hint safety contract passed."
+    }
+  ],
+  "checks": {
+    "runtimeStages1To200Continuous": true,
+    "stages101To200Are10x10": true,
+    "stages101To200QualityMetadata": true,
+    "stage150Boss": true,
+    "stage200Boss": true,
+    "manifest": true,
+    "displayedVersion": true,
+    "historyRange51To200": true,
+    "javascriptSyntax": true
+  }
+}

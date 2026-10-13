@@ -1,0 +1,311 @@
+NEKOMICHI CHARACTER REFERENCE COLLECTION V161
+========================================================================
+Project root: C:\Dell\DSD-Development\GitHub\cat-logic-puzzle
+Collected root: character_reference
+All files: 22
+Text extracted: 4
+Listed only: 18
+Errors: 0
+
+DIRECTORY FILE LIST
+------------------------------------------------------------------------
+character_reference\00_設定資料\character_manifest.csv
+character_reference\00_設定資料\character_manifest.json
+character_reference\00_設定資料\README_キャラクター原案.md
+character_reference\00_設定資料\STORY_CHARACTER_MAP.md
+character_reference\01_主人公_テコちゃん\01_テコちゃん_原案A.png
+character_reference\01_主人公_テコちゃん\02_テコちゃん_原案B.png
+character_reference\01_主人公_テコちゃん\03_テコちゃん_原案C.png
+character_reference\02_主要人物_家族と案内役\01_ニャンじい_原案A.png
+character_reference\02_主要人物_家族と案内役\02_ニャンじい_原案B.png
+character_reference\02_主要人物_家族と案内役\03_ミヤ.png
+character_reference\03_仲間候補_地域別\01_タイジュ.png
+character_reference\03_仲間候補_地域別\02_ミナモ.png
+character_reference\03_仲間候補_地域別\03_カナメ.png
+character_reference\03_仲間候補_地域別\04_シオネ.png
+character_reference\04_第1部後半_物語人物\01_クオン.png
+character_reference\04_第1部後半_物語人物\02_ヨル.png
+character_reference\04_第1部後半_物語人物\03_アマネ.png
+character_reference\04_第1部後半_物語人物\04_レン_原案A.png
+character_reference\04_第1部後半_物語人物\05_レン_原案B.png
+character_reference\05_他種族_カラスとキツネ\01_クロバネ.png
+character_reference\05_他種族_カラスとキツネ\02_コガネ.png
+character_reference\05_他種族_カラスとキツネ\03_サンバガラス.png
+
+LISTED ONLY
+------------------------------------------------------------------------
+character_reference\01_主人公_テコちゃん\01_テコちゃん_原案A.png | binary/image or unsupported extension
+character_reference\01_主人公_テコちゃん\02_テコちゃん_原案B.png | binary/image or unsupported extension
+character_reference\01_主人公_テコちゃん\03_テコちゃん_原案C.png | binary/image or unsupported extension
+character_reference\02_主要人物_家族と案内役\01_ニャンじい_原案A.png | binary/image or unsupported extension
+character_reference\02_主要人物_家族と案内役\02_ニャンじい_原案B.png | binary/image or unsupported extension
+character_reference\02_主要人物_家族と案内役\03_ミヤ.png | binary/image or unsupported extension
+character_reference\03_仲間候補_地域別\01_タイジュ.png | binary/image or unsupported extension
+character_reference\03_仲間候補_地域別\02_ミナモ.png | binary/image or unsupported extension
+character_reference\03_仲間候補_地域別\03_カナメ.png | binary/image or unsupported extension
+character_reference\03_仲間候補_地域別\04_シオネ.png | binary/image or unsupported extension
+character_reference\04_第1部後半_物語人物\01_クオン.png | binary/image or unsupported extension
+character_reference\04_第1部後半_物語人物\02_ヨル.png | binary/image or unsupported extension
+character_reference\04_第1部後半_物語人物\03_アマネ.png | binary/image or unsupported extension
+character_reference\04_第1部後半_物語人物\04_レン_原案A.png | binary/image or unsupported extension
+character_reference\04_第1部後半_物語人物\05_レン_原案B.png | binary/image or unsupported extension
+character_reference\05_他種族_カラスとキツネ\01_クロバネ.png | binary/image or unsupported extension
+character_reference\05_他種族_カラスとキツネ\02_コガネ.png | binary/image or unsupported extension
+character_reference\05_他種族_カラスとキツネ\03_サンバガラス.png | binary/image or unsupported extension
+
+========================================================================
+FILE: character_reference\00_設定資料\character_manifest.csv
+========================================================================
+name,role,source_file,archive_file,status_note
+テコちゃん,主人公,teko1.png,01_主人公_テコちゃん/01_テコちゃん_原案A.png,正式デザイン比較候補A
+テコちゃん,主人公,teko2.png,01_主人公_テコちゃん/02_テコちゃん_原案B.png,正式デザイン比較候補B
+テコちゃん,主人公,teko3.png,01_主人公_テコちゃん/03_テコちゃん_原案C.png,正式デザイン比較候補C
+ニャンじい,育ての親・師匠,nyanjii.png,02_主要人物_家族と案内役/01_ニャンじい_原案A.png,比較候補A
+ニャンじい,育ての親・師匠,nyanjii2.png,02_主要人物_家族と案内役/02_ニャンじい_原案B.png,比較候補B
+ミヤ,母,mia.png,02_主要人物_家族と案内役/03_ミヤ.png,第1部ステージ1000で再会
+タイジュ,森の仲間,taijyu.png,03_仲間候補_地域別/01_タイジュ.png,ステージ50・猫じゃらし
+ミナモ,草原・水辺の仲間候補,minamo.png,03_仲間候補_地域別/02_ミナモ.png,ステージ100・またたび候補
+カナメ,山岳の仲間候補,kaname.png,03_仲間候補_地域別/03_カナメ.png,ステージ150・肉球チェック候補
+シオネ,海辺の仲間候補,shione.png,03_仲間候補_地域別/04_シオネ.png,ステージ200・ネコ缶候補
+クオン,古道の記録守,kuon.png,04_第1部後半_物語人物/01_クオン.png,ステージ201～400
+ヨル,謎の案内役,yoru.png,04_第1部後半_物語人物/02_ヨル.png,ステージ401～600・知りたきゃついてこい
+アマネ,共同体の元連絡役,amane.png,04_第1部後半_物語人物/03_アマネ.png,ステージ601～800
+レン,超ボスにゃんこ候補,ren1.png,04_第1部後半_物語人物/04_レン_原案A.png,比較候補A・ミヤの戦友
+レン,超ボスにゃんこ候補,ren2.png,04_第1部後半_物語人物/05_レン_原案B.png,比較候補B・ミヤの戦友
+クロバネ,カラス・物と情報の収集役,kurobane.png,05_他種族_カラスとキツネ/01_クロバネ.png,ステージ201～400で初登場
+コガネ,キツネ・一時的ないたずら役,kogane.png,05_他種族_カラスとキツネ/02_コガネ.png,ステージ401～600で初登場
+サンバガラス,カラス三兄弟,sanbakarasu.png,05_他種族_カラスとキツネ/03_サンバガラス.png,別案・集団キャラクター候補
+
+
+========================================================================
+FILE: character_reference\00_設定資料\character_manifest.json
+========================================================================
+[
+  {
+    "name": "テコちゃん",
+    "role": "主人公",
+    "source_file": "teko1.png",
+    "archive_file": "01_主人公_テコちゃん/01_テコちゃん_原案A.png",
+    "status_note": "正式デザイン比較候補A"
+  },
+  {
+    "name": "テコちゃん",
+    "role": "主人公",
+    "source_file": "teko2.png",
+    "archive_file": "01_主人公_テコちゃん/02_テコちゃん_原案B.png",
+    "status_note": "正式デザイン比較候補B"
+  },
+  {
+    "name": "テコちゃん",
+    "role": "主人公",
+    "source_file": "teko3.png",
+    "archive_file": "01_主人公_テコちゃん/03_テコちゃん_原案C.png",
+    "status_note": "正式デザイン比較候補C"
+  },
+  {
+    "name": "ニャンじい",
+    "role": "育ての親・師匠",
+    "source_file": "nyanjii.png",
+    "archive_file": "02_主要人物_家族と案内役/01_ニャンじい_原案A.png",
+    "status_note": "比較候補A"
+  },
+  {
+    "name": "ニャンじい",
+    "role": "育ての親・師匠",
+    "source_file": "nyanjii2.png",
+    "archive_file": "02_主要人物_家族と案内役/02_ニャンじい_原案B.png",
+    "status_note": "比較候補B"
+  },
+  {
+    "name": "ミヤ",
+    "role": "母",
+    "source_file": "mia.png",
+    "archive_file": "02_主要人物_家族と案内役/03_ミヤ.png",
+    "status_note": "第1部ステージ1000で再会"
+  },
+  {
+    "name": "タイジュ",
+    "role": "森の仲間",
+    "source_file": "taijyu.png",
+    "archive_file": "03_仲間候補_地域別/01_タイジュ.png",
+    "status_note": "ステージ50・猫じゃらし"
+  },
+  {
+    "name": "ミナモ",
+    "role": "草原・水辺の仲間候補",
+    "source_file": "minamo.png",
+    "archive_file": "03_仲間候補_地域別/02_ミナモ.png",
+    "status_note": "ステージ100・またたび候補"
+  },
+  {
+    "name": "カナメ",
+    "role": "山岳の仲間候補",
+    "source_file": "kaname.png",
+    "archive_file": "03_仲間候補_地域別/03_カナメ.png",
+    "status_note": "ステージ150・肉球チェック候補"
+  },
+  {
+    "name": "シオネ",
+    "role": "海辺の仲間候補",
+    "source_file": "shione.png",
+    "archive_file": "03_仲間候補_地域別/04_シオネ.png",
+    "status_note": "ステージ200・ネコ缶候補"
+  },
+  {
+    "name": "クオン",
+    "role": "古道の記録守",
+    "source_file": "kuon.png",
+    "archive_file": "04_第1部後半_物語人物/01_クオン.png",
+    "status_note": "ステージ201～400"
+  },
+  {
+    "name": "ヨル",
+    "role": "謎の案内役",
+    "source_file": "yoru.png",
+    "archive_file": "04_第1部後半_物語人物/02_ヨル.png",
+    "status_note": "ステージ401～600・知りたきゃついてこい"
+  },
+  {
+    "name": "アマネ",
+    "role": "共同体の元連絡役",
+    "source_file": "amane.png",
+    "archive_file": "04_第1部後半_物語人物/03_アマネ.png",
+    "status_note": "ステージ601～800"
+  },
+  {
+    "name": "レン",
+    "role": "超ボスにゃんこ候補",
+    "source_file": "ren1.png",
+    "archive_file": "04_第1部後半_物語人物/04_レン_原案A.png",
+    "status_note": "比較候補A・ミヤの戦友"
+  },
+  {
+    "name": "レン",
+    "role": "超ボスにゃんこ候補",
+    "source_file": "ren2.png",
+    "archive_file": "04_第1部後半_物語人物/05_レン_原案B.png",
+    "status_note": "比較候補B・ミヤの戦友"
+  },
+  {
+    "name": "クロバネ",
+    "role": "カラス・物と情報の収集役",
+    "source_file": "kurobane.png",
+    "archive_file": "05_他種族_カラスとキツネ/01_クロバネ.png",
+    "status_note": "ステージ201～400で初登場"
+  },
+  {
+    "name": "コガネ",
+    "role": "キツネ・一時的ないたずら役",
+    "source_file": "kogane.png",
+    "archive_file": "05_他種族_カラスとキツネ/02_コガネ.png",
+    "status_note": "ステージ401～600で初登場"
+  },
+  {
+    "name": "サンバガラス",
+    "role": "カラス三兄弟",
+    "source_file": "sanbakarasu.png",
+    "archive_file": "05_他種族_カラスとキツネ/03_サンバガラス.png",
+    "status_note": "別案・集団キャラクター候補"
+  }
+]
+
+========================================================================
+FILE: character_reference\00_設定資料\README_キャラクター原案.md
+========================================================================
+# ねこみちロジック キャラクター原案アーカイブ
+
+作成日: 2026-10-01
+
+## このアーカイブの目的
+
+受領したキャラクター原案を、キャラクターの役割と物語上の登場区分に沿って整理した保存用アーカイブです。画像内の文章は原案であり、正式実装前にストーリー設定との整合性、表記、年齢感、毛色、装飾、能力を再確認します。
+
+## フォルダー構成
+
+- `01_主人公_テコちゃん`: テコちゃんの比較原案3枚
+- `02_主要人物_家族と案内役`: ニャンじい比較案、母ミヤ
+- `03_仲間候補_地域別`: タイジュ、ミナモ、カナメ、シオネ
+- `04_第1部後半_物語人物`: クオン、ヨル、アマネ、レン比較案
+- `05_他種族_カラスとキツネ`: クロバネ、コガネ、サンバガラス
+- `00_設定資料`: 一覧、採用状況、物語対応、CSV・JSON台帳
+
+## 現時点の物語対応
+
+### ステージ1～200
+
+- ステージ1～50: 森、タイジュ、猫じゃらし
+- ステージ51～100: 草原・水辺、ミナモ、またたび候補
+- ステージ101～150: 山岳、カナメ、肉球チェック候補
+- ステージ151～200: 海辺、シオネ、ネコ缶候補
+
+### ステージ201～1000
+
+- ステージ201～400: こもれび古道、クオン、クロバネ
+- ステージ401～600: うつろい谷、コガネ、ヨル
+- ステージ601～800: 星雨高原、アマネ、クロバネ再登場
+- ステージ801～1000: 千路の原、レン、ミヤ、既存仲間の再集合
+
+## 家族設定
+
+- 母: ミヤ
+- 父: カケル。画像未作成。道、橋、避難路を作る役目。消息不明。
+- 兄: ワタル。画像未作成。父の残した道や救助拠点を修復する。
+- 娘: テコちゃん
+
+## 比較が必要な原案
+
+- テコちゃん: 原案A、B、C
+- ニャンじい: 原案A、B
+- レン: 原案A、B
+
+比較案は削除せず残し、正式採用後に `採用` と `保留` を台帳へ追記します。
+
+## キャラクター全体の統一方針
+
+- 猫中心の世界観を維持する。
+- カラスとキツネは、種族全体ではなく一部個体を対立役・協力役として描く。
+- 名前、外見、装飾、能力は地域と物語上の役割に結び付ける。
+- デフォルメの頭身、目の大きさ、線の太さ、肉球色、アイコン縮小時の識別性を実装前にそろえる。
+- 画像内の日本語は資料用。ゲーム実装では文字と画像を分離し、多言語対応できる状態にする。
+
+
+========================================================================
+FILE: character_reference\00_設定資料\STORY_CHARACTER_MAP.md
+========================================================================
+# キャラクターとストーリー対応表
+
+## 主人公・家族
+
+- テコちゃん: 第1部と第2部の主人公。母ミヤへの道を探し、兄ワタルの足あとを追い、最終的に皆が帰れる場所を作る。
+- ミヤ: テコちゃんの母。超ボスにゃんこ・レンの戦友。ステージ1000で再会する。
+- カケル: 父。画像未作成。安全な道、橋、避難路、休憩拠点を作った。消息不明。
+- ワタル: 年の離れた兄。画像未作成。第2部で探す対象。カケルの道と拠点を修復している。
+- ニャンじい: ミヤから幼いテコちゃんを託された育ての親。序盤で「道」を自然な言葉として示す。
+
+## 旅の仲間
+
+- タイジュ: 森と迷子の猫を守る。ステージ50加入。猫じゃらし。
+- ミナモ: 草原・水辺、記録、地図、論理。ステージ100加入候補。またたび。
+- カナメ: 山岳、見張り、安全確認。ステージ150加入候補。肉球チェック。
+- シオネ: 海辺、遠くの声と気配の探索。ステージ200加入候補。ネコ缶。
+
+## 第1部後半
+
+- クオン: 共同体の記録と古道を守る猫。ステージ201～400。
+- クロバネ: 古道で物と情報を集めるカラス。トラブル役から情報提供者へ変化。
+- コガネ: うつろい谷で偽物の道を示すキツネ。完全な悪役にはしない。
+- ヨル: ミヤを知る者への案内役。「知りたきゃ、ついてこい」を担う。
+- アマネ: 元連絡役。ミヤが自分の意思で旅立った事実を伝える。
+- レン: 超ボスにゃんこ候補名。ミヤの戦友。ステージ999で対峙し、誤解が解ける。
+- サンバガラス: カラス三兄弟の別案。クロバネと併存させるか、役割を分けるかは未決。
+
+## 正式発表前に確認する項目
+
+- テコちゃん、ニャンじい、レンの原案選定。
+- 各画像に書かれた設定と長期ストーリーの食い違い。
+- レンの傷、ペンダント、マントの正式デザイン。
+- ミヤとテコちゃんの毛色・花飾りの近さを親子表現としてどこまで残すか。
+- ミナモとシオネの青系配色が似すぎないよう役割と装飾を分離する。
+- クロバネとサンバガラスの役割の重複整理。
+- カケルとワタルの画像制作。
+

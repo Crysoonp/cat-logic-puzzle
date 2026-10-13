@@ -1,0 +1,735 @@
+{
+  "title": "NEKOMICHI STAGE 51-100 INDEPENDENT AUDIT",
+  "source": "NEKOMICHI_STAGE_51_100_CANDIDATES.json",
+  "summary": {
+    "passed": false,
+    "stageCount": 50,
+    "failureStages": [
+      52,
+      53,
+      55,
+      59
+    ],
+    "warningStages": [],
+    "sizeCounts": {
+      "8": 17,
+      "9": 18,
+      "10": 15
+    },
+    "starCounts": {
+      "2": 34,
+      "3": 15,
+      "4": 1
+    }
+  },
+  "stages": [
+    {
+      "stage": 51,
+      "size": 8,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 8,
+        "locked": 0,
+        "cats": 8
+      },
+      "singletonRegions": 3
+    },
+    {
+      "stage": 52,
+      "size": 8,
+      "errors": [
+        "independent level-2 logic solver stalled"
+      ],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": false,
+        "direct": 5,
+        "locked": 4,
+        "cats": 5
+      },
+      "singletonRegions": 1
+    },
+    {
+      "stage": 53,
+      "size": 8,
+      "errors": [
+        "independent level-2 logic solver stalled"
+      ],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": false,
+        "direct": 4,
+        "locked": 3,
+        "cats": 4
+      },
+      "singletonRegions": 2
+    },
+    {
+      "stage": 54,
+      "size": 8,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 8,
+        "locked": 3,
+        "cats": 8
+      },
+      "singletonRegions": 1
+    },
+    {
+      "stage": 55,
+      "size": 8,
+      "errors": [
+        "independent level-2 logic solver stalled"
+      ],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": false,
+        "direct": 0,
+        "locked": 3,
+        "cats": 0
+      },
+      "singletonRegions": 0
+    },
+    {
+      "stage": 56,
+      "size": 8,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 8,
+        "locked": 4,
+        "cats": 8
+      },
+      "singletonRegions": 2
+    },
+    {
+      "stage": 57,
+      "size": 8,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 8,
+        "locked": 0,
+        "cats": 8
+      },
+      "singletonRegions": 3
+    },
+    {
+      "stage": 58,
+      "size": 8,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 8,
+        "locked": 4,
+        "cats": 8
+      },
+      "singletonRegions": 2
+    },
+    {
+      "stage": 59,
+      "size": 8,
+      "errors": [
+        "independent level-2 logic solver stalled"
+      ],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": false,
+        "direct": 1,
+        "locked": 4,
+        "cats": 1
+      },
+      "singletonRegions": 1
+    },
+    {
+      "stage": 60,
+      "size": 8,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 8,
+        "locked": 1,
+        "cats": 8
+      },
+      "singletonRegions": 3
+    },
+    {
+      "stage": 61,
+      "size": 8,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 8,
+        "locked": 0,
+        "cats": 8
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 62,
+      "size": 8,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 8,
+        "locked": 0,
+        "cats": 8
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 63,
+      "size": 8,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 8,
+        "locked": 0,
+        "cats": 8
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 64,
+      "size": 8,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 8,
+        "locked": 0,
+        "cats": 8
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 65,
+      "size": 9,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 9,
+        "locked": 1,
+        "cats": 9
+      },
+      "singletonRegions": 4
+    },
+    {
+      "stage": 66,
+      "size": 8,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 8,
+        "locked": 0,
+        "cats": 8
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 67,
+      "size": 9,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 9,
+        "locked": 0,
+        "cats": 9
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 68,
+      "size": 9,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 9,
+        "locked": 0,
+        "cats": 9
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 69,
+      "size": 9,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 9,
+        "locked": 0,
+        "cats": 9
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 70,
+      "size": 9,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 9,
+        "locked": 0,
+        "cats": 9
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 71,
+      "size": 9,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 9,
+        "locked": 0,
+        "cats": 9
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 72,
+      "size": 9,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 9,
+        "locked": 0,
+        "cats": 9
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 73,
+      "size": 9,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 9,
+        "locked": 0,
+        "cats": 9
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 74,
+      "size": 8,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 8,
+        "locked": 0,
+        "cats": 8
+      },
+      "singletonRegions": 4
+    },
+    {
+      "stage": 75,
+      "size": 9,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 9,
+        "locked": 0,
+        "cats": 9
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 76,
+      "size": 9,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 9,
+        "locked": 0,
+        "cats": 9
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 77,
+      "size": 9,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 9,
+        "locked": 0,
+        "cats": 9
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 78,
+      "size": 8,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 8,
+        "locked": 0,
+        "cats": 8
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 79,
+      "size": 9,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 9,
+        "locked": 0,
+        "cats": 9
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 80,
+      "size": 9,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 9,
+        "locked": 0,
+        "cats": 9
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 81,
+      "size": 9,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 9,
+        "locked": 1,
+        "cats": 9
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 82,
+      "size": 9,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 9,
+        "locked": 2,
+        "cats": 9
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 83,
+      "size": 10,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 10,
+        "locked": 0,
+        "cats": 10
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 84,
+      "size": 9,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 9,
+        "locked": 0,
+        "cats": 9
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 85,
+      "size": 10,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 10,
+        "locked": 0,
+        "cats": 10
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 86,
+      "size": 9,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 9,
+        "locked": 0,
+        "cats": 9
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 87,
+      "size": 10,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 10,
+        "locked": 1,
+        "cats": 10
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 88,
+      "size": 10,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 10,
+        "locked": 1,
+        "cats": 10
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 89,
+      "size": 9,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 9,
+        "locked": 1,
+        "cats": 9
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 90,
+      "size": 10,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 10,
+        "locked": 0,
+        "cats": 10
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 91,
+      "size": 10,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 10,
+        "locked": 0,
+        "cats": 10
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 92,
+      "size": 10,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 10,
+        "locked": 1,
+        "cats": 10
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 93,
+      "size": 10,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 10,
+        "locked": 1,
+        "cats": 10
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 94,
+      "size": 10,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 10,
+        "locked": 2,
+        "cats": 10
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 95,
+      "size": 10,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 10,
+        "locked": 0,
+        "cats": 10
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 96,
+      "size": 10,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 10,
+        "locked": 1,
+        "cats": 10
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 97,
+      "size": 10,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 10,
+        "locked": 0,
+        "cats": 10
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 98,
+      "size": 10,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 10,
+        "locked": 0,
+        "cats": 10
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 99,
+      "size": 10,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 10,
+        "locked": 0,
+        "cats": 10
+      },
+      "singletonRegions": 5
+    },
+    {
+      "stage": 100,
+      "size": 10,
+      "errors": [],
+      "warnings": [],
+      "solutionCount": 1,
+      "logicAudit": {
+        "solved": true,
+        "direct": 10,
+        "locked": 1,
+        "cats": 10
+      },
+      "singletonRegions": 5
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "benchmarkVersion": "V208",
+  "purpose": "12x12-only strengthened-anchor feasibility benchmark.",
+  "timeLimits": {
+    "perSizeSeconds": 35.0,
+    "globalSeconds": 40.0
+  },
+  "totalElapsedSeconds": 35.01,
+  "foundCount": 0,
+  "requiredCount": 1,
+  "allLargeSizesFound": false,
+  "results": [
+    {
+      "size": 12,
+      "status": "TIMEOUT",
+      "elapsedSeconds": 35.01,
+      "attempts": 2161,
+      "connectedCandidates": 2151,
+      "uniqueChecks": 1556,
+      "bestObservedMaximumArea": 21,
+      "candidate": null
+    }
+  ],
+  "decision": "LARGE_BOARD_CONSTRUCTION_NEEDS_REPAIR",
+  "gameFilesModified": false
+}

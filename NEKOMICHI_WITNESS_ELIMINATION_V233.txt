@@ -1,0 +1,8 @@
+NEKOMICHI WITNESS ELIMINATION V233
+Status: NOT_FOUND
+Elapsed: 45.025s
+Attempts: 170
+Witness rounds: 13286
+Mutation checks: 17708
+Best: {"size":12,"rounds":44,"areaSizes":[9,11,9,13,11,15,12,13,15,12,14,10]}
+Candidate: null

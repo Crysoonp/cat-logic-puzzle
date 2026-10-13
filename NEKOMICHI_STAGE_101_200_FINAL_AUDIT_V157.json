@@ -1,0 +1,708 @@
+{
+  "title": "NEKOMICHI STAGE 101-200 FINAL INDEPENDENT AUDIT V157",
+  "passed": true,
+  "stageCount": 100,
+  "failures": [],
+  "details": [
+    {
+      "stage": 101,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 102,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 103,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 104,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 105,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 106,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 107,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 108,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 109,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 110,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 111,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 112,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 113,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 114,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 115,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 116,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 117,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 118,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 119,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 120,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 121,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 122,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 123,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 124,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 125,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 126,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 127,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 128,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 129,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 130,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 131,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 132,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 133,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 134,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 135,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 136,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 137,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 138,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 139,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 140,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 141,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 142,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 143,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 144,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 145,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 146,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 147,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 148,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 149,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 150,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 151,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 152,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 153,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 154,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 155,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 156,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 157,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 158,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 159,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 160,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 161,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 162,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 163,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 164,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 165,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 166,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 167,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 168,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 169,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 170,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 171,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 172,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 173,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 174,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 175,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 176,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 177,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 178,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 179,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 180,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 181,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 182,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 183,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 184,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 185,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 186,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 187,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 188,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 189,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 190,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 191,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 192,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 193,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 194,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 195,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 196,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 197,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 198,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 199,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    },
+    {
+      "stage": 200,
+      "solutionCount": 1,
+      "logicalSolved": true,
+      "logicalSteps": 10,
+      "errors": []
+    }
+  ]
+}

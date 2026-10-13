@@ -1,0 +1,8 @@
+NEKOMICHI MULTI CELL BRIDGE V231
+Status: NOT_FOUND
+Elapsed: 45.04s
+Rounds: 5
+Pair candidates: 6108
+Accepted states: 1863
+Best: {"metric":{"one":2,"two":0,"score":234,"sizes":[24,5,3,3,3,3,35,3,35,1,28,1]}}
+Candidate: null

@@ -1,0 +1,47 @@
+{
+  "version": "V229",
+  "elapsedSeconds": 4.788,
+  "sourceStages": [
+    {
+      "stage": 302,
+      "size": 12,
+      "objective": 497,
+      "areaSizes": [
+        29,
+        2,
+        1,
+        2,
+        2,
+        2,
+        35,
+        1,
+        40,
+        1,
+        28,
+        1
+      ]
+    }
+  ],
+  "uniquenessChecks": 585,
+  "acceptedMoves": 8,
+  "status": "NOT_FOUND",
+  "best": {
+    "source": 302,
+    "objective": 235,
+    "areaSizes": [
+      26,
+      3,
+      3,
+      3,
+      3,
+      3,
+      34,
+      3,
+      36,
+      1,
+      28,
+      1
+    ]
+  },
+  "candidate": null
+}

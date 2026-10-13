@@ -1,0 +1,8 @@
+NEKOMICHI SOLUTION COUNT DESCENT V234
+Status: NOT_FOUND
+Elapsed: 45s
+Attempts: 746
+Evaluations: 99583
+Accepted moves: 103
+Best: {"value":64,"limited":true,"areaSizes":[13,10,15,10,12,12,11,10,10,7,11]}
+Candidate: null

@@ -1,0 +1,33 @@
+{
+  "version": "V231",
+  "elapsedSeconds": 45.04,
+  "status": "NOT_FOUND",
+  "sourceStage": 302,
+  "rounds": 5,
+  "statesSeen": 6109,
+  "pairCandidates": 6108,
+  "uniquenessChecks": 6108,
+  "acceptedStates": 1863,
+  "best": {
+    "metric": {
+      "one": 2,
+      "two": 0,
+      "score": 234,
+      "sizes": [
+        24,
+        5,
+        3,
+        3,
+        3,
+        3,
+        35,
+        3,
+        35,
+        1,
+        28,
+        1
+      ]
+    }
+  },
+  "candidate": null
+}

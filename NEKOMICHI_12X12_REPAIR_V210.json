@@ -1,0 +1,29 @@
+{
+  "version": "V210",
+  "source": "NEKOMICHI_12X12_UNIQUENESS_CANDIDATES_V209.json",
+  "elapsedSeconds": 45.002,
+  "generatedVariants": 17270,
+  "uniqueSolutionChecks": 0,
+  "decision": "REPAIR_PATH_NOT_FOUND",
+  "bestObserved": {
+    "sizes": [
+      28,
+      2,
+      2,
+      2,
+      2,
+      2,
+      34,
+      2,
+      39,
+      2,
+      27,
+      2
+    ],
+    "minimum": 2,
+    "maximum": 39,
+    "singletons": 0,
+    "twoCells": 8
+  },
+  "gameFilesModified": false
+}

@@ -1,0 +1,9 @@
+NEKOMICHI REGION BEAM SEARCH V230
+Status: NOT_FOUND
+Elapsed: 45.006s
+Rounds: 8
+States seen: 6771
+Uniqueness checks: 6770
+Accepted states: 2931
+Best: {"metric":{"one":2,"two":0,"score":235,"sizes":[26,3,3,3,3,3,34,3,36,1,28,1]}}
+Candidate: null
